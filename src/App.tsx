@@ -1,13 +1,17 @@
 import React from 'react';
 import './App.css';
-import Technologies from "./Technologies";
-import Header from "./Header";
 
-function App() {
+const App: React.FC = () => {
     return (
         <div>
-            <Header />
-            <Technologies />
+            <header>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzpExVyX0u7sbSBpSxVdui50mn1_slr9JXTw&usqp=CAU" alt="react-logo"/>
+            </header>
+            <nav>
+                <div>Profile</div>
+                <div>Messages</div>
+                <div>Main content</div>
+            </nav>
         </div>
     );
 }
