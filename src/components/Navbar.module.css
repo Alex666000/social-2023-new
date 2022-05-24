@@ -1,0 +1,11 @@
+.nav {
+    grid-area: n; /* псевдонимы*/
+    margin-top: 10px;
+    background-color: lightblue;
+}
+.nav a {
+    text-decoration: none;
+}
+.item {
+    color: white;
+}

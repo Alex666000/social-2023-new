@@ -1,3 +1,4 @@
+/* У CSS классов нет модульной замкнутости они глобальны!!! К примеру если у кого то будет класс item он применится ко всем элементам. module.css помогает добиться инкапсуляции стилей*/
 .app-wrapper {
     display: grid;
     width: 2400px;
@@ -8,28 +9,4 @@
     grid-template-rows: 60px 1fr; /*шаблон: 2 строки всего: 1 строка 60px и 1 фракци = все остальное место*/
     grid-template-columns: 2fr 10fr;
     /*grid-gap: 10px;*/
-}
-
-.header {
-    grid-area: h; /* псевдонимы*/
-    background-color: darkolivegreen;
-}
-
-.header img {
-    width: 60px;
-}
-
-.nav {
-    grid-area: n; /* псевдонимы*/
-    margin-top: 10px;
-    background-color: lightblue;
-}
-.nav a {
-    text-decoration: none;
-}
-
-.content {
-    grid-area: c; /* псевдонимы*/
-    background-color: cornsilk;
-    margin-top: 10px;
 }
