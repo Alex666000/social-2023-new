@@ -18,10 +18,10 @@ const Profile: React.FC = () => {
                 </div>
                 <div  className={s.posts}>
                     <div className={s.item}>
-                        post 1
+                        post1
                     </div>
                     <div className={s.item}>
-                        post 2
+                        post2
                     </div>
                 </div>
             </div>
