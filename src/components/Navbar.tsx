@@ -1,22 +1,25 @@
 import React from 'react';
-import './Navbar.module.css'
+import s from './Navbar.module.css'
+
+console.log(s)
 
 const Navbar: React.FC = () => {
     return (
-        <nav className={'nav'}>
-            <div className={'item'}>
+        <nav className={s.nav}>
+            <div className={s.item}>
                 <a href="src/components/Navbar#">Profile</a>
             </div>
-            <div className={'item'}>
+            {/*ставим класс item active*/}
+            <div className={` ${s.item} ${s.active} `}>
                 <a href="src/components/Navbar#">Messages</a>
             </div>
-            <div className={'item'}>
+            <div className={s.item}>
                 <a href="src/components/Navbar#">News</a>
             </div>
-            <div className={'item'}>
+            <div className={s.item}>
                 <a href="src/components/Navbar#">Music</a>
             </div>
-            <div className={'item'}>
+            <div className={s.item}>
                 <a href="src/components/Navbar#">Settings</a>
             </div>
         </nav>

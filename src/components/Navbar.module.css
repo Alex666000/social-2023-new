@@ -5,7 +5,11 @@
 }
 .nav a {
     text-decoration: none;
+    color: white;
 }
 .item {
     color: white;
+}
+.item.active {
+    color: gold;
 }

@@ -1,9 +1,9 @@
 import React from 'react';
-import './Header.css'
+import s from './Header.module.css'
 
 const Header: React.FC = () => {
     return (
-        <header className={'header'}>
+        <header className={s.from}>
             <img
                 src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf8yndOQhIaFf36hkWn9w6UAff4nmPREbmvQ&usqp=CAU'
                 alt="react-logo"/>
