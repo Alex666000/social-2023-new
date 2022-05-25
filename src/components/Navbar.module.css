@@ -1,15 +1,12 @@
 .nav {
-    grid-area: n; /* псевдонимы*/
-    margin-top: 10px;
-    background-color: lightblue;
+    grid-area: n;
+    background-color: burlywood;
 }
-.nav a {
-    text-decoration: none;
-    color: white;
-}
+
 .item {
     color: white;
 }
+
 .item.active {
     color: gold;
 }

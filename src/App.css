@@ -2,13 +2,14 @@
 module.css помогает добиться инкапсуляции стилей. Module.css обеспечивает модульности стилей, классы называть без дефиса и нижнего подчеркивания только Кемлкейс...
 Импортирием обьект, используем как ключ значение, где значение хешуруется всегда уникальное*/
 .app-wrapper {
-    display: grid;
-    width: 2400px;
     margin: 0 auto;
+    display: grid;
+    width: 1900px;
     grid-template-areas:
-            "h h"
-            "n c";
-    grid-template-rows: 60px 1fr; /*шаблон: 2 строки всего: 1 строка 60px и 1 фракци = все остальное место*/
+  "h h"
+  "n c";
+
+    grid-template-rows: 60px 1fr;
     grid-template-columns: 2fr 10fr;
-    /*grid-gap: 10px;*/
+    /* grid-gap: 10px; */
 }

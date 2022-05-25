@@ -1,9 +1,10 @@
 .header {
-    grid-area: h; /* псевдонимы*/
-    background-color: darkolivegreen;
+    grid-area: h;
+    background-color: green;
 }
 
-.headerimg {
-    width: 60px;
-    border-radius: 100% ;
+.header img {
+    width: 10px;
+    height: 10px;
 }
+

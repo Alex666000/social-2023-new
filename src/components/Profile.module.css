@@ -1,8 +1,10 @@
 .content {
     grid-area: c; /* псевдонимы*/
     background-color: cornsilk;
-    margin-top: 10px;
 }
 .item {
     color: green;
 }
+
+
+
