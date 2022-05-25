@@ -13,7 +13,8 @@ const Profile: React.FC = () => {
             <div>
                 My post
                 <div>
-                    New post
+                    <textarea></textarea>
+                    <button>Add post</button>
                 </div>
                 <div  className={s.posts}>
                     <div className={s.item}>
