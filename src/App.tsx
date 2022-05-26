@@ -8,7 +8,7 @@ const App: React.FC = () => {
     return (
         <div className={'app-wrapper'}>
             <Header />
-            <Navbar />
+            <Navbar/>
             <Profile />
         </div>
     );
