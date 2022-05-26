@@ -7,9 +7,9 @@ import Profile from "./components/Profile/Profile";
 const App: React.FC = () => {
     return (
         <div className={'app-wrapper'}>
-            <Header/>
-            <Navbar/>
-            <Profile/>
+            <Header />
+            <Navbar />
+            <Profile />
         </div>
     );
 }
