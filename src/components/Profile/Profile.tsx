@@ -13,7 +13,7 @@ const Profile: React.FC = () => {
             <div>
                 avatar + descripshion
             </div>
-            <MyPosts />
+            <MyPosts hey={'yo'}/>
         </div>
     );
 };

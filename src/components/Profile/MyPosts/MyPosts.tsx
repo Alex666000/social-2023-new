@@ -2,7 +2,10 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import Post from "./Post/Post";
 
-const MyPosts: React.FC = () => {
+type MyPostPropsType = {
+    hey: string
+}
+const MyPosts: React.FC<MyPostPropsType> = (props) => {
     return (
             <div>
                 My post
@@ -11,8 +14,9 @@ const MyPosts: React.FC = () => {
                     <button>Add post</button>
                 </div>
                 <div  className={s.posts}>
-                    <Post/>
-                    <Post />
+                    <Post message={'hello how are you'}/>
+                    <Post message={'my name is Alex'}/>
+                    <Post message={'football'}/>
                 </div>
             </div>
     );
