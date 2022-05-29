@@ -13,3 +13,7 @@ module.css помогает добиться инкапсуляции стиле
     grid-template-columns: 2fr 10fr;
     /* grid-gap: 10px; */
 }
+.app-wrapper-content {
+    grid-area: c; /* псевдонимы*/
+    background-color: cornsilk;
+}
