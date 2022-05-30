@@ -1,6 +1,17 @@
-.content {
-    grid-area: c; /* псевдонимы*/
-    background-color: cornsilk;
+.dialogs {
+    display: grid;
+    grid-template-columns: 2fr 10fr;
 }
 
+dialogsItems {
+    padding: 10px;
+}
+.dialogsItem .active {
+    color: gold;
+}
+
+.messages .message {
+    padding: 10px;
+
+}
 
