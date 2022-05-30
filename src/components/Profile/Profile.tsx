@@ -3,13 +3,12 @@ import s from './Profile.module.css'
 import MyPosts from './MyPosts/MyPosts';
 import {Profileinfo} from './Profileinfo/Profileinfo';
 
-const Profile: React.FC = () => {
+export const Profile: React.FC = (props) => {
     return (
         <div>
             <Profileinfo/>
-            <MyPosts hey={'yo'}/>
+            <MyPosts/>
         </div>
     );
 };
 
-export default Profile;
