@@ -1,2 +1,10 @@
-
+.postBlock {
+    padding: 10px;
+}
+.addPost {
+    display: block;
+}
+.posts {
+    margin-top: 10px;
+}
 

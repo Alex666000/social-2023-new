@@ -7,11 +7,11 @@ type MyPostPropsType = {
 }
 const MyPosts: React.FC<MyPostPropsType> = (props) => {
     return (
-            <div>
-                My post
+            <div className={s.postBlock}>
+                <h3>My post</h3>
                 <div>
                     <textarea></textarea>
-                    <button>Add post</button>
+                    <button className={s.addPost}>Add post</button>
                 </div>
                 <div  className={s.posts}>
                     <Post message={'hello how are you'}/>
