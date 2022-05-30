@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Header.module.css'
 
-const Header: React.FC = () => {
+export const Header: React.FC = (props) => {
     return (
         <header className={s.header}>
             <img
@@ -11,4 +11,3 @@ const Header: React.FC = () => {
     );
 };
 
-export default Header;
