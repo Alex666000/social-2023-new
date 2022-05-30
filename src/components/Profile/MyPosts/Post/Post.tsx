@@ -12,7 +12,7 @@ export const Post: React.FC<PostPropsType> = (props) => {
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqHrYQj-TB5Vu5GASryHzs13C94vlvUqX7KQ&usqp=CAU" alt="avatar"/>
             {props.message}
             <div>
-                <span>like</span>
+                <span>{props.likeCount}</span>
             </div>
         </div>
     );
