@@ -4,10 +4,11 @@ import {Profileinfo} from './Profileinfo/Profileinfo';
 import {MyPosts} from './MyPosts/MyPosts';
 
 export const Profile: React.FC = (props) => {
+
     return (
         <div>
             <Profileinfo/>
-            <MyPosts/>
+            <MyPosts posts={props.posts}/>
         </div>
     );
 };

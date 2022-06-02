@@ -8,7 +8,8 @@ import {Profile} from './components/Profile/Profile';
 
 
 
-const App: React.FC = () => {
+const App: React.FC = (props) => {
+
     return (
         <BrowserRouter>
             <div className={'app-wrapper'}>
@@ -16,8 +17,8 @@ const App: React.FC = () => {
                 <Navbar/>
                 {/*У нас отображается Dialogs или Profile*/}
                 <div className={'app-wrapper-content'}>
-                        <Route path={'/dialogs'} render={() => <Dialogs/>}/>
-                        <Route path={'/profile'} render={() => <Profile/>}/>
+                        <Route path={'/dialogs'} render={() => <Dialogs dialogs={props.dialogs} messages={props.messages}/>}/>
+                        <Route path={'/profile'} render={() => <Profile posts={props.posts}/>}/>
                 </div>
             </div>
         </BrowserRouter>);
