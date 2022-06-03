@@ -1,25 +1,25 @@
 // типизация state:
-type PostType = {
+export type PostType = {
     id: number
     message: string
     likeCount: number
 }
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
 }
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
 }
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: Array<PostType>
 }
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
 }
-type SidebarType = {}
+export type SidebarType = {}
 
 export type RootStateType = {
     profilePage: ProfilePageType
@@ -28,7 +28,7 @@ export type RootStateType = {
 }
 
 // state:
-export let state = {
+let state = {
     //ветки profilePage и dialogsPage - отдельный подобъект для каждой страничке
     profilePage: {
         posts: [
@@ -55,3 +55,5 @@ export let state = {
     },
     sidebar: {}
 }
+
+export default state
