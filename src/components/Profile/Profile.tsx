@@ -3,7 +3,7 @@ import s from './Profile.module.css'
 import {Profileinfo} from './Profileinfo/Profileinfo';
 import {MyPosts} from './MyPosts/MyPosts';
 
-export const Profile = (props) => {
+export const Profile:React.FC = (props) => {
     return (
         <div>
             <Profileinfo/>

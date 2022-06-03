@@ -3,10 +3,10 @@ import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 
 
-export const MyPosts= (props) => {
+export const MyPosts: React.FC = (props) => {
 
 
-    let postsElements = props.posts.map(p => <Post message={p.message} likeCount={p.likeCount}/>)
+    let postsElements = props.state.posts.map(p => <Post message={p.message} likeCount={p.likeCount}/>)
 
     return (
             <div className={s.postBlock}>

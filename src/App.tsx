@@ -5,29 +5,28 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Profile} from './components/Profile/Profile';
+import {state} from './redux/state';
 
 
-const App = (props) => {
+const App :React.FC = (props) => {
 
     return (
-        <BrowserRouter>
-            <div className={'app-wrapper'}>
-                <Header/>
-                <Navbar/>
-                {/*У нас отображается Dialogs или Profile*/}
-                <div className={'app-wrapper-content'}>
-                    <Route
-                        path={'/dialogs'}
-                        render={() =>
-                            <Dialogs
-                                state={props.state.dialogsPage.dialogs}
-                                state={props.state.dialogsPage.messages}/>}/>
-                    <Route
-                        path={'/profile'}
-                        render={() => <Profile state={props.state.ProfilePage.posts}/>}/>
-                </div>
+        <div className={'app-wrapper'}>
+            <Header/>
+            <Navbar/>
+            {/*У нас отображается Dialogs или Profile*/}
+            <div className={'app-wrapper-content'}>
+                <Route
+                    path={'/dialogs'}
+                    render={() =>
+                        <Dialogs
+                            state={props.state.dialogsPage.dialogs}
+                            state={props.state.dialogsPage.messages}/>}/>
+                <Route
+                    path={'/profile'}
+                    render={() => <Profile state={props.state.ProfilePage.posts}/>}/>
             </div>
-        </BrowserRouter>);
+        </div>
 }
 
 export default App;
