@@ -1,39 +1,32 @@
 // типизация state:
-type PostType = {
+export type PostType = {
     id: number,
     message: string
     likeCount: number
 }
-type DialogType = {
+export type DialogType = {
     id: number
     name: string
 }
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
 }
-type SidebarType = {}
-type ProfilePageType = {
+export type ProfilePageType = {
     posts: Array<PostType>
 }
-type DialogsPageType = {
+export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
 }
-type StateType = {
-    profilePage: Array<PostType>
-    dialogsPage: DialogType
-}
 
-type RootStateType = {
+export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar: SidebarType
 }
-
 // state:
 export let state: RootStateType = {
-    //ветки profilePage и dialogsPage - отдельный подобъект для каждой страничке
+    //ветки profilePage и dialogsPage - отдельный под]объект для каждой страничке...
     profilePage: {
         posts: [
             {id: 1, message: 'Hello', likeCount: 12},
@@ -56,7 +49,8 @@ export let state: RootStateType = {
             {id: 4, message: 'My name is....'},
             {id: 5, message: 'Let\'s go'},
         ]
-    },
-    sidebar: {}
+    }
 }
+
+export default state;
 

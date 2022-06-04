@@ -3,25 +3,35 @@ import './App.css';
 import {Header} from './components/Header/Header';
 import {Navbar} from './components/Navbar/Navbar';
 import {Dialogs} from './components/Dialogs/Dialogs';
-import {Route} from 'react-router-dom';
+import {BrowserRouter, Route} from 'react-router-dom';
 import {Profile} from './components/Profile/Profile';
+import {RootStateType} from './redux/state';
 
+type AppPropsType = {
+    state: RootStateType
+}
 
-const App: React.FC = (props) => {
-
+const App: React.FC<AppPropsType> = (props) => {
     return (
-        <div className={'app-wrapper'}>
-            <Header/>
-            <Navbar/>
-            {/*У нас отображается Dialogs или Profile*/}
-            <div className={'app-wrapper-content'}>
-                <Route path={'/dialogs'}
-                    render={() => <Dialogs state={props.state.dialogsPage} />}/>
-                <Route
-                    path={'/profile'}
-                    render={() => <Profile state={props.state.profilePage} /> }/>
-                        </div>
-                        </div>)
-                    }
+        <BrowserRouter>
+            <div className={'app-wrapper'}>
+                <Header/>
+                <Navbar/>
+                {/*У нас отображается Dialogs или Profile*/}
+                <div className={'app-wrapper-content'}>
 
-                    export default App;
+                    <Route path={'/dialogs'}
+                           render={() => <Dialogs
+                               dialogsPage={props.state.dialogsPage}
+                               />}
+                    />
+                    <Route
+                        path={'/profile'}
+                        render={() => <Profile
+                            profilePage={props.state.profilePage}/>}/>
+                </div>
+            </div>
+        </BrowserRouter>)
+}
+
+export default App;
