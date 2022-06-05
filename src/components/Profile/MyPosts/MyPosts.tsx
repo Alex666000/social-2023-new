@@ -1,13 +1,13 @@
 import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import state, {PostType} from '../../../redux/state';
+import {PostType} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: Array<PostType>
 }
 
-export const MyPosts: React.FC<MyPostsPropsType> = (props): JSX.Element => {
+export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     let newPostElement: any = React.createRef()
 
     let addPost = () => {
@@ -15,7 +15,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props): JSX.Element => {
         alert('Hello')
     }
 
-    let postsElements = state.profilePage.posts.map((p) => <Post id={1} message={p.message} likeCount={p.likeCount}/>)
+    let postsElements = props.posts.map((p) => <Post id={1} message={p.message} likeCount={p.likeCount}/>)
 
     return (
         <div className={s.postBlock}>
