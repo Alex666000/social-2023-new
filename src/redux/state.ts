@@ -1,4 +1,7 @@
 // типизация state:
+
+import {rerenderEntireThree} from '../render';
+
 export type PostType = {
     id: number,
     message: string
@@ -19,10 +22,12 @@ export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
 }
+type SidebarType = {}
 
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
+    sidebar: SidebarType
 }
 // state:
 export let state: RootStateType = {
@@ -30,7 +35,9 @@ export let state: RootStateType = {
     profilePage: {
         posts: [
             {id: 1, message: 'Hello', likeCount: 12},
-            {id: 2, message: 'How are you?', likeCount: 10}
+            {id: 2, message: 'How are you?', likeCount: 10},
+            {id: 3, message: 'Spartak', likeCount: 10},
+            {id: 4, message: 'Moscow', likeCount: 10}
         ],
     },
     dialogsPage: {
@@ -49,7 +56,18 @@ export let state: RootStateType = {
             {id: 4, message: 'My name is....'},
             {id: 5, message: 'Let\'s go'},
         ]
+    },
+    sidebar: {}
+}
+
+export let addPost = (postMessage: string) => {
+    const  newPost: PostType  = {
+        id: new Date().getTime(),
+        message: postMessage,
+        likeCount: 0
     }
+    state.profilePage.posts.push(newPost)
+    rerenderEntireThree(state)
 }
 
 

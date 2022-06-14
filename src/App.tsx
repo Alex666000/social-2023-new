@@ -9,28 +9,31 @@ import {RootStateType} from './redux/state';
 
 type AppPropsType = {
     state: RootStateType
+    addPostCallback: (mess: string ) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
     return (
-            <div className={'app-wrapper'}>
-                <Header/>
-                <Navbar/>
-                {/*У нас отображается Dialogs или Profile*/}
-                <div className={'app-wrapper-content'}>
+        <div className={'app-wrapper'}>
+            <Header/>
+            <Navbar/>
+            {/*У нас отображается Dialogs или Profile*/}
+            <div className={'app-wrapper-content'}>
 
-                    <Route path={'/dialogs'}
-                           render={() => <Dialogs
-                               dialogsPage={props.state.dialogsPage}
+                <Route path={'/dialogs'}
+                       render={() => <Dialogs
+                           dialogsPage={props.state.dialogsPage}
 
-                               />}
-                    />
-                    <Route
-                        path={'/profile'}
-                        render={() => <Profile
-                            profilePage={props.state.profilePage}/>}/>
-                </div>
-            </div>)
+                       />}
+                />
+                <Route
+                    path={'/profile'}
+                    render={() => <Profile
+                        profilePage={props.state.profilePage}
+                        addPostCallback={props.addPostCallback}
+                    />}/>
+            </div>
+        </div>)
 }
 
 export default App;
