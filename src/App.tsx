@@ -5,11 +5,12 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Profile} from './components/Profile/Profile';
-import {RootStateType} from './redux/state';
+import {RootStateType, updateNewPostText} from './redux/state';
 
 type AppPropsType = {
     state: RootStateType
     addPostCallback: (mess: string ) => void
+    updateNewPostText: (text: string) => void
 }
 
 const App: React.FC<AppPropsType> = (props) => {
@@ -31,6 +32,7 @@ const App: React.FC<AppPropsType> = (props) => {
                     render={() => <Profile
                         profilePage={props.state.profilePage}
                         addPostCallback={props.addPostCallback}
+                        updateNewPostText={props.updateNewPostText}
                     />}/>
             </div>
         </div>)
