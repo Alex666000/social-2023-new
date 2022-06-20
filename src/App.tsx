@@ -5,15 +5,15 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Profile} from './components/Profile/Profile';
-import {RootStateType, updateNewPostText} from './redux/state';
+import {StoreType} from './redux/state';
 
 type AppPropsType = {
-    state: RootStateType
-    addPostCallback: (mess: string ) => void
-    updateNewPostText: (text: string) => void
-}
+    store: StoreType
+    }
 
 const App: React.FC<AppPropsType> = (props) => {
+    const state = props.store.getState()
+
     return (
         <div className={'app-wrapper'}>
             <Header/>
@@ -23,16 +23,16 @@ const App: React.FC<AppPropsType> = (props) => {
 
                 <Route path={'/dialogs'}
                        render={() => <Dialogs
-                           dialogsPage={props.state.dialogsPage}
+                           dialogsPage={props.store.getState().dialogsPage}
 
                        />}
                 />
                 <Route
                     path={'/profile'}
                     render={() => <Profile
-                        profilePage={props.state.profilePage}
-                        addPostCallback={props.addPostCallback}
-                        updateNewPostText={props.updateNewPostText}
+                        profilePage={props.store.getState().profilePage}
+                        addPostCallback={props.store.addPost.bind(props.store)}
+                        updateNewPostText={props.store.updateNewPostText.bind(props.store)}
                     />}/>
             </div>
         </div>)
