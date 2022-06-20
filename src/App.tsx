@@ -5,7 +5,7 @@ import {Navbar} from './components/Navbar/Navbar';
 import {Dialogs} from './components/Dialogs/Dialogs';
 import {BrowserRouter, Route} from 'react-router-dom';
 import {Profile} from './components/Profile/Profile';
-import {StoreType} from './redux/state';
+import {store, StoreType} from './redux/state';
 
 type AppPropsType = {
     store: StoreType
@@ -31,8 +31,7 @@ const App: React.FC<AppPropsType> = (props) => {
                     path={'/profile'}
                     render={() => <Profile
                         profilePage={props.store.getState().profilePage}
-                        addPostCallback={props.store.addPost.bind(props.store)}
-                        updateNewPostText={props.store.updateNewPostText.bind(props.store)}
+                        dispatch={props.store.dispatch.bind(props.store)}
                     />}/>
             </div>
         </div>)

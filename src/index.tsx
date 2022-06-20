@@ -9,9 +9,7 @@ import App from './App';
 let rerenderEntireThree = () => {
     ReactDOM.render(
         <BrowserRouter>
-            <App
-                store={store}
-            />
+            <App store={store} />
         </BrowserRouter>, document.getElementById('root')
     );
 }

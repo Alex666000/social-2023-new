@@ -1,47 +1,48 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, MouseEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {PostType} from '../../../redux/state';
+import {ActionsTypes, PostType, StoreType} from '../../../redux/state';
 
 type MyPostsPropsType = {
-    posts: Array<PostType>
-    addPostCallback: (mess: string) => void
+    posts: PostType[]
+    dispatch: (action: ActionsTypes) => void
     newPostText: string
-    updateNewPostText: (newText: string) => void
 }
-
+// present component:
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
-
+// constants:
     const postsElements = props.posts.map((p) => <Post key={p.id} id={1} message={p.message} likeCount={p.likeCount}/>)
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
-
-    const addPost = () => {
+// logic:
+    const addPost = (e: MouseEvent<HTMLButtonElement>) => {
         if (newPostElement.current) {
-            props.addPostCallback(newPostElement.current.value)
+            // берем из пропсов newPostText - так как отправляем dispatch - чем при нажатии на кнопку:
+            props.dispatch({type: 'ADD-POST', postText: props.newPostText})
         }
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.updateNewPostText(e.currentTarget.value)
-    }
+        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value })}
 
-    return (
-        <div className={s.postBlock}>
-            <h3>My post</h3>
-            <div>
+        return (
+            <div className={s.postBlock}>
+                <h3>My post</h3>
+                <div>
                 <textarea
                     ref={newPostElement}
                     value={props.newPostText}
                     onChange={onPostChange}
 
                 ></textarea>
-                <button onClick={addPost} className={s.addPost}>Add post
-                </button>
+                    <button
+                        onClick={addPost}
+                        className={s.addPost}>Add post
+                    </button>
+                </div>
+                <div className={s.posts}>
+                    {postsElements}
+                </div>
             </div>
-            <div className={s.posts}>
-                {postsElements}
-            </div>
-        </div>
-    );
-};
+        );
+    };
 

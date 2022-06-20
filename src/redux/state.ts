@@ -27,14 +27,23 @@ type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
+// typing actions
+type AddPostActionType = {
+    type: 'ADD-POST'
+    postText: string
+}
+type UpdateNewPostTextActionType = {
+    type: 'UPDATE-NEW-POST-TEXT'
+    newText: string
+}
+export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
 
 export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
-    addPost: (newPostText: string) => void
-    updateNewPostText: (text: string) => void
     _callSubscriber: () => void
     subscribe: (callback: () => void) => void
+    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType) => void
 }
 
 export let store: StoreType = {
@@ -44,10 +53,10 @@ export let store: StoreType = {
             posts: [
                 {id: 1, message: 'Hello', likeCount: 12},
                 {id: 2, message: 'How are you?', likeCount: 10},
-                {id: 3, message: 'Spartak', likeCount: 10},
+                {id: 3, message: 'Nike', likeCount: 10},
                 {id: 4, message: 'Moscow', likeCount: 10}
             ],
-            newPostText: 'Hello friend!!!',
+            newPostText: 'Hello friend',
         },
         dialogsPage: {
             dialogs: [
@@ -71,26 +80,27 @@ export let store: StoreType = {
     getState() {
         return this._state
     },
-    addPost(newPostText: string) {
-        const newPost: PostType = {
-            id: new Date().getTime(),
-            message: this._state.profilePage.newPostText,
-            likeCount: 0
-        };
-        this._state.profilePage.posts.push(newPost)
-        this._state.profilePage.newPostText = ''
-       this._callSubscriber()
-    },
-    updateNewPostText(text: string) {
-        this._state.profilePage.newPostText = text
-        this._callSubscriber()
-    },
     _callSubscriber() {
         console.log('State changed')
     },
     subscribe(observer) {
         this._callSubscriber = observer
     },
+    dispatch(action) {
+        if (action.type === 'ADD-POST') {
+            const newPost: PostType = {
+                id: new Date().getTime(),
+                message: action.postText,
+                likeCount: 0
+            };
+            this._state.profilePage.posts.push(newPost)
+            this._state.profilePage.newPostText = ''
+            this._callSubscriber()
+        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+            this._state.profilePage.newPostText = action.newText
+            this._callSubscriber()
+        }
+    }
 
 }
 
