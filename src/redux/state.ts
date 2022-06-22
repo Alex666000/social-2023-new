@@ -1,4 +1,8 @@
-// типизация state:
+import {MouseEvent} from 'react';
+// constants:
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
+// types:
 export type PostType = {
     id: number,
     message: string
@@ -21,31 +25,25 @@ export type DialogsPageType = {
     messages: Array<MessageType>
 }
 type SidebarType = {}
-
 type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
-// typing actions
-type AddPostActionType = {
-    type: 'ADD-POST'
-    postText: string
-}
-type UpdateNewPostTextActionType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    newText: string
-}
-export type ActionsTypes = AddPostActionType | UpdateNewPostTextActionType
-
+// typing actions creators:
+export type ActionsTypes = ReturnType<typeof addPostActionCreator> | ReturnType<typeof updateNewPostTextActionCreator>
+// action creators:
+export let addPostActionCreator = (newPostText: string) => ({type: ADD_POST, postText: newPostText}) as const
+export let updateNewPostTextActionCreator = (value: string) => ({type: UPDATE_NEW_POST_TEXT, newText: value}) as const
+// store typing:
 export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: () => void
     subscribe: (callback: () => void) => void
-    dispatch: (action: AddPostActionType | UpdateNewPostTextActionType) => void
+    dispatch: (action: ActionsTypes) => void
 }
-
+// data store:
 export let store: StoreType = {
     _state: {
         //ветки profilePage и dialogsPage - отдельный под]объект для каждой страничке...
@@ -87,7 +85,7 @@ export let store: StoreType = {
         this._callSubscriber = observer
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type ===  ADD_POST) {
             const newPost: PostType = {
                 id: new Date().getTime(),
                 message: action.postText,
@@ -96,13 +94,15 @@ export let store: StoreType = {
             this._state.profilePage.posts.push(newPost)
             this._state.profilePage.newPostText = ''
             this._callSubscriber()
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.newText
             this._callSubscriber()
         }
     }
 
 }
+
+
 
 
 

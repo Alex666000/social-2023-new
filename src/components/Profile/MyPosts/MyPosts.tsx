@@ -1,13 +1,14 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {ActionsTypes, PostType, StoreType} from '../../../redux/state';
+import {ActionsTypes, addPostActionCreator, PostType, updateNewPostTextActionCreator} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostType[]
     dispatch: (action: ActionsTypes) => void
     newPostText: string
 }
+
 // present component:
 export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 // constants:
@@ -18,31 +19,32 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const addPost = (e: MouseEvent<HTMLButtonElement>) => {
         if (newPostElement.current) {
             // берем из пропсов newPostText - так как отправляем dispatch - чем при нажатии на кнопку:
-            props.dispatch({type: 'ADD-POST', postText: props.newPostText})
+            props.dispatch(addPostActionCreator(props.newPostText))
         }
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: 'UPDATE-NEW-POST-TEXT', newText: e.currentTarget.value })}
+        props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value))
+    }
 
-        return (
-            <div className={s.postBlock}>
-                <h3>My post</h3>
-                <div>
+    return (
+        <div className={s.postBlock}>
+            <h3>My post</h3>
+            <div>
                 <textarea
                     ref={newPostElement}
                     value={props.newPostText}
                     onChange={onPostChange}
 
                 ></textarea>
-                    <button
-                        onClick={addPost}
-                        className={s.addPost}>Add post
-                    </button>
-                </div>
-                <div className={s.posts}>
-                    {postsElements}
-                </div>
+                <button
+                    onClick={addPost}
+                    className={s.addPost}>Add post
+                </button>
             </div>
-        );
-    };
+            <div className={s.posts}>
+                {postsElements}
+            </div>
+        </div>
+    );
+};
 
