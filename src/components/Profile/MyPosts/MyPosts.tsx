@@ -1,7 +1,12 @@
 import React, {ChangeEvent, MouseEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
-import {ActionsTypes, addPostActionCreator, PostType, updateNewPostTextActionCreator} from '../../../redux/state';
+import {
+    ActionsTypes,
+    addPostCreator,
+    PostType,
+    updateNewPostTextCreator
+} from '../../../redux/state';
 
 type MyPostsPropsType = {
     posts: PostType[]
@@ -19,11 +24,11 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
     const addPost = (e: MouseEvent<HTMLButtonElement>) => {
         if (newPostElement.current) {
             // берем из пропсов newPostText - так как отправляем dispatch - чем при нажатии на кнопку:
-            props.dispatch(addPostActionCreator(props.newPostText))
+            props.dispatch(addPostCreator(props.newPostText))
         }
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value))
+        props.dispatch(updateNewPostTextCreator(e.currentTarget.value))
     }
 
     return (
