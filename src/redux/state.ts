@@ -1,11 +1,8 @@
-import {MouseEvent} from 'react';
-import {text} from 'stream/consumers';
-// constants:
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
-const SEND_MESSAGE = 'SEND_MESSAGE'
 // types:
+import {addPostCreator, profileReduser, updateNewPostTextCreator} from './profile-reduser';
+import {dialogsReduser, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reduser';
+import {sidebarReduser} from './sidebar-reduser';
+
 export type PostType = {
     id: number,
     message: string
@@ -39,12 +36,6 @@ export type ActionsTypes = ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewMessageBodyCreator>
     | ReturnType<typeof updateNewPostTextCreator>
     | ReturnType<typeof sendMessageCreator>
-// action creators:
-export let addPostCreator = (newPostText: string) => ({type: ADD_POST, postText: newPostText}) as const
-export let updateNewPostTextCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text}) as const
-export let updateNewMessageBodyCreator = (value: string) => ({type: UPDATE_NEW_MESSAGE_BODY, text: value} as const)
-
-export let sendMessageCreator = () => ({type: SEND_MESSAGE}) as const
 // store typing:
 export type StoreType = {
     _state: RootStateType
@@ -98,28 +89,10 @@ export const store: StoreType = {
         store._callSubscriber = observer
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            const newPost: PostType = {
-                id: new Date().getTime(),
-                message: action.postText,
-                likeCount: 0
-            }
-            store._state.profilePage.posts.push(newPost)
-            store._state.profilePage.newPostText = ''
-            store._callSubscriber(store._state)
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            store._state.profilePage.newPostText = action.newText
-            store._callSubscriber(store._state)
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            // newMessageBody - будет равно action пришедшему из UI:
-            store._state.dialogsPage.newMessageBody = action.text
-            store._callSubscriber(store._state)
-        } else if (action.type === SEND_MESSAGE ) {
-            let newMessage = store._state.dialogsPage.newMessageBody
-            store._state.dialogsPage.messages.push({id: new Date().getTime(), message: newMessage})
-            store._state.dialogsPage.newMessageBody = '';
-            store._callSubscriber(store._state)
-        }
+        const profilePage = profileReduser(store._state.profilePage, action)
+        const dialogsPage = dialogsReduser(store._state.dialogsPage, action)
+        const sidebarPage = sidebarReduser(store._state.dialogsPage, action)
+        store._callSubscriber(store._state)
     }
 }
 
