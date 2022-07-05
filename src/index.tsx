@@ -15,5 +15,7 @@ let rerenderEntireThree = () => {
         </BrowserRouter>, document.getElementById('root')
     );
 }
-store.subscribe(rerenderEntireThree)
+store.subscribe(() => {
+    rerenderEntireThree()
+})
 rerenderEntireThree()
