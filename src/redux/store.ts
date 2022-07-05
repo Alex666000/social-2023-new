@@ -89,6 +89,7 @@ export const store: StoreType = {
         store._callSubscriber = observer
     },
     dispatch(action) {
+        // пробегаем по всем редюсерам отдаем часть стейта, экшн и собираем новый измененный стейт
         const profilePage = profileReduser(store._state.profilePage, action)
         const dialogsPage = dialogsReduser(store._state.dialogsPage, action)
         const sidebarPage = sidebarReduser(store._state.dialogsPage, action)
