@@ -1,5 +1,5 @@
 // types:
-import {addPostCreator, profileReduser, updateNewPostTextCreator} from './profile-reduser';
+import {addPostCreator, profileReducer, updateNewPostTextCreator} from './profile-reducer';
 import {dialogsReduser, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reduser';
 import {sidebarReduser} from './sidebar-reduser';
 
@@ -45,8 +45,6 @@ export type StoreType = {
     dispatch: (action: ActionsTypes) => void
 }
 // data store:
-
-
 export const store: StoreType = {
     _state: {
         //ветки profilePage и dialogsPage - отдельный под]объект для каждой страничке...
@@ -89,8 +87,7 @@ export const store: StoreType = {
         store._callSubscriber = observer
     },
     dispatch(action) {
-        // пробегаем по всем редюсерам отдаем часть стейта, экшн и собираем новый измененный стейт
-        const profilePage = profileReduser(store._state.profilePage, action)
+        const profilePage = profileReducer(store._state.profilePage, action)
         const dialogsPage = dialogsReduser(store._state.dialogsPage, action)
         const sidebarPage = sidebarReduser(store._state.dialogsPage, action)
         store._callSubscriber(store._state)

@@ -1,18 +1,17 @@
-import React, {MouseEvent} from 'react';
-import {ActionsTypes, PostType, StoreType} from '../../../redux/store';
-import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reduser';
+import React from 'react';
+import {StoreType} from '../../../redux/store';
+import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 
 type MyPostsPropsType = {
     store: StoreType
 }
 
-// present component:
 export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
     const state = props.store.getState()
 
     const addPost = () => {
-        props.store.dispatch(addPostCreator())
+        props.store.dispatch(addPostCreator(state.profilePage.newPostText))
     }
     const onPostChange = (value: string) => {
         // вся грязная работа:
@@ -20,12 +19,11 @@ export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
         props.store.dispatch(action)
     }
 
-// удовлетворяем пропсами MyPosts - ПК - оборачиваем в обертку:
-    return (<MyPosts
+    return <MyPosts
         newPostText={state.profilePage.newPostText}
         updateNewPostText={onPostChange}
         addPost={addPost}
-        posts={state.profilePage.posts}/>)
+        posts={state.profilePage.posts}/>
 }
 
 

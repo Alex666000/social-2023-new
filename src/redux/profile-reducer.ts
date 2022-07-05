@@ -14,7 +14,7 @@ let initialState = {
 }
 
 // reduser --- state тут равен profilePage и если state сюда не придет ты будешь равен инициализационному state:
-export const profileReduser = (state: ProfilePageType = initialState, action: ActionsTypes) => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes) => {
     switch (action.type) {
         case ADD_POST: {
             const newPost: PostType = {
