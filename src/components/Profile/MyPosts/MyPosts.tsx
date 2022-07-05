@@ -1,13 +1,10 @@
-import React, {ChangeEvent, MouseEvent} from 'react';
+import React, {ChangeEvent} from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {ActionsTypes, PostType} from '../../../redux/store';
-import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reduser';
 
 type MyPostsPropsType = {
-    posts: PostType[]
-    dispatch: (action: ActionsTypes) => void
-    newPostText: string
+    updateNewPostText: () => void
 }
 
 // present component:
@@ -17,14 +14,16 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     const newPostElement = React.createRef<HTMLTextAreaElement>()
 // logic:
-    const addPost = (e: MouseEvent<HTMLButtonElement>) => {
+    const onAddPost = () => {
         if (newPostElement.current) {
-            // берем из пропсов newPostText - так как отправляем dispatch - чем при нажатии на кнопку:
-            props.dispatch(addPostCreator(props.newPostText))
+            // понятия не имеет что там происходит просто вызывает колбеки:
+           props.addPost()
         }
     }
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewPostTextCreator(e.currentTarget.value))
+        // понятия не имеет что там происходит просто вызывает колбеки:
+        let value = newPostElement.current?.value
+        props.updateNewPostText(value)
     }
 
     return (
@@ -38,7 +37,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
                 ></textarea>
                 <button
-                    onClick={addPost}
+                    onClick={onAddPost}
                     className={s.addPost}>Add post
                 </button>
             </div>
