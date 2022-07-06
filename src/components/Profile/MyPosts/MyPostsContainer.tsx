@@ -1,25 +1,15 @@
 import React from 'react';
-import {StoreType} from '../../../redux/store';
+import {DialogsPageType, store, StoreType} from '../../../redux/store';
 import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
-import {StoreContext} from '../../../StoreContext';
+import {sendMessageCreator, updateNewMessageBodyCreator} from '../../../redux/dialogs-reduser';
 
 type MyPostsPropsType = {
     store: StoreType
 }
 
 export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
-    // const state = props.store.getState()
 
-    /*const addPost = () => {
-        props.store.dispatch(addPostCreator(state.profilePage.newPostText))
-    }
-    const onPostChange = (value: string) => {
-        // вся грязная работа:
-        let action = updateNewPostTextCreator(value);
-        props.store.dispatch(updateNewPostTextCreator(value))
-    }
-*/
     return <StoreContext.Consumer>
         {
         (store) => {
@@ -41,8 +31,25 @@ export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
         }
     }
     </StoreContext.Consumer>
+}
+// стейтовые данные
+let mapStateToProps = (state: DialogsPageType) => {
+    return {
+        dialogsPage: store.getState().dialogsPage
+    }
+}
+// берет колбеки которые отправим в ПК
+let mapDispatchToProps = (dispatch: any) => {
+    return {
+        // в теле функции логика что они делали:
+        updateNewMessageBody:(value: string) => {
+            dispatch(updateNewMessageBodyCreator(value))
+        },
+        sendMessage:() => {
+            dispatch(sendMessageCreator())
 
-
+        }
+    }
 }
 
 

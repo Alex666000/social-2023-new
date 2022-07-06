@@ -11,10 +11,7 @@ import {Provider} from 'react-redux';
 let rerenderEntireThree = () => {
     ReactDOM.render(
         <BrowserRouter>
-           <Provider store={store}>
                <App/>
-           </Provider>
-
         </BrowserRouter>, document.getElementById('root')
     );
 }
