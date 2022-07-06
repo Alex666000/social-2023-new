@@ -11,7 +11,7 @@ export const Profile: React.FC<ProfilePagePropsType> = (props) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer store={props.store}
+            <MyPostsContainer
             />
         </div>
     );
