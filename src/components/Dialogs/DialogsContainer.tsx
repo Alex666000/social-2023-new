@@ -1,5 +1,4 @@
 import React from 'react';
-import {StoreType} from '../../redux/store';
 import {sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reduser';
 import {Dialogs} from './Dialogs';
 import {StoreContext} from '../../StoreContext';
