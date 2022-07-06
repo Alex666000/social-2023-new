@@ -16,7 +16,7 @@ export const MyPostsContainer: React.FC<MyPostsPropsType> = (props) => {
     const onPostChange = (value: string) => {
         // вся грязная работа:
         let action = updateNewPostTextCreator(value);
-        props.store.dispatch(action)
+        props.store.dispatch(updateNewPostTextCreator(value))
     }
 
     return <MyPosts
