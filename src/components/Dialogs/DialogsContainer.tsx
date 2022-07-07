@@ -4,20 +4,14 @@ import {sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialo
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 
-type DialogsPropsType = {
-    store: StoreType
-}
-
-// стейтовые данные
-let mapStateToProps = (state: DialogsPageType) => {
+const mapStateToProps = (state: DialogsPageType) => {
     return {
         dialogsPage: store.getState().dialogsPage
     }
 }
-// берет колбеки которые отправим в ПК
-let mapDispatchToProps = (dispatch: any) => {
+
+const mapDispatchToProps = (dispatch: any) => {
     return {
-        // в теле функции логика что они делали:
         updateNewMessageBody:(value: string) => {
             dispatch(updateNewMessageBodyCreator(value))
         },
