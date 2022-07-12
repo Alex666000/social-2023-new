@@ -1,26 +1,26 @@
 // types:
 import {addPostCreator, profileReducer, updateNewPostTextCreator} from './profile-reducer';
-import {dialogsReduser, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reduser';
-import {sidebarReduser} from './sidebar-reduser';
+import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reduser';
+import {sidebarReducer} from './sidebar-reduser';
 
-export type PostType = {
+type PostType = {
     id: number,
     message: string
     likeCount: number
 }
-export type DialogType = {
+type DialogType = {
     id: number
     name: string
 }
-export type MessageType = {
+type MessageType = {
     id: number
     message: string
 }
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
-export type DialogsPageType = {
+type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
     newMessageBody: string
@@ -88,8 +88,8 @@ export const store: StoreType = {
     },
     dispatch(action) {
         const profilePage = profileReducer(store._state.profilePage, action)
-        const dialogsPage = dialogsReduser(store._state.dialogsPage, action)
-        const sidebarPage = sidebarReduser(store._state.dialogsPage, action)
+        const dialogsPage = dialogsReducer(store._state.dialogsPage, action)
+        const sidebarPage = sidebarReducer(store._state.dialogsPage, action)
         store._callSubscriber(store._state)
     }
 }

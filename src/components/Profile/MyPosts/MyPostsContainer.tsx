@@ -1,18 +1,33 @@
 import React from 'react';
-import {ProfilePageType, store, StoreType} from '../../../redux/store';
-import {addPostCreator, updateNewPostTextCreator} from '../../../redux/profile-reducer';
+import {store} from '../../../redux/store';
+import {addPostCreator, PostType, updateNewPostTextCreator} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
+import {AppStateType} from '../../../redux/redux-store';
+import {Dispatch} from 'redux';
+// типизируем то что mapStateToProps возвращает (возвращает часть стейта которую достаем из редюсера)
+type MapStateToPropsType = {
+    newPostText: string
+    posts: Array<PostType>
+}
 
-let mapStateToProps = (state: ProfilePageType) => {
+type MapDispatchToPropsType = {
+    updateNewPostText: (value: string) => void
+    addPost: () => void
+}
+
+export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
+
+// сидит state всего App:
+let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        newPostText: state.newPostText,
-        posts: state.posts
+        newPostText: state.profilePage.newPostText,
+        posts: state.profilePage.posts
     }
 }
-let mapDispatchToProps = (dispatch: any) => {
+let mapDispatchToProps = (dispatch: Dispatch ): MapDispatchToPropsType => {
     return {
-        updateNewPostText: (value: string) => {
+        updateNewPostText: (value: string): any => {
             dispatch(updateNewPostTextCreator(value))
         },
         addPost: () => {

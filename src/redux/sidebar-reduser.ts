@@ -1,7 +1,8 @@
-import {ActionsTypes, PostType, RootStateType} from './store';
+import {ActionsTypes} from './store';
 
+type SidebarType = {}
 let initialState = {}
 
-export const sidebarReduser = (state: {}, action: ActionsTypes) => {
+export const sidebarReducer = (state: SidebarType = {}, action: ActionsTypes) => {
     return state
 }

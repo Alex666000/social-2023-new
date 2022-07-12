@@ -1,7 +1,23 @@
-import {ActionsTypes, DialogsPageType} from './store';
+import {ActionsTypes} from './store';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
 const SEND_MESSAGE = 'SEND_MESSAGE'
+// все типы к своему reducer писать...
+export type DialogType = {
+    id: number
+    name: string
+}
+export type DialogsPageType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+    newMessageBody: string
+}
+export type MessageType = {
+    id: number
+    message: string
+}
+// typeof - автоматически про-типизирует наш объект:
+export type initialStateType = typeof initialState
 
 let initialState = {
     dialogs: [
@@ -11,19 +27,20 @@ let initialState = {
         {id: 4, name: 'Sasha'},
         {id: 5, name: 'Valera'},
         {id: 6, name: 'Victor'},
-    ],
+    ] as Array<DialogType>,
     messages: [
         {id: 1, message: 'Hello'},
         {id: 2, message: 'How are you?'},
         {id: 3, message: 'What is your name'},
         {id: 4, message: 'My name is....'},
         {id: 5, message: 'Let\'s go'},
-    ],
+        // воспринимай этот массив как такой-то тип, примитивы через as не делаем
+    ] as Array<MessageType>,
     newMessageBody: 'hello'
 }
 
-// state тут = dialodPage
-export const dialogsReduser = (state: DialogsPageType = initialState, action: ActionsTypes) => {
+// state тут = "dialodsPage"  а не весь state
+export const dialogsReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY: {
             // newMessageBody - будет равно action пришедшему из UI:

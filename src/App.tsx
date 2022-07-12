@@ -6,8 +6,7 @@ import {Route} from 'react-router-dom';
 import {Profile} from './components/Profile/Profile';
 import {DialogsContainer} from './components/Dialogs/DialogsContainer';
 
-
-const App: React.FC<any> = (props) => {
+const App: React.FC = (props) => {
     return (
         <div className={'app-wrapper'}>
             <Header/>
