@@ -1,5 +1,4 @@
 import React from 'react';
-import {store} from '../../redux/store';
 import {DialogsPageType, sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reduser';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
@@ -15,11 +14,10 @@ export type MapDispatchToPropsType = {
     sendMessage: () => void
 }
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
-
 // logic
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        dialogsPage: store.getState().dialogsPage
+        dialogsPage: state.dialogsPage
     }
 }
 

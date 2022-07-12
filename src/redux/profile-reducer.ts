@@ -16,30 +16,30 @@ export type initialStateType = typeof initialState
 
 let initialState = {
     posts: [
-        {id: 1, message: 'Hello', likeCount: 12},
+        {id: 1, message: 'Hello', likeCount: 12}, // post
         {id: 2, message: 'How are you?', likeCount: 10},
         {id: 3, message: 'Nike', likeCount: 10},
         {id: 4, message: 'Moscow', likeCount: 10}
-    ] as Array<PostType> ,
+    ],
     newPostText: 'Hello friend',
-}
+} as ProfilePageType
 
-export const profileReducer = (state: initialStateType = initialState, action: ActionsTypes) => {
+export const profileReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
     switch (action.type) {
-        case ADD_POST: {
-            const newPost: PostType = {
-                id: new Date().getTime(),
-                message: action.postText,
-                likeCount: 0
+        // добавить новый пост:
+        case ADD_POST:
+            let newPost = {id: new Date().getTime(), message: state.newPostText, likeCount: 0} // новый пост = message: state.newPostText
+            return {
+                ...state,
+                posts: [...state.posts, newPost],
+                newPostText: ''
             }
-            state.posts.push(newPost)
-            state.newPostText = ''
-            return state
-        }
-        case UPDATE_NEW_POST_TEXT: {
-            state.newPostText = action.newText
-            return state
-        }
+            // обновить текст поста:
+        case UPDATE_NEW_POST_TEXT:
+            return {
+                ...state,
+                newPostText: action.newText
+            }
         default:
             return state
     }

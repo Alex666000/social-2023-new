@@ -6,7 +6,6 @@ import App from './App';
 import store from './redux/redux-store';
 import {Provider} from 'react-redux';
 
-let rerenderEntireThree = () => {
     ReactDOM.render(
         <BrowserRouter>
             <Provider store={store}>
@@ -15,8 +14,6 @@ let rerenderEntireThree = () => {
 
         </BrowserRouter>, document.getElementById('root')
     );
-}
-store.subscribe(() => {
-    rerenderEntireThree()
-})
-rerenderEntireThree()
+
+
+

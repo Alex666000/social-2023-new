@@ -7,7 +7,7 @@ export const Profile: React.FC = (props) => {
     return (
         <div>
             <ProfileInfo/>
-            <MyPostsContainer/>
+            <MyPostsContainer />
         </div>
     );
 };

@@ -42,17 +42,18 @@ let initialState = {
 // state тут = "dialodsPage"  а не весь state
 export const dialogsReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY: {
-            // newMessageBody - будет равно action пришедшему из UI:
-            state.newMessageBody = action.text
-            return state
-        }
-        case SEND_MESSAGE: {
+        case UPDATE_NEW_MESSAGE_BODY:
+            return {
+                ...state,
+                newMessageBody: action.text
+            }
+        case SEND_MESSAGE:
             let newMessage = state.newMessageBody
-            state.messages.push({id: new Date().getTime(), message: newMessage})
-            state.newMessageBody = '';
-            return state
-        }
+            return {
+                ...state,
+                newMessageBody: '',
+                messages: [...state.messages, {id: new Date().getTime(), message: newMessage}]
+            }
         default:
             return state
     }
