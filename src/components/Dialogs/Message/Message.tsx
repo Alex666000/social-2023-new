@@ -7,7 +7,7 @@ type MessagePropsType = {
 
 export const Message: React.FC<MessagePropsType> = (props) => {
 
-    let refTextarea: any = React.createRef()
+    let refTextarea: any = React.createRef() // fix
 
     let addMessage = () => {
         let message = refTextarea.current.value

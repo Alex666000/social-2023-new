@@ -36,7 +36,7 @@ let initialState = {
         {id: 5, message: 'Let\'s go'},
         // воспринимай этот массив как такой-то тип, примитивы через as не делаем
     ] as Array<MessageType>,
-    newMessageBody: 'hello'
+    newMessageBody: 'hello' as string
 }
 
 // state тут = "dialodsPage"  а не весь state

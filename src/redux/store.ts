@@ -2,6 +2,7 @@
 import {addPostCreator, profileReducer, updateNewPostTextCreator} from './profile-reducer';
 import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
+import {followAC, setUsersAC, unFollowAC} from './users-reducer';
 
 type PostType = {
     id: number,
@@ -32,10 +33,7 @@ export type RootStateType = {
     sidebar: SidebarType
 }
 // typing actions creators:
-export type ActionsTypes = ReturnType<typeof addPostCreator>
-    | ReturnType<typeof updateNewMessageBodyCreator>
-    | ReturnType<typeof updateNewPostTextCreator>
-    | ReturnType<typeof sendMessageCreator>
+export type ActionsTypes = ReturnType<typeof addPostCreator> | ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof updateNewPostTextCreator> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof followAC> | ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC>
 // store typing:
 export type StoreType = {
     _state: RootStateType
@@ -55,7 +53,7 @@ export const store: StoreType = {
                 {id: 3, message: 'Nike', likeCount: 10},
                 {id: 4, message: 'Moscow', likeCount: 10}
             ],
-            newPostText: 'Hello friend',
+            newPostText: 'Top gun',
         },
         dialogsPage: {
             dialogs: [
@@ -73,7 +71,7 @@ export const store: StoreType = {
                 {id: 4, message: 'My name is....'},
                 {id: 5, message: 'Let\'s go'},
             ],
-            newMessageBody: 'hello'
+            newMessageBody: 'friends'
         },
         sidebar: {}
     },

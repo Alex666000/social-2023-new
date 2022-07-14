@@ -30,7 +30,7 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
                                 placeholder="Enter your message"
                             ></textarea></div>
                         <div onClick={sendMessageClick}>
-                            <button>Send message</button>
+                            <button>Send_message</button>
                         </div>
                     </div>
                 </div>

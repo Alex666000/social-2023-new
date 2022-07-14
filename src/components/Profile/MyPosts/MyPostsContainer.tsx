@@ -19,7 +19,7 @@ type MapDispatchToPropsType = {
 
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-// сидит state всего App:
+//  в нём сидит state всего App:
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,

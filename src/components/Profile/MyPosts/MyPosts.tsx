@@ -20,7 +20,7 @@ export const MyPosts: React.FC<MyPostsPropsType> = (props) => {
 
     return (
         <div className={s.postBlock}>
-            <h3>My post</h3>
+            <h3> ----- My post -----</h3>
             <div>
                 <textarea
                     ref={newPostElement}
