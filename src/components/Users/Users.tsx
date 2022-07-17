@@ -2,16 +2,9 @@ import React from 'react';
 import styles from './user.module.css';
 import axios from 'axios';
 import userPhoto from '../../assets/images/user.jpg'
-import {UsersPropsType} from './UsersContainer';
-import {IUsers} from '../../redux/users-reducer';
-import any = jasmine.any;
 
-// переписали User которая функциональная компонента на классовую UserC:
 export class Users extends React.Component<any, any> {
-    // делаем коструирование объекта:
-    constructor(props: any) {
-        super(props);
-        // делаем запрос на сервак за пользователями - даж if е надо ставить делаем запрос 1 раз - при загрузке стр. так как конструктор вызывается 1 раз при загрузке страницы никак в функциональны К_ах - будем получать при загрузке пользователей и все будет хорошо - делаем в этом месте запрос на сервак просто:
+    componentDidMount() {
         axios.get('https://social-network.samuraijs.com/api/1.0/users').then(response => {
             this.props.setUsers(response.data.items)
         })

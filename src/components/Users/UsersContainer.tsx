@@ -16,7 +16,6 @@ type MapDispatchToPropsType = {
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         // передаст пропсы users в ПК - Users
