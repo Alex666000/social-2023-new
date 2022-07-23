@@ -1,4 +1,3 @@
-import {ActionsTypes} from './store';
 
 const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
 const SEND_MESSAGE = 'SEND_MESSAGE'
@@ -38,9 +37,10 @@ let initialState = {
     ] as Array<MessageType>,
     newMessageBody: 'hello' as string
 }
+type DialogsActionsTypes = ReturnType<typeof updateNewMessageBodyCreator> |  ReturnType<typeof sendMessageCreator>
 
 // state тут = "dialodsPage"  а не весь state
-export const dialogsReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
+export const dialogsReducer = (state: initialStateType = initialState, action: DialogsActionsTypes): initialStateType => {
     switch (action.type) {
         case UPDATE_NEW_MESSAGE_BODY:
             return {

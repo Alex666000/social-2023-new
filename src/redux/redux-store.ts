@@ -5,7 +5,7 @@ import {sidebarReducer} from './sidebar-reduser';
 import {usersReducer} from './users-reducer';
 
 let rootReducer = combineReducers({
-    // ветки - за ветки отвечают эти редюсеры
+    // ветки = части "стейта" - за ветки отвечают эти редюсеры
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,

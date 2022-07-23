@@ -1,8 +1,7 @@
 // types:
-import {addPostCreator, profileReducer, updateNewPostTextCreator} from './profile-reducer';
-import {dialogsReducer, sendMessageCreator, updateNewMessageBodyCreator} from './dialogs-reduser';
+import {profileReducer} from './profile-reducer';
+import {dialogsReducer} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
-import {followAC, setUsersAC, unFollowAC} from './users-reducer';
 
 type PostType = {
     id: number,
@@ -32,15 +31,13 @@ export type RootStateType = {
     dialogsPage: DialogsPageType
     sidebar: SidebarType
 }
-// typing actions creators:
-export type ActionsTypes = ReturnType<typeof addPostCreator> | ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof updateNewPostTextCreator> | ReturnType<typeof sendMessageCreator> | ReturnType<typeof followAC> | ReturnType<typeof unFollowAC> | ReturnType<typeof setUsersAC>
 // store typing:
 export type StoreType = {
     _state: RootStateType
     getState: () => RootStateType
     _callSubscriber: (val: RootStateType) => void
     subscribe: (callback: () => void) => void
-    dispatch: (action: ActionsTypes) => void
+    dispatch: (action: any) => void
 }
 // data store:
 export const store: StoreType = {

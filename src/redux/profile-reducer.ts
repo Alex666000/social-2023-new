@@ -1,8 +1,7 @@
-import {ActionsTypes} from './store';
 // constants:
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
-
+// types:
 export type PostType = {
     id: number,
     message: string
@@ -12,7 +11,10 @@ export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
 }
+export type ActionsProfileTypes = ReturnType<typeof addPostCreator> | ReturnType<typeof updateNewPostTextCreator>
+
 export type initialStateType = typeof initialState
+
 
 let initialState = {
     posts: [
@@ -24,7 +26,7 @@ let initialState = {
     newPostText: 'Hello friend',
 } as ProfilePageType
 
-export const profileReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
+export const profileReducer = (state: initialStateType = initialState, action: ActionsProfileTypes): initialStateType => {
     switch (action.type) {
         // добавить новый пост:
         case ADD_POST:
@@ -34,7 +36,7 @@ export const profileReducer = (state: initialStateType = initialState, action: A
                 posts: [...state.posts, newPost],
                 newPostText: ''
             }
-            // обновить текст поста:
+        // обновить текст поста:
         case UPDATE_NEW_POST_TEXT:
             return {
                 ...state,
