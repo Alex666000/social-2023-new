@@ -16,7 +16,7 @@ export const Users = (props: any) => {
           {/* пагинация: */}
             {pages.map(p => {
                 // @ts-ignore // текущая страница:
-                return <span className={props.currentPage === p && styles.selectedPage}
+                return <span className={props.currentPage === p &&  styles.selectedPage}
                              onClick={(e) => {
                                  props.onPageChange(p)
                              }} // "сетаем" текущую страницу что придет через "колбек" в пропсах:
