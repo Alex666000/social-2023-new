@@ -3,6 +3,7 @@ import styles from './user.module.css';
 import userPhoto from '../../assets/images/user.jpg';
 
 export const Users = (props: any) => {
+    // пагинация:
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
     let pages = []
@@ -12,6 +13,7 @@ export const Users = (props: any) => {
 
     return <div>
         <div>
+          {/* пагинация: */}
             {pages.map(p => {
                 // @ts-ignore // текущая страница:
                 return <span className={props.currentPage === p && styles.selectedPage}
@@ -26,7 +28,7 @@ export const Users = (props: any) => {
                 return (<div key={u.id}>
                     <span>
                         <div>
-                            <img src={u.photos.small ? u.photos.small : userPhoto}
+                            <img src={u.photos.small ? u.photos.small : u.photos.large ?  u.photos.large : userPhoto}
                                  className={styles.userPhoto}/>
                         </div>
                     </span>
