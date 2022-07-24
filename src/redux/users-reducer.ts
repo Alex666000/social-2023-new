@@ -15,12 +15,12 @@ export interface IUsers {
     followed: boolean
 }
 
-export type ActionsUsersTypes = ReturnType<typeof followAC>
-    | ReturnType<typeof unFollowAC>
-    | ReturnType<typeof setUsersAC>
-    | ReturnType<typeof setCurrentPageAC>
-    | ReturnType<typeof setUsersTotalCountAC>
-    | ReturnType<typeof toggleIsFetchingAC>
+export type ActionsUsersTypes = ReturnType<typeof follow>
+    | ReturnType<typeof unFollow>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof setCurrentPage>
+    | ReturnType<typeof setUsersTotalCount>
+    | ReturnType<typeof toggleIsFetching>
 // state:
 export type initialStateType = {
     users: IUsers[]
@@ -70,16 +70,16 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
     }
 }
 // АС:
-export const followAC = (userId: number) => ({type: FOLLOW, userId} as const)
-export const unFollowAC = (userId: number) => ({type: UNFOLLOW, userId} as const)
+export const follow = (userId: number) => ({type: FOLLOW, userId} as const)
+export const unFollow = (userId: number) => ({type: UNFOLLOW, userId} as const)
 // установить полученных с сервера пользователей
-export const setUsersAC = (users: Array<IUsers>) => ({type: SET_USERS, users} as const)
+export const setUsers = (users: Array<IUsers>) => ({type: SET_USERS, users} as const)
 // установить текущую страничку
-export const setCurrentPageAC = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
+export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
 // установить общее кол-во пользователей
-export const setUsersTotalCountAC = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount
+export const setUsersTotalCount = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount
 } as const)
 // прелоадер:
-export const toggleIsFetchingAC = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
+export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
 
 
