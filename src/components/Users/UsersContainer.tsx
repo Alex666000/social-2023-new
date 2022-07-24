@@ -1,6 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Users} from './Users';
 import {
     followAC,
     IUsers,
@@ -11,6 +10,8 @@ import {
 } from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {Dispatch} from 'redux';
+import axios from 'axios';
+import {Users} from './Users';
 
 type MapStateToPropsType = {
     users: Array<IUsers>
@@ -28,6 +29,35 @@ type MapDispatchToPropsType = {
 }
 export type UsersPropsType = MapStateToPropsType & MapDispatchToPropsType
 
+// классовая 2 КК UsersAPI:
+class UsersContainer extends React.Component<UsersPropsType, any> {
+    componentDidMount() {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+            this.props.setUsersTotalCount(response.data.totalCount)
+        })
+    }
+
+    onPageChange = (pageNumber: number) => {
+        this.props.setCurrentPage(pageNumber)
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+            this.props.setUsers(response.data.items)
+        })
+    }
+
+    render() {
+        return <Users totalUsersCount={this.props.totalUsersCount}
+                      pageSize={this.props.pageSize}
+                      currentPage={this.props.currentPage}
+                      onPageChange={this.onPageChange}
+                      users={this.props.users}
+                      follow={this.props.follow}
+                      unFollow={this.props.unFollow}
+
+        />
+    }
+}
+// супер - функции connect:
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         // передаст пропсы users в ПК - Users
@@ -37,7 +67,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         currentPage: state.usersPage.currentPage
     }
 }
-
 const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     return {
         follow: (userId: number) => {
@@ -57,10 +86,8 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         }
     }
 }
+// двойная обертка:
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users)
 
-function dispatch(arg0: { readonly type: 'FOLLOW'; readonly userId: number; }) {
-    throw new Error('Function not implemented.');
-}
 
