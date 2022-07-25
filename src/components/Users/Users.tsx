@@ -1,8 +1,20 @@
 import React from 'react';
 import styles from './user.module.css';
 import userPhoto from '../../assets/images/user.jpg';
+import {NavLink} from 'react-router-dom';
+import {IUser} from '../../redux/users-reducer';
 
-export const Users = (props: any) => {
+type UsersPropsType = {
+    totalUsersCount: number
+    pageSize: number
+    currentPage: number
+    onPageChange: (page: number) => void
+    users: Array<IUser>
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
+
+}
+export const Users = (props: UsersPropsType) => {
     // пагинация:
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
 
@@ -15,11 +27,9 @@ export const Users = (props: any) => {
         <div>
           {/* пагинация: */}
             {pages.map(p => {
-                // @ts-ignore // текущая страница:
-                return <span className={props.currentPage === p &&  styles.selectedPage}
-                             onClick={(e) => {
-                                 props.onPageChange(p)
-                             }} // "сетаем" текущую страницу что придет через "колбек" в пропсах:
+           // текущая страница:
+                return <span className={props.currentPage === p ?  styles.selectedPage : '' }
+                             onClick={() => props.onPageChange(p)} // "сетаем" текущую страницу что придет через "колбек" в пропсах:
                 >{p}</span>
             })}
         </div>
@@ -28,8 +38,11 @@ export const Users = (props: any) => {
                 return (<div key={u.id}>
                     <span>
                         <div>
-                            <img src={u.photos.small ? u.photos.small : u.photos.large ?  u.photos.large : userPhoto}
-                                 className={styles.userPhoto}/>
+                            <NavLink to={'profile/' + u.id}>
+                               <img src={u.photos.small ? u.photos.small : u.photos.large ?  u.photos.large : userPhoto}
+                                    className={styles.userPhoto}/>
+                            </NavLink>
+
                         </div>
                     </span>
                         <div>

@@ -5,9 +5,8 @@ const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTALUSERS_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-
-// types:
-export interface IUsers {
+// response type 1 user:
+export interface IUser { // user
     name: string
     id: number
     photos: { small: boolean, large: boolean }
@@ -21,23 +20,16 @@ export type ActionsUsersTypes = ReturnType<typeof follow>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setUsersTotalCount>
     | ReturnType<typeof toggleIsFetching>
-// state:
-export type initialStateType = {
-    users: IUsers[]
-    pageSize: number
-    totalUsersCount: number
-    currentPage: number
-    isFetching: boolean
-
-}
 // logic:
 let initialState = {
-    users: [] as IUsers[],
+    users: [] as IUser[],
     pageSize: 4,
     totalUsersCount: 0,
     currentPage: 5,
     isFetching: true,
 }
+export type initialStateType = typeof initialState
+
 
 export const usersReducer = (state: initialStateType = initialState, action: ActionsUsersTypes): initialStateType => {
     switch (action.type) {
@@ -72,11 +64,11 @@ export const usersReducer = (state: initialStateType = initialState, action: Act
 // АС:
 export const follow = (userId: number) => ({type: FOLLOW, userId} as const)
 export const unFollow = (userId: number) => ({type: UNFOLLOW, userId} as const)
-// установить полученных с сервера пользователей
-export const setUsers = (users: Array<IUsers>) => ({type: SET_USERS, users} as const)
-// установить текущую страничку
+// установить полученных с сервера пользователей:
+export const setUsers = (users: Array<IUser>) => ({type: SET_USERS, users} as const)
+// установить текущую страничку:
 export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
-// установить общее кол-во пользователей
+// установить общее кол-во пользователей:
 export const setUsersTotalCount = (totalUsersCount: number) => ({type: SET_TOTAL_USERS_COUNT, count: totalUsersCount
 } as const)
 // прелоадер:
