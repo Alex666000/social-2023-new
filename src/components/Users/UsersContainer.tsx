@@ -31,9 +31,11 @@ type MapDispatchToPropsType = {
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
-// обертка:
+// КК - обертка:
 class UsersContainer extends React.Component<PropsType, any> {
     componentDidMount() {
+        // Получаем userId:
+        // let userId = this.props.match.params.userId
         // запрос на сервер пошел - покажи preloader:
         this.props.toggleIsFetching(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
@@ -82,6 +84,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         isFetching: state.usersPage.isFetching
     }
 }
+
 export default connect(mapStateToProps, {
     follow,
     unFollow,

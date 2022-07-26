@@ -6,7 +6,7 @@ import {Preloader} from '../../common/Preloader/Preloader';
 type ProfilePropsType = {
     profile: IProfile
 }
-
+//ПК:
 export const ProfileInfo = (props: ProfilePropsType) => {
     if (!props.profile) {
         return <Preloader/>
@@ -20,7 +20,10 @@ export const ProfileInfo = (props: ProfilePropsType) => {
             </div>
             <div className={s.descriptionBlock}>
                 {props.profile.photos?.large && <img src={props.profile.photos.large}/>}
-                avatar + descripshion
+                <div>{props.profile.fullName}</div>
+                <div>{props.profile.lookingForAJobDescription}</div>
+                <div>{props.profile.aboutMe}</div>
+                <div>{props.profile.userId}</div>
             </div>
         </div>
     );

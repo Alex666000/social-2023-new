@@ -18,7 +18,7 @@ const App: React.FC = (props) => {
                     render={() => <DialogsContainer/>}
                 />
                 <Route
-                    path={'/profile'}
+                    path={'/profile/:userId?'}
                     render={() => <ProfileContainer/>}/>
                 <Route
                     path={'/users'}
