@@ -38,7 +38,9 @@ class UsersContainer extends React.Component<PropsType, any> {
         // let userId = this.props.match.params.userId
         // запрос на сервер пошел - покажи preloader:
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
+            withCredentials: true
+        }).then(response => {
             // когда приходит ответ с сервера скрываем preloader:
             this.props.toggleIsFetching(false)
             this.props.setUsers(response.data.items)
@@ -50,7 +52,9 @@ class UsersContainer extends React.Component<PropsType, any> {
         this.props.setCurrentPage(pageNumber)
         // когда меняем страничку:
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`).then(response => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{
+            withCredentials: true
+        }).then(response => {
             // когда приходит ответ с сервера скрываем preloader:
             this.props.toggleIsFetching(false)
             this.props.setUsers(response.data.items)
@@ -72,7 +76,6 @@ class UsersContainer extends React.Component<PropsType, any> {
         </>
     }
 }
-
 // супер - функции connect:
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
