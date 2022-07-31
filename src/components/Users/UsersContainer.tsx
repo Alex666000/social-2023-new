@@ -10,9 +10,9 @@ import {
     unFollow
 } from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
-import axios from 'axios';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {usersAPI} from '../../api/api';
 
 type MapStateToPropsType = {
     totalUsersCount: number
@@ -34,17 +34,13 @@ export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 // КК - обертка:
 class UsersContainer extends React.Component<PropsType, any> {
     componentDidMount() {
-        // Получаем userId:
-        // let userId = this.props.match.params.userId
-        // запрос на сервер пошел - покажи preloader:
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`, {
-            withCredentials: true
-        }).then(response => {
+        // импортировали getUsers() сюда из api.ts и говорим дай мне пользователей, а вся логика по запросу на сервер скрыта в DAL уровне в api.ts
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
             // когда приходит ответ с сервера скрываем preloader:
             this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data.items)
-            this.props.setUsersTotalCount(response.data.totalCount)
+            this.props.setUsers(data.items)
+            this.props.setUsersTotalCount(data.totalCount)
         })
     }
 
@@ -52,13 +48,12 @@ class UsersContainer extends React.Component<PropsType, any> {
         this.props.setCurrentPage(pageNumber)
         // когда меняем страничку:
         this.props.toggleIsFetching(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`,{
-            withCredentials: true
-        }).then(response => {
-            // когда приходит ответ с сервера скрываем preloader:
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(response.data.items)
-        })
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                // когда приходит ответ с сервера скрываем preloader:
+                this.props.toggleIsFetching(false)
+                this.props.setUsers(data.items)
+            })
     }
 
     render() {
@@ -76,7 +71,7 @@ class UsersContainer extends React.Component<PropsType, any> {
         </>
     }
 }
-// супер - функции connect:
+
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
         // передаст пропсы users в ПК - Users
