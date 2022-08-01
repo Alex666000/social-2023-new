@@ -15,7 +15,7 @@ export const ProfileInfo = (props: ProfilePropsType) => {
     return (<div>
             <div>
                 <img className={s.imgProfileInfo}
-                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2aOTrZH4dN0uKM1hMP5b4ewjeyEERCzo7kA&usqp=CAU"
+                     src="https://img.championat.com/s/735x490/news/big/v/x/nejroset-imagen-ot-google-sozdayot-neveroyatnye-kartinki-vot-primery-eyo-rabot_1653415767422445164.jpg"
                      alt="TS"/>
             </div>
             <div className={s.descriptionBlock}>
