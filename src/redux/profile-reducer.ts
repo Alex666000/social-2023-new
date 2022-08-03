@@ -1,4 +1,8 @@
 // constants:
+import {AppActionsType} from './redux-store';
+import {usersAPI} from '../api/api';
+import {Dispatch} from 'redux';
+
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -36,7 +40,7 @@ export interface IProfile {
 }
 
 // Actions types:
-export type ActionsProfileTypes =
+export type ProfileActionsTypes =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewPostTextCreator>
     | ReturnType<typeof setUserProfile>
@@ -55,7 +59,7 @@ let initialState = {
 // initialStateType:
 export type initialStateType = typeof initialState
 
-export const profileReducer = (state: initialStateType = initialState, action: ActionsProfileTypes): initialStateType => {
+export const profileReducer = (state: initialStateType = initialState, action: AppActionsType): initialStateType => {
     switch (action.type) {
         // добавить новый пост:
         case ADD_POST:
@@ -83,6 +87,13 @@ export const profileReducer = (state: initialStateType = initialState, action: A
 // action creators:
 export let addPostCreator = (newPostText: string) => ({type: ADD_POST, postText: newPostText} as const)
 export let updateNewPostTextCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
-// установить профиль пользователя полученного с сервера:
 export let setUserProfile = (profile: IProfile) => ({type: SET_USER_PROFILE, profile} as const)
+
+// СК:
+export let getUserProfile = (userId: number) => (dispatch: Dispatch<AppActionsType>) => {
+    usersAPI.getProfile(userId).then(response => {
+             dispatch(setUserProfile(response.data))
+        }
+    )
+}
 

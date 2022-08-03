@@ -1,19 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {
-    follow,
-    IUser,
-    setCurrentPage,
-    setUsers,
-    setUsersTotalCount,
-    toggleFollowingProgress,
-    toggleIsFetching,
-    unFollow
-} from '../../redux/users-reducer';
+import {getUsers, IUser} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
-import {usersAPI} from '../../api/api';
 
 type MapStateToPropsType = {
     totalUsersCount: number
@@ -24,39 +14,20 @@ type MapStateToPropsType = {
     followingInProgress: Array<number>
 }
 type MapDispatchToPropsType = {
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-    setUsers: (users: Array<IUser>) => void
-    setCurrentPage: (pageNumber: number) => void
-    setUsersTotalCount: (totalCount: number) => void
-    toggleIsFetching: (isFetching: boolean) => void
-    toggleFollowingProgress: (isFetching: boolean, userId: number) => void
+    getUsers: (currentPage: number, pageSize: number) => void
+    followSuccess: (userId: number) => void
+    unFollowSuccess: (userId: number) => void
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
 // КК - обертка:
 class UsersContainer extends React.Component<PropsType, any> {
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        // импортировали getUsers() сюда из api.ts и говорим дай мне пользователей, а вся логика по запросу на сервер скрыта в DAL уровне в api.ts
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-            // когда приходит ответ с сервера скрываем preloader:
-            this.props.toggleIsFetching(false)
-            this.props.setUsers(data.items)
-            this.props.setUsersTotalCount(data.totalCount)
-        })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChange = (pageNumber: number) => {
-        this.props.setCurrentPage(pageNumber)
-        // когда меняем страничку:
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                // когда приходит ответ с сервера скрываем preloader:
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -68,11 +39,9 @@ class UsersContainer extends React.Component<PropsType, any> {
                    currentPage={this.props.currentPage}
                    onPageChange={this.onPageChange}
                    users={this.props.users}
-                   follow={this.props.follow}
-                   unFollow={this.props.unFollow}
-                   toggleFollowingProgress={this.props.toggleFollowingProgress}
                    followingInProgress={this.props.followingInProgress}
-
+                   follow={this.props.followSuccess}
+                   unFollow={this.props.unFollowSuccess}
             />
         </>
     }
@@ -90,14 +59,7 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {
-    follow,
-    unFollow,
-    setUsers,
-    setCurrentPage,
-    setUsersTotalCount,
-    toggleIsFetching,
-    toggleFollowingProgress,
+export default connect(mapStateToProps, {getUsers,
 })(UsersContainer)
 
 

@@ -1,9 +1,10 @@
-import {combineReducers, createStore} from 'redux';
-import {profileReducer} from './profile-reducer';
-import {dialogsReducer} from './dialogs-reduser';
+import {applyMiddleware, combineReducers, createStore} from 'redux';
+import thunkMiddleware, {ThunkAction} from 'redux-thunk';
+import {ProfileActionsTypes, profileReducer} from './profile-reducer';
+import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
-import {usersReducer} from './users-reducer';
-import {authReducer} from './auth-reducer';
+import {UsersActionsTypes, usersReducer} from './users-reducer';
+import {AuthActionsTypes, authReducer} from './auth-reducer';
 
 let rootReducer = combineReducers({
     // ветки = части "стейта" - за ветки отвечают эти редюсеры
@@ -16,9 +17,12 @@ let rootReducer = combineReducers({
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>
 
-let store = createStore(rootReducer)
+// общая типизация всех actions приложения для типизации "санок":
+export type AppActionsType = UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes | AuthActionsTypes
 
+let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 // @ts-ignore
 window.store = store
 
