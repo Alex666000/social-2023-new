@@ -2,7 +2,7 @@ import React from 'react';
 import {Header} from './Header';
 import {AppStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
-import {DataAuthType} from '../../redux/auth-reducer';
+import {getAuthUserData} from '../../redux/auth-reducer';
 
 class HeaderContainer extends React.Component<HeaderContainerPropsType, any> {
     componentDidMount() {

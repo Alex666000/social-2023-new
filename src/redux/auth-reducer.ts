@@ -47,7 +47,7 @@ export const setAuthUserData = ({id, email, login}: DataAuthType) => ({
 } as const)
 // СК:
 // получить "авторизационные" данные:
-const getAuthUserData = () => (dispatch: Dispatch<AppActionsType>) => {
+export const getAuthUserData = () => (dispatch: Dispatch<AppActionsType>) => {
     authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {

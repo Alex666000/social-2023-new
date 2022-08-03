@@ -95,7 +95,6 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: number) => 
     isFetching,
     userId
 } as const)
-
 // санки - CK:
 
 // получить пользователей:

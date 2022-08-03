@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './user.module.css';
 import userPhoto from '../../assets/images/user.jpg';
 import {NavLink} from 'react-router-dom';
-import {follow, IUser, unFollowSuccess} from '../../redux/users-reducer';
+import {IUser} from '../../redux/users-reducer';
 
 type UsersPropsType = {
     totalUsersCount: number
@@ -54,7 +54,7 @@ export const Users = (props: UsersPropsType) => {
                                 }}>unFollow</button>
                                 : <button
                                     disabled={props.followingInProgress.some(id => id === u.id)} onClick={() => {
-                                  props.follow(u.id)
+                                    props.follow(u.id)
                                 }}>follow</button>}
                         </div>
                         <span>

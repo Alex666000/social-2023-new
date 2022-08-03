@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getUsers, IUser} from '../../redux/users-reducer';
+import {follow, getUsers, IUser, unFollow} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
@@ -15,11 +15,10 @@ type MapStateToPropsType = {
 }
 type MapDispatchToPropsType = {
     getUsers: (currentPage: number, pageSize: number) => void
-    followSuccess: (userId: number) => void
-    unFollowSuccess: (userId: number) => void
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
-
 // КК - обертка:
 class UsersContainer extends React.Component<PropsType, any> {
     componentDidMount() {
@@ -40,8 +39,8 @@ class UsersContainer extends React.Component<PropsType, any> {
                    onPageChange={this.onPageChange}
                    users={this.props.users}
                    followingInProgress={this.props.followingInProgress}
-                   follow={this.props.followSuccess}
-                   unFollow={this.props.unFollowSuccess}
+                   follow={this.props.follow}
+                   unFollow={this.props.unFollow}
             />
         </>
     }
@@ -59,7 +58,8 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     }
 }
 
-export default connect(mapStateToProps, {getUsers,
+export default connect(mapStateToProps, {follow,unFollow,
+    getUsers,
 })(UsersContainer)
 
 
