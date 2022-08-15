@@ -4,6 +4,7 @@ import {follow, getUsers, IUser, unFollow} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
+import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type MapStateToPropsType = {
     totalUsersCount: number
@@ -57,10 +58,10 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
-
-export default connect(mapStateToProps, {follow,unFollow,
+// перед compouse:
+export default withAuthRedirect(connect(mapStateToProps, {follow,unFollow,
     getUsers,
-})(UsersContainer)
+})(UsersContainer))
 
 
 

@@ -17,7 +17,6 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
         props.sendMessage()
     }
     // делаем редирект по условию на страницу логин как в Арр компоненте путь указан:
-    if(!props.isAuth) return <Redirect to={'login'}/>
 
     return (
         <div className={s.dialogs}>
