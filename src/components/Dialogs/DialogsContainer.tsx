@@ -7,17 +7,20 @@ import {AppStateType} from '../../redux/redux-store';
 // types
 export type MapStateToPropsType = {
     dialogsPage: DialogsPageType
+    isAuth: boolean
 }
 
 export type MapDispatchToPropsType = {
     updateNewMessageBody: (value: string) => void
     sendMessage: () => void
 }
+// общие пропсы для ПК Dialogs в нее они уйдут...:
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 // logic
 const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth,
     }
 }
 

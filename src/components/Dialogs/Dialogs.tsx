@@ -3,6 +3,7 @@ import s from './Dialogs.module.css'
 import {DialogItem} from './DialogItem/DialogsItem';
 import {Message} from './Message/Message';
 import {DialogsPropsType} from './DialogsContainer';
+import {Redirect} from 'react-router-dom';
 
 export const Dialogs: React.FC<DialogsPropsType> = (props) => {
 
@@ -15,6 +16,8 @@ export const Dialogs: React.FC<DialogsPropsType> = (props) => {
     const sendMessageClick = () => {
         props.sendMessage()
     }
+    // делаем редирект по условию на страницу логин как в Арр компоненте путь указан:
+    if(!props.isAuth) return <Redirect to={'login'}/>
 
     return (
         <div className={s.dialogs}>

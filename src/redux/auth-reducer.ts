@@ -26,7 +26,7 @@ const initialState = {
     id: 24936,
     login: 'slim666',
     email: 'bogdanov777000@mail.ru',
-    isAuth: true
+    isAuth: false
 }
 export const authReducer = (state: initialStateType = initialState, action: AppActionsType): initialStateType => {
     switch (action.type) {
