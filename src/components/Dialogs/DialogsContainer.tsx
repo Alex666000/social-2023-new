@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {DialogsPageType, sendMessageCreator, updateNewMessageBodyCreator} from '../../redux/dialogs-reduser';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
     }
 }
 
-export default compose(
+export default compose<ComponentType>(
     connect(mapStateToProps, mapDispatchToProps),
         withAuthRedirect
 )(Dialogs)

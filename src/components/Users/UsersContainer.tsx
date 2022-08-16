@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {connect} from 'react-redux';
 import {follow, getUsers, IUser, unFollow} from '../../redux/users-reducer';
 import {AppStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
+import {compose} from 'redux';
 
 type MapStateToPropsType = {
     totalUsersCount: number
@@ -20,6 +21,7 @@ type MapDispatchToPropsType = {
     unFollow: (userId: number) => void
 }
 export type PropsType = MapStateToPropsType & MapDispatchToPropsType
+
 // КК - обертка:
 class UsersContainer extends React.Component<PropsType, any> {
     componentDidMount() {
@@ -58,10 +60,14 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
-// перед compouse:
-export default withAuthRedirect(connect(mapStateToProps, {follow,unFollow,
-    getUsers,
-})(UsersContainer))
+
+export default compose<ComponentType>(
+    withAuthRedirect,
+    connect(mapStateToProps, {
+        follow, unFollow,
+        getUsers,
+    })
+)(UsersContainer)
 
 
 
