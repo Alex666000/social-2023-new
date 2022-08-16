@@ -1,25 +1,29 @@
-import React from 'react';
+import React, {ComponentType} from 'react'
 import {Redirect} from 'react-router-dom';
-import {AppStateType} from '../redux/redux-store';
 import {connect} from 'react-redux';
-import {MapStateToPropsForRedirectType} from '../components/Profile/ProfileContainer';
+import {AppStateType} from '../redux/redux-store';
 
-let mapStateToPropsForRedirect = (state: AppStateType): MapStateToPropsForRedirectType => ({
+
+type MapStateToPropsType = {
+    isAuth: boolean
+}
+
+const mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     isAuth: state.auth.isAuth
 })
 
-export const withAuthRedirect = (Component: any) => {
-    // создаем отдельный класс для каждой целевой К-ты - отдельный  класс-обертку
-    class RedirectComponent extends React.Component<any, any> {
-        render() {
-            // делаем логику редиректа
-            if (!this.props.isAuth) return <Redirect to={'/login'}/>
-            // перерисовываем целевую К_ту которую на входе передадут:
-            return <Component {...this.props}/>
-        }
+export function withAuthRedirect<T>(Component: ComponentType<T>) {
+    debugger
+    const RedirectComponent = (props: MapStateToPropsType) => {
+        // вытащили isAuth чтобы не ушел дальше в К_ту Component, а остальные пропсы прокинули в неё..:
+        let {isAuth, ...restProps} = props
+
+        if (!isAuth) return <Redirect to={'/login'}/>
+
+        return <Component {...restProps as T}/>
     }
-    let ConnectedRedirectComponent = connect(mapStateToPropsForRedirect) (RedirectComponent)
 
-    return ConnectedRedirectComponent
-};
+    const ConnectRedirectComponent = connect(mapStateToProps)(RedirectComponent)
 
+    return ConnectRedirectComponent
+}

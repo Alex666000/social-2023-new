@@ -30,7 +30,6 @@ const mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         },
         sendMessage: () => {
             dispatch(sendMessageCreator())
-
         }
     }
 }

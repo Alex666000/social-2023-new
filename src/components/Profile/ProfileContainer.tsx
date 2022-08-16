@@ -3,14 +3,11 @@ import {Profile} from './Profile';
 import {connect} from 'react-redux';
 import {AppStateType} from '../../redux/redux-store';
 import {getUserProfile, IProfile} from '../../redux/profile-reducer';
-import {Redirect, RouteComponentProps, withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 type PathParamsType = {
-    userId: any
-}
-export type MapStateToPropsForRedirectType = {
-    isAuth: boolean
+    userId: string
 }
 
 type MapStateToPropsType = {
@@ -19,15 +16,15 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     getUserProfile: (userId: number) => void
 }
-export type ProfileContainerPropsType = MapStateToPropsForRedirectType & MapStateToPropsType & MapDispatchToPropsType
+export type ProfileContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 export type PropsType = RouteComponentProps<PathParamsType> & ProfileContainerPropsType
 
 class ProfileContainer extends React.Component<PropsType, any> {
     componentDidMount() {
         // Получаем userId:
-        let userId = this.props.match.params.userId
+        let userId = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = '2'
+            userId = this.props.profile.userId
         }
         this.props.getUserProfile(userId)
     }
@@ -38,12 +35,11 @@ class ProfileContainer extends React.Component<PropsType, any> {
         )
     }
 }
-let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
-
 
 let mapStateToProps = (state: AppStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
 })
+// берем параметры Url:
+let withUrlDataContainerComponent = withRouter(ProfileContainer)
 
-let withUrlDataContainerComponent = withRouter(AuthRedirectComponent)
-export default connect(mapStateToProps, {getUserProfile})(withUrlDataContainerComponent)
+export default withAuthRedirect(connect(mapStateToProps, {getUserProfile})(withUrlDataContainerComponent))

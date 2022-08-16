@@ -5,7 +5,7 @@ import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
 import {UsersActionsTypes, usersReducer} from './users-reducer';
 import {AuthActionsTypes, authReducer} from './auth-reducer';
-
+// не RootReducers а в единственном числе - когда комбайним редюсеры на выходе получается один рутовый редюсер:
 let rootReducer = combineReducers({
     // ветки = части "стейта" - за ветки отвечают эти редюсеры
     profilePage: profileReducer,
