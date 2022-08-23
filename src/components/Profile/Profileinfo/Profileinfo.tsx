@@ -2,6 +2,7 @@ import React from 'react';
 import s from './ProfileInfo.module.css'
 import {IProfile} from '../../../redux/profile-reducer';
 import {Preloader} from '../../common/Preloader/Preloader';
+import {ProfileStatus} from './ProfileStatus';
 
 type ProfilePropsType = {
     profile: IProfile
@@ -13,13 +14,14 @@ export const ProfileInfo = (props: ProfilePropsType) => {
     }
 
     return (<div>
-            <div>
-                <img className={s.imgProfileInfo}
-                     src="https://img.championat.com/s/735x490/news/big/v/x/nejroset-imagen-ot-google-sozdayot-neveroyatnye-kartinki-vot-primery-eyo-rabot_1653415767422445164.jpg"
-                     alt="TS"/>
-            </div>
+            {/*<div>*/}
+            {/*    <img className={s.imgProfileInfo}*/}
+            {/*         src="https://img.championat.com/s/735x490/news/big/v/x/nejroset-imagen-ot-google-sozdayot-neveroyatnye-kartinki-vot-primery-eyo-rabot_1653415767422445164.jpg"*/}
+            {/*         alt="TS"/>*/}
+            {/*</div>*/}
             <div className={s.descriptionBlock}>
                 {props.profile.photos?.large && <img src={props.profile.photos.large}/>}
+                <ProfileStatus status={'hello............'} />
                 <div>{props.profile.fullName}</div>
                 <div>{props.profile.lookingForAJobDescription}</div>
                 <div>{props.profile.aboutMe}</div>
