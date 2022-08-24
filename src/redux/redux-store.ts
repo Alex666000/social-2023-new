@@ -5,6 +5,8 @@ import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
 import {UsersActionsTypes, usersReducer} from './users-reducer';
 import {AuthActionsTypes, authReducer} from './auth-reducer';
+import { reducer as formReducer } from 'redux-form'
+
 // не RootReducers а в единственном числе - когда комбайним редюсеры на выходе получается один рутовый редюсер:
 let rootReducer = combineReducers({
     // ветки = части "стейта" - за ветки отвечают эти редюсеры
@@ -14,6 +16,8 @@ let rootReducer = combineReducers({
     usersPage: usersReducer,
     // данное что достаем useSelector или mapStateToProps
     auth: authReducer,
+    form: formReducer
+
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
