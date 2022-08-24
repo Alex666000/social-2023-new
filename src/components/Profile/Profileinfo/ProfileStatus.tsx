@@ -1,40 +1,47 @@
-import React from 'react';
+import React, {ChangeEvent} from 'react';
 
 type ProfileStatusType = {
     status: string
+    updateStatus: (status: string) => void
 }
 
 export class ProfileStatus extends React.Component<ProfileStatusType> {
     state = {
         // режим отображения: переключатель span или input:
-        editMode: false
+        editMode: false,
+        status: this.props.status
     }
     activateEditMode = () => {
         this.setState({
             editMode: true
         })
-        // this.state.editMode = true
     }
     deactivateEditMode = () => {
         this.setState({
-            editMode: false
+            editMode: false,
+        })
+        // поменяли локально статус шлем в бизнес просьбу отправить запрос в thunk на сервер и обновить статус - новый статус придет к нам в пропсы и мы его в span отобразим и увидим новый статус, что написали в input:
+        this.props.updateStatus(this.state.status)
+    }
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            status: e.currentTarget.value
         })
     }
-
     render() {
         return (
             <div>
                 {/*покажи span если...*/}
                 {!this.state.editMode &&
                     <div>
-                        <span onDoubleClick={this.activateEditMode.bind(this)}>{this.props.status}</span>
+                        <span onDoubleClick={this.activateEditMode}>{this.props.status || 'No_status'}</span>
                     </div>}
                 {/*покажи input если...*/}
                 {this.state.editMode &&
                     <div>
-                        <input autoFocus onBlur={this.deactivateEditMode.bind(this)} value={this.props.status}/>
+                        <input onChange={this.onStatusChange} autoFocus onBlur={this.deactivateEditMode}
+                               value={this.state.status}/>
                     </div>}
-
             </div>
         );
     }

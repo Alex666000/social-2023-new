@@ -1,11 +1,11 @@
-// constants:
 import {AppActionsType} from './redux-store';
-import {usersAPI} from '../api/api';
+import {IProfile, profileAPI, usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
-
+// constants:
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
+const SET_STATUS = 'SET_STATUS'
 // types:
 export type PostType = {
     id: number,
@@ -16,34 +16,14 @@ export type ProfilePageType = {
     posts: Array<PostType>
     newPostText: string
     profile: IProfile
+    status: string
 }
-// response type:
-export interface IPhotosType {small: string, large: string }
-export interface IContactsType {
-    facebook: string
-    website: boolean
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: boolean
-    github: string
-    mainLink: boolean
-}
-export interface IProfile {
-    aboutMe: string
-    contacts:IContactsType
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
-    photos: IPhotosType
-}
-
 // Actions types:
 export type ProfileActionsTypes =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof updateNewPostTextCreator>
     | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus>
 // logic:
 let initialState = {
     posts: [
@@ -55,6 +35,7 @@ let initialState = {
     newPostText: 'Hello friend',
     // изначально объект пустой инициализируем:
     profile: {} as IProfile,
+    status: '',
 } as ProfilePageType
 // initialStateType:
 export type initialStateType = typeof initialState
@@ -75,6 +56,12 @@ export const profileReducer = (state: initialStateType = initialState, action: A
                 ...state,
                 newPostText: action.newText
             }
+        // когда статус придет с сервера - установим его:
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
         case SET_USER_PROFILE:
             return {
                 ...state,
@@ -88,12 +75,33 @@ export const profileReducer = (state: initialStateType = initialState, action: A
 export let addPostCreator = (newPostText: string) => ({type: ADD_POST, postText: newPostText} as const)
 export let updateNewPostTextCreator = (text: string) => ({type: UPDATE_NEW_POST_TEXT, newText: text} as const)
 export let setUserProfile = (profile: IProfile) => ({type: SET_USER_PROFILE, profile} as const)
-
-// СК:
+export let setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+// Санк-крейторы:
 export let getUserProfile = (userId: number) => (dispatch: Dispatch<AppActionsType>) => {
-    usersAPI.getProfile(userId).then(response => {
-             dispatch(setUserProfile(response.data))
-        }
-    )
+    usersAPI.getProfile(userId)
+        .then(response => {
+                dispatch(setUserProfile(response.data))
+            }
+        )
+}
+// получение статуса с сервера - аякс запрос так как делаем санку:
+export let getStatus = (userId: number) => (dispatch: Dispatch<AppActionsType>) => {
+    profileAPI.getStatus(userId)
+        .then(response => {
+                // когда получим статус с сервера - засетаем его в state  к себе...:
+                dispatch(setStatus(response.data))
+            }
+        )
+}
+// thunk, которая шлет запрос, чтобы обновить статус:
+// получение статуса с сервера - аякс запрос, так как делаем thunk:
+export let updateStatus = (status: string) => (dispatch: Dispatch<AppActionsType>) => {
+    profileAPI.updateStatus(status)
+        .then(response => {
+            if (response.data.resultCode === 0) {
+                // засетали статус себе - чтобы его потом на UI отобразить:
+                dispatch(setStatus(status))
+            }
+        })
 }
 
