@@ -16,18 +16,28 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
             editMode: true
         })
     }
-    deactivateEditMode = () => {
-        this.setState({
-            editMode: false,
-        })
-        // поменяли локально статус шлем в бизнес просьбу отправить запрос в thunk на сервер и обновить статус - новый статус придет к нам в пропсы и мы его в span отобразим и увидим новый статус, что написали в input:
-        this.props.updateStatus(this.state.status)
-    }
     onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         this.setState({
             status: e.currentTarget.value
         })
     }
+    deactivateEditMode = () => {
+        this.setState({
+            editMode: false,
+        })
+        // поменяли локально статус и когда выйдем из фокуса input - шлем в бизнес просьбу отправить запрос в thunk на сервер и обновить статус - новый статус придет к нам в пропсы и мы его в span отобразим и увидим новый статус, что написали в input:
+        this.props.updateStatus(this.state.status)
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileStatusType>, prevState: Readonly<{}>, snapshot?: any) {
+// вызовется когда в пропсах придет новый статус и мы "заапдейтим" новым статусом старый статус":
+        if (prevProps.status !== this.props.status)
+            this.setState({
+                status: this.props.status
+            })
+        console.log('componentDidUpdate')
+    }
+
     render() {
         return (
             <div>
