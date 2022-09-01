@@ -1,6 +1,5 @@
 import {AppActionsType} from './redux-store';
 
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE_NEW_MESSAGE_BODY'
 const SEND_MESSAGE = 'SEND_MESSAGE'
 // все типы к своему reducer писать...
 export type DialogType = {
@@ -10,11 +9,10 @@ export type DialogType = {
 export type DialogsPageType = {
     dialogs: Array<DialogType>
     messages: Array<MessageType>
-    newMessageBody: string
 }
 export type MessageType = {
     id: number
-    message: string
+    message: string | null
 }
 // typeof - автоматически про-типизирует наш объект:
 export type initialStateType = typeof initialState
@@ -36,30 +34,21 @@ let initialState = {
         {id: 5, message: 'Let\'s go'},
         // воспринимай этот массив как такой-то тип, примитивы через as не делаем
     ] as Array<MessageType>,
-    newMessageBody: 'hello' as string
 }
 export type DialogsActionsTypes =
-    ReturnType<typeof updateNewMessageBodyCreator> | ReturnType<typeof sendMessageCreator>
+    | ReturnType<typeof sendMessageCreator>
 
 // state тут = "dialodsPage"  а не весь state
 export const dialogsReducer = (state: initialStateType = initialState, action: AppActionsType): initialStateType => {
     switch (action.type) {
-        case UPDATE_NEW_MESSAGE_BODY:
-            return {
-                ...state,
-                newMessageBody: action.text
-            }
         case SEND_MESSAGE:
-            let newMessage = state.newMessageBody
             return {
                 ...state,
-                newMessageBody: '',
-                messages: [...state.messages, {id: new Date().getTime(), message: newMessage}]
+                messages: [...state.messages, {id: new Date().getTime(), message: action.newMessageBody}]
             }
         default:
             return state
     }
 }
 // action creators:
-export let updateNewMessageBodyCreator = (value: string) => ({type: UPDATE_NEW_MESSAGE_BODY, text: value} as const)
-export let sendMessageCreator = () => ({type: SEND_MESSAGE}) as const
+export let sendMessageCreator = (newMessageBody: string | null) => ({type: SEND_MESSAGE, newMessageBody}) as const
