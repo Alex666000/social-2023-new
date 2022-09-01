@@ -25,6 +25,7 @@ const AddNewPostForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
 // present component:
 export const MyPosts: React.FC<InjectedFormProps<FormDataType> & MyPostsPropsType> = (props) => {
     const postsElements = props.posts.map((p) => <Post key={p.id} message={p.message} likeCount={p.likeCount}/>)
+
     // в параметры придут values после onSubmit формы
     const onAddPost = (values: FormDataType) => {
         props.addPost(values.newPostText)

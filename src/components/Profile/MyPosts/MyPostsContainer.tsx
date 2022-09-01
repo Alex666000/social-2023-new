@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {ComponentType} from 'react';
 import {AppStateType} from '../../../redux/redux-store';
 import {addPostCreator, PostType} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import {compose, Dispatch} from 'redux';
 // типизируем то что mapStateToProps возвращает (возвращает часть state которую достаем из reducer...)
 type MapStateToPropsType = {
     posts: Array<PostType>
@@ -27,7 +27,9 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchToPropsType => {
         }
     }
 }
-export const MyPostsContainer = connect(mapStateToProps, mapDispatchToProps)(MyPosts)
+export default compose<ComponentType>(
+    connect(mapStateToProps, mapDispatchToProps),
+)(MyPosts)
 
 
 

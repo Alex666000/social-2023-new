@@ -1,7 +1,7 @@
 import React from 'react';
 import {ProfileInfo} from './Profileinfo/Profileinfo';
-import {MyPostsContainer} from './MyPosts/MyPostsContainer';
 import {IProfile} from '../../api/api';
+import MyPostsContainer from './MyPosts/MyPostsContainer';
 
 type ProfilePropsType = {
     profile: IProfile
