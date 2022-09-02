@@ -1,26 +1,11 @@
-import {AppActionsType} from './redux-store';
+import {AppActionsTypes, AppThunk} from './redux-store';
 import {IProfile, profileAPI, usersAPI} from '../api/api';
 import {Dispatch} from 'redux';
 // constants:
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
-// types:
-export type PostType = {
-    id: number,
-    message: string
-    likeCount: number
-}
-export type ProfilePageType = {
-    posts: Array<PostType>
-    profile: IProfile
-    status: string
-}
-// Actions types:
-export type ProfileActionsTypes =
-    ReturnType<typeof addPostCreator>
-    | ReturnType<typeof setUserProfile>
-    | ReturnType<typeof setStatus>
+
 // logic:
 let initialState = {
     posts: [
@@ -33,10 +18,9 @@ let initialState = {
     profile: {} as IProfile,
     status: '',
 } as ProfilePageType
-// initialStateType:
-export type initialStateType = typeof initialState
 
-export const profileReducer = (state: initialStateType = initialState, action: AppActionsType): initialStateType => {
+
+export const profileReducer = (state: initialStateType = initialState, action: ProfileActionsTypes): initialStateType => {
     switch (action.type) {
         // добавить новый пост:
         case ADD_POST:
@@ -67,16 +51,15 @@ export let setUserProfile = (profile: IProfile) => ({type: SET_USER_PROFILE, pro
 export let setStatus = (status: string) => ({type: SET_STATUS, status} as const)
 
 // TC
-export let getUserProfile = (userId: number) => (dispatch: Dispatch<AppActionsType>) => {
+export let getUserProfile = (userId: number): AppThunk => (dispatch) => {
     usersAPI.getProfile(userId)
         .then(response => {
                 dispatch(setUserProfile(response.data))
             }
         )
 }
-
 // получение статуса с сервера - аякс запрос так как делаем санку:
-export let getStatus = (userId: number) => (dispatch: Dispatch<AppActionsType>) => {
+export let getStatus = (userId: number): AppThunk => (dispatch) => {
     profileAPI.getStatus(userId)
         .then(response => {
                 // когда получим статус с сервера - засетаем его в state  к себе...:
@@ -86,7 +69,7 @@ export let getStatus = (userId: number) => (dispatch: Dispatch<AppActionsType>) 
 }
 // thunk, которая шлет запрос, чтобы обновить статус:
 // получение статуса с сервера - аякс запрос, так как делаем thunk:
-export let updateStatus = (status: string) => (dispatch: Dispatch<AppActionsType>) => {
+export let updateStatus = (status: string): AppThunk => (dispatch) => {
     profileAPI.updateStatus(status)
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -95,4 +78,23 @@ export let updateStatus = (status: string) => (dispatch: Dispatch<AppActionsType
             }
         })
 }
+
+// types:
+export type PostType = {
+    id: number,
+    message: string
+    likeCount: number
+}
+export type ProfilePageType = {
+    posts: Array<PostType>
+    profile: IProfile
+    status: string
+}
+// Actions types:
+export type ProfileActionsTypes =
+    ReturnType<typeof addPostCreator>
+    | ReturnType<typeof setUserProfile>
+    | ReturnType<typeof setStatus>
+// initialStateType:
+export type initialStateType = typeof initialState
 

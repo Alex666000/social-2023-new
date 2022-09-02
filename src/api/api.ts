@@ -4,37 +4,9 @@ const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': 'd8114a5c-5d70-419b-bdfc-b392c1edb4fe'
+        'API-KEY': '918ec653-c8c3-4a75-be1f-1a698d5868a4'
     }
 })
-
-// response type:
-export interface IPhotosType {
-    small: string,
-    large: string
-}
-
-export interface IContactsType {
-    facebook: string
-    website: boolean
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: boolean
-    github: string
-    mainLink: boolean
-}
-
-export interface IProfile {
-    aboutMe: string
-    contacts: IContactsType
-    lookingForAJob: boolean
-    lookingForAJobDescription: string
-    fullName: string
-    userId: number
-    photos: IPhotosType
-}
-
 // упаковочка для всех методов для группировки:
 export const usersAPI = {
     getUsers(currentPage = 1, pageSize = 10) {
@@ -68,7 +40,50 @@ export const profileAPI = {
 export const authAPI = {
     me() {
         return instance.get('auth/me')
+    },
+    // отправляем объект
+    login(email: string, password: string, rememberMe: boolean) {
+        return instance.post<LoginResponseType>('/auth/login', {email, password, rememberMe})
+    },
+    logout() {
+        return instance.delete('auth/login')
     }
+
+}
+
+// types
+export type LoginResponseType = {
+    resultCode: number
+    messages: string [],
+    data: {
+        userId: number
+    }
+}
+
+export interface IPhotosType {
+    small: string,
+    large: string
+}
+
+export interface IContactsType {
+    facebook: string
+    website: boolean
+    vk: string
+    twitter: string
+    instagram: string
+    youtube: boolean
+    github: string
+    mainLink: boolean
+}
+
+export interface IProfile {
+    aboutMe: string
+    contacts: IContactsType
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    userId: number
+    photos: IPhotosType
 }
 
 

@@ -3,11 +3,11 @@ import {DialogsPageType, sendMessageCreator} from '../../redux/dialogs-reduser';
 import {Dialogs} from './Dialogs';
 import {connect} from 'react-redux';
 import {compose, Dispatch} from 'redux';
-import {AppStateType} from '../../redux/redux-store';
+import {AppRootStateType} from '../../redux/redux-store';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 
 // logic
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         dialogsPage: state.dialogsPage,
     }
@@ -30,11 +30,9 @@ export default compose<ComponentType>(
 export type MapStateToPropsType = {
     dialogsPage: DialogsPageType
 }
-
 export type MapDispatchToPropsType = {
     sendMessage: (newMessageBody: string | null) => void
 }
-
 // общие пропсы для ПК Dialogs в нее они уйдут...:
 export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
 

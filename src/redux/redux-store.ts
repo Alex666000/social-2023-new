@@ -5,7 +5,7 @@ import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
 import {UsersActionsTypes, usersReducer} from './users-reducer';
 import {AuthActionsTypes, authReducer} from './auth-reducer';
-import { reducer as formReducer } from 'redux-form'
+import {reducer as formReducer} from 'redux-form'
 
 // не RootReducers а в единственном числе - когда комбайним редюсеры на выходе получается один рутовый редюсер:
 let rootReducer = combineReducers({
@@ -20,11 +20,12 @@ let rootReducer = combineReducers({
 
 })
 
-export type AppStateType = ReturnType<typeof rootReducer>
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppStateType, unknown, AppActionsType>
+export type AppRootStateType = ReturnType<typeof rootReducer>
+// типизация санок
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsTypes>
 
-// общая типизация всех actions приложения для типизации "санок":
-export type AppActionsType = UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes | AuthActionsTypes
+// общая типизация всех actions приложения для типизации "санок"всего Арр:
+export type AppActionsTypes = UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes | AuthActionsTypes
 
 let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 // @ts-ignore

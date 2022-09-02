@@ -1,10 +1,10 @@
 import React from 'react';
 import {Header} from './Header';
-import {AppStateType} from '../../redux/redux-store';
+import {AppRootStateType} from '../../redux/redux-store';
 import {connect} from 'react-redux';
-import {getAuthUserData} from '../../redux/auth-reducer';
+import {getAuthUserData, logout} from '../../redux/auth-reducer';
 
-class HeaderContainer extends React.Component<HeaderContainerPropsType, any> {
+class HeaderContainer extends React.Component<HeaderContainerPropsType> {
     componentDidMount() {
         this.props.getAuthUserData()
     }
@@ -13,23 +13,25 @@ class HeaderContainer extends React.Component<HeaderContainerPropsType, any> {
         return <Header {...this.props}  />
     }
 }
-
-type MapStateToPropsType = {
-    isAuth: boolean
-    login: string
-}
-type MapDispatchToPropsType = {
-    getAuthUserData: () => void
-}
 export type HeaderContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         isAuth: state.auth.isAuth,
         login: state.auth.login,
     }
 }
 
-export default connect(mapStateToProps, {getAuthUserData})(HeaderContainer)
+export default connect(mapStateToProps, {getAuthUserData,logout})(HeaderContainer)
+
+// types
+type MapStateToPropsType = {
+    isAuth: boolean
+    login: string | null
+}
+type MapDispatchToPropsType = {
+    getAuthUserData: () => void
+    logout: (email: string | null, password: string | null, rememberMe: boolean) => void
+}
 
 

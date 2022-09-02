@@ -5,6 +5,8 @@ import {Message} from './Message/Message';
 import {Redirect} from 'react-router-dom';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {DialogsPropsType} from './DialogsContainer';
+import {Textarea} from '../common/FormsControls/FormsControls';
+import {maxLengthCreator, required} from '../../utils/validators/validators';
 
 type PropsType = {
     isAuth: boolean
@@ -36,11 +38,13 @@ export const Dialogs: React.FC<InjectedFormProps<FormDataType> & DialogsPropsTyp
     );
 };
 // создали дочернюю компоненту — задача которой заниматься сбором данных с формы
+const maxLength50 = maxLengthCreator(50)
+
 const AddMessageForm = (props: any) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field component={'textarea'} name={'newMessageBody'} placeholder={'Enter your message'}/>
+                <Field validate={[required, maxLength50]} component={Textarea} name={'newMessageBody'} placeholder={'Enter your message'}/>
                 {/* <textarea value={props.dialogsPage.newMessageBody} onChange={onNewMessageChange} placeholder='Enter your message'></textarea>*/}
             </div>
             <div>

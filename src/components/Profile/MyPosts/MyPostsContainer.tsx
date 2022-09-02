@@ -1,5 +1,5 @@
 import React, {ComponentType} from 'react';
-import {AppStateType} from '../../../redux/redux-store';
+import {AppRootStateType} from '../../../redux/redux-store';
 import {addPostCreator, PostType} from '../../../redux/profile-reducer';
 import {MyPosts} from './MyPosts';
 import {connect} from 'react-redux';
@@ -15,7 +15,7 @@ type MapDispatchToPropsType = {
 export type MyPostsPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 //  в нём сидит state всего App:
-let mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         posts: state.profilePage.posts,
     }

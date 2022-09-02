@@ -1,21 +1,4 @@
-import {AppActionsType} from './redux-store';
-
 const SEND_MESSAGE = 'SEND_MESSAGE'
-// все типы к своему reducer писать...
-export type DialogType = {
-    id: number
-    name: string
-}
-export type DialogsPageType = {
-    dialogs: Array<DialogType>
-    messages: Array<MessageType>
-}
-export type MessageType = {
-    id: number
-    message: string | null
-}
-// typeof - автоматически про-типизирует наш объект:
-export type initialStateType = typeof initialState
 
 let initialState = {
     dialogs: [
@@ -35,11 +18,9 @@ let initialState = {
         // воспринимай этот массив как такой-то тип, примитивы через as не делаем
     ] as Array<MessageType>,
 }
-export type DialogsActionsTypes =
-    | ReturnType<typeof sendMessageCreator>
 
-// state тут = "dialodsPage"  а не весь state
-export const dialogsReducer = (state: initialStateType = initialState, action: AppActionsType): initialStateType => {
+// state тут = "dialodsPage" - а не весь state
+export const dialogsReducer = (state: initialStateType = initialState, action: DialogsActionsTypes): initialStateType => {
     switch (action.type) {
         case SEND_MESSAGE:
             return {
@@ -50,5 +31,24 @@ export const dialogsReducer = (state: initialStateType = initialState, action: A
             return state
     }
 }
-// action creators:
+// АС:
 export let sendMessageCreator = (newMessageBody: string | null) => ({type: SEND_MESSAGE, newMessageBody}) as const
+
+// types
+// все типы к своему reducer писать...
+export type DialogType = {
+    id: number
+    name: string
+}
+export type DialogsPageType = {
+    dialogs: Array<DialogType>
+    messages: Array<MessageType>
+}
+export type MessageType = {
+    id: number
+    message: string | null
+}
+// typeof - автоматически про-типизирует наш объект:
+export type initialStateType = typeof initialState
+export type DialogsActionsTypes =
+    | ReturnType<typeof sendMessageCreator>

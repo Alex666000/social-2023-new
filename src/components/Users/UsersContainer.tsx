@@ -1,29 +1,14 @@
 import React, {ComponentType} from 'react';
 import {connect} from 'react-redux';
 import {follow, getUsers, IUser, unFollow} from '../../redux/users-reducer';
-import {AppStateType} from '../../redux/redux-store';
+import {AppRootStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
-type MapStateToPropsType = {
-    totalUsersCount: number
-    currentPage: number
-    pageSize: number
-    isFetching: boolean
-    users: Array<IUser>
-    followingInProgress: Array<number>
-}
-type MapDispatchToPropsType = {
-    getUsers: (currentPage: number, pageSize: number) => void
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-}
-export type PropsType = MapStateToPropsType & MapDispatchToPropsType
-
 // КК - обертка:
-class UsersContainer extends React.Component<PropsType, any> {
+class UsersContainer extends React.Component<UsersContainerPropsType> {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
@@ -48,8 +33,7 @@ class UsersContainer extends React.Component<PropsType, any> {
         </>
     }
 }
-
-const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
+const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         // передаст пропсы users в ПК - Users
         users: state.usersPage.users,
@@ -60,7 +44,6 @@ const mapStateToProps = (state: AppStateType): MapStateToPropsType => {
         followingInProgress: state.usersPage.followingInProgress
     }
 }
-
 export default compose<ComponentType>(
     withAuthRedirect,
     connect(mapStateToProps, {
@@ -69,5 +52,20 @@ export default compose<ComponentType>(
     })
 )(UsersContainer)
 
+// types
+type MapStateToPropsType = {
+    totalUsersCount: number
+    currentPage: number
+    pageSize: number
+    isFetching: boolean
+    users: Array<IUser>
+    followingInProgress: Array<number>
+}
+type MapDispatchToPropsType = {
+    getUsers: (currentPage: number, pageSize: number) => void
+    follow: (userId: number) => void
+    unFollow: (userId: number) => void
+}
+export type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 
