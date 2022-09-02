@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {authAPI} from '../api/api';
 import {AppActionsTypes, AppThunk} from './redux-store';
+import {stopSubmit} from 'redux-form';
 
 // constants:
 const SET_USER_DATA = 'SET_USER_DATA'
@@ -10,7 +11,7 @@ const initialState = {
     email: null as (string | null),
     login: null as (string | null),
     isAuth: false,
-    // captchaUrl: null as (string | null) // if null, then captcha is not required
+    captchaUrl: null as (string | null) // if null, then captcha is not required
 };
 // reducer
 export const authReducer = (state: initialStateType = initialState, action: AuthActionsTypes): initialStateType => {
@@ -37,28 +38,35 @@ export const getAuthUserData = (): AppThunk => (dispatch) => {
         .then(response => {
             if (response.data.resultCode === 0) {
                 let {id, login, email} = response.data.data
+                // если мы авторизованы устанавливаем эти "авторизационные" данные
                 dispatch(setAuthUserData({id, email, login, isAuth: true}))
             }
         })
 }
+// синтаксис async await:------------------------------------------------
 // export const getAuthUserData1 = (): AppThunk => async (dispatch) => {
 //     const res = await authAPI.me()
 //     dispatch(setAuthUserData({id, email, login, isAuth: true}))
-// }
+// }---------------------------------------------------------------------
 
 // логинимся
-export const login = (email: string, password: string, rememberMe: boolean): AppThunk => (dispatch) => {
+export const login = (email: string, password: string, rememberMe = false, captcha: null | string = null): AppThunk => (dispatch) => {
+
     authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
                 // let {id, login, email} = response.data.data
                 // dispatch(setAuthUserData({id, email, login}))
                 dispatch(getAuthUserData())
+            } else {
+                let message = response.data.length > 0 ?response.data.messages[0] : '\'Email or password is wrong\''
+                let action: any = stopSubmit('login', {_error: message})
+                dispatch(action)
             }
         })
 }
 // вы-лог...
-export const logout = (email: string | null, password: string | null, rememberMe: boolean): AppThunk => (dispatch: Dispatch<AppActionsTypes | any>) => {
+export const logout = (): AppThunk => (dispatch: Dispatch<AppActionsTypes | any>) => {
     authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
@@ -76,11 +84,12 @@ type initialStateType = typeof initialState
 
 // response на запрос auth/me:
 export type DataAuthType = {
-    id: number| null
+    id: number | null
     login: string | null
     email: string | null
     isAuth: boolean
 }
+
 export interface IAuthMeData {
     data: DataAuthType,
     'messages': string[],

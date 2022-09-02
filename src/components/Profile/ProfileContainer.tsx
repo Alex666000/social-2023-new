@@ -8,15 +8,20 @@ import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import {IProfile} from '../../api/api';
 
-class ProfileContainer extends React.Component<PropsType, any> {
+class ProfileContainer extends React.Component<PropsType> {
     componentDidMount() {
         // Получаем userId:
-        let userId = Number(this.props.match.params.userId)
+        let userId: number | null = Number(this.props.match.params.userId)
         if (!userId) {
-            userId = 2
+            // если нет userId и мы не авторизованы - то нам нечего показывать
+            userId = this.props.authorizedId
         }
-        this.props.getUserProfile(userId)
-        this.props.getStatus(userId)
+        if (typeof userId === 'number') {
+            this.props.getUserProfile(userId)
+        }
+        if (typeof userId === 'number') {
+            this.props.getStatus(userId)
+        }
     }
 
     render() {
@@ -27,7 +32,9 @@ class ProfileContainer extends React.Component<PropsType, any> {
 }
 let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     profile: state.profilePage.profile,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorizedId: state.auth.id,
+    isAuth: state.auth.isAuth
 })
 export default compose<ComponentType>(
     connect(mapStateToProps, {getUserProfile, getStatus, updateStatus}),
@@ -42,6 +49,9 @@ type PathParamsType = {
 type MapStateToPropsType = {
     profile: IProfile
     status: string
+    authorizedId: number | null
+    isAuth: boolean
+
 }
 type MapDispatchToPropsType = {
     getUserProfile: (userId: number) => void

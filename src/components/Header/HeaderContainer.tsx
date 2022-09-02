@@ -31,7 +31,7 @@ type MapStateToPropsType = {
 }
 type MapDispatchToPropsType = {
     getAuthUserData: () => void
-    logout: (email: string | null, password: string | null, rememberMe: boolean) => void
+    logout: () => void
 }
 
 
