@@ -15,6 +15,10 @@ class ProfileContainer extends React.Component<PropsType> {
         if (!userId) {
             // если нет userId и мы не авторизованы - то нам нечего показывать
             userId = this.props.authorizedId
+            // но если все-таки userId не оказалось:
+            if (!userId) {
+                this.props.history.push('/login')
+            }
         }
         if (typeof userId === 'number') {
             this.props.getUserProfile(userId)

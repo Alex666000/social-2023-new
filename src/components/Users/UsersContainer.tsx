@@ -1,11 +1,18 @@
 import React, {ComponentType} from 'react';
 import {connect} from 'react-redux';
-import {follow, getUsers, IUser, unFollow} from '../../redux/users-reducer';
+import {follow, IUser, requestUsers, unFollow} from '../../redux/users-reducer';
 import {AppRootStateType} from '../../redux/redux-store';
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
-import {withAuthRedirect} from '../../hoc/withAuthRedirect';
 import {compose} from 'redux';
+import {
+    getCurrentPage,
+    getFollowingInProgress,
+    getIsFetching,
+    getPageSize,
+    getTotalUsersCount,
+    getUsers
+} from '../../redux/users-selectors';
 
 // КК - обертка:
 class UsersContainer extends React.Component<UsersContainerPropsType> {
@@ -19,8 +26,7 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     render() {
         return <>
-            {this.props.isFetching
-                ? <Preloader/> : null}
+            {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
                    currentPage={this.props.currentPage}
@@ -36,19 +42,20 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
     return {
         // передаст пропсы users в ПК - Users
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalUsersCount: state.usersPage.totalUsersCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
+        users: getUsers(state),
+        pageSize: getPageSize(state),
+        totalUsersCount: getTotalUsersCount(state),
+        currentPage: getCurrentPage(state),
+        isFetching: getIsFetching(state),
+        followingInProgress: getFollowingInProgress(state)
     }
 }
 export default compose<ComponentType>(
-    withAuthRedirect,
+    // withAuthRedirect: защитили страницу пользователей - закомментируем withAuthRedirect чтобы могли в любом случае на нее заходит
+    // withAuthRedirect,
     connect(mapStateToProps, {
         follow, unFollow,
-        getUsers,
+        getUsers: requestUsers,
     })
 )(UsersContainer)
 

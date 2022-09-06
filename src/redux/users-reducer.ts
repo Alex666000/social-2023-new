@@ -1,10 +1,10 @@
 // constants:
-import {Dispatch} from 'redux';
 import {usersAPI} from '../api/api';
-import {AppActionsTypes, AppThunk} from './redux-store';
+import {AppThunk} from './redux-store';
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
+const SET_FILTER = 'SET_FILTER'
 const SET_USERS = 'SET_USERS'
 const SET_CURRENT_PAGE = 'CURRENT_PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
@@ -21,9 +21,8 @@ let initialState = {
     // followingInProgress: false,
     followingInProgress: [] as Array<number>,
 }
-
-
-export const usersReducer = (state: initialStateType = initialState, action: UsersActionsTypes): initialStateType => {
+// reducer
+export const usersReducer = (state: InitialStateType = initialState, action: UsersActionsTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW:
             return {
@@ -34,9 +33,7 @@ export const usersReducer = (state: initialStateType = initialState, action: Use
                 ...state, users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
             }
         case SET_USERS:
-            return {
-                ...state, users: [...action.users, ...state.users]
-            }
+            return {...state, users: action.users}
         case SET_CURRENT_PAGE:
             return {
                 ...state, currentPage: action.currentPage
@@ -80,18 +77,18 @@ export const toggleFollowingProgress = (isFetching: boolean, userId: number) => 
     userId
 } as const)
 
-// CK:
-
+// thunk:
 // получить пользователей:
-export const getUsers = (currentPage: number, pageSize: number): AppThunk => {
-    // типизация санки когда диспатчим action а не санку
+export const requestUsers = (page: number, pageSize: number): AppThunk => {
     return (dispatch) => {
         dispatch(toggleIsFetching(true))
-        usersAPI.getUsers(currentPage, pageSize).then(data => {
+        // теперь подсвечивается жирным текущая страница
+        dispatch(setCurrentPage(page))
+        usersAPI.getUsers(page, pageSize).then(res => {
             // когда приходит ответ с сервера скрываем preloader:
             dispatch(toggleIsFetching(false))
-            dispatch(setUsers(data.items))
-            dispatch(setUsersTotalCount(data.totalCount))
+            dispatch(setUsers(res.data.items))
+            dispatch(setUsersTotalCount(res.data.items.totalCount))
         })
     }
 }
@@ -117,7 +114,8 @@ export const unFollow = (userId: number): AppThunk => (dispatch) => {
 }
 
 // types
-// response type - 1 user:
+
+/*   response type - 1 user:   */
 export interface IUser { // user
     name: string
     id: number
@@ -126,13 +124,16 @@ export interface IUser { // user
     followed: boolean
 }
 
+export type InitialStateType = typeof initialState
+
 export type UsersActionsTypes =
-    | ReturnType<typeof setUsers> | ReturnType<typeof followSuccess> | ReturnType<typeof unFollowSuccess>
+    | ReturnType<typeof setUsers>
+    | ReturnType<typeof followSuccess>
+    | ReturnType<typeof unFollowSuccess>
     | ReturnType<typeof setCurrentPage>
     | ReturnType<typeof setUsersTotalCount>
     | ReturnType<typeof toggleIsFetching>
     | ReturnType<typeof toggleFollowingProgress>
-export type initialStateType = typeof initialState
 
 
 
