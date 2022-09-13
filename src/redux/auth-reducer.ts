@@ -4,7 +4,7 @@ import {AppActionsTypes, AppThunk} from './redux-store';
 import {stopSubmit} from 'redux-form';
 
 // constants:
-const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'samurai-network/auth/SET_USER_DATA'
 
 const initialState = {
     id: null as (number | null),
@@ -33,48 +33,38 @@ export const setAuthUserData = ({id, email, login, isAuth}: DataAuthType) => ({
 
 // СК:-----------------------------------------------
 // получить "авторизационные" данные:
-export const getAuthUserData = (): AppThunk => (dispatch) => {
-  return authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                let {id, login, email} = response.data.data
-                // если мы авторизованы устанавливаем эти "авторизационные" данные
-                dispatch(setAuthUserData({id, email, login, isAuth: true}))
-            }
-        })
+// результат работы асинхронной функции вернется promise
+// await дожидается выполнения promise когда он resolve()
+export const getAuthUserData = (): AppThunk => async (dispatch) => {
+    const response = await authAPI.me()
+
+    if (response.data.resultCode === 0) {
+        let {id, login, email} = response.data.data
+        // если мы авторизованы устанавливаем эти "авторизационные" данные
+        dispatch(setAuthUserData({id, email, login, isAuth: true}))
+    }
 }
-// синтаксис async await:------------------------------------------------
-// export const getAuthUserData1 = (): AppThunk => async (dispatch) => {
-//     const res = await authAPI.me()
-//     dispatch(setAuthUserData({id, email, login, isAuth: true}))
-// }---------------------------------------------------------------------
-
 // логинимся
-export const login = (email: null | string, password:  null | string, rememberMe = false,captcha: string | null = null): AppThunk => (dispatch) => {
-
-    authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                // let {id, login, email} = response.data.data
-                // dispatch(setAuthUserData({id, email, login}))
-                dispatch(getAuthUserData())
-            } else {
-                let message = response.data.length > 0 ?response.data.messages[0] : '\'Email or password is wrong\''
-                let action: any = stopSubmit('login', {_error: message})
-                dispatch(action)
-            }
-        })
+export const login = (email: null | string, password: null | string, rememberMe = false, captcha: string | null = null): AppThunk => async (dispatch) => {
+const response =  await authAPI.me()
+    if (response.data.resultCode === 0) {
+        // let {id, login, email} = response.data.data
+        // dispatch(setAuthUserData({id, email, login}))
+        dispatch(getAuthUserData())
+    } else {
+        let message = response.data.length > 0 ? response.data.messages[0] : '\'Email or password is wrong\''
+        let action: any = stopSubmit('login', {_error: message})
+        dispatch(action)
+    }
 }
 // вы-лог...
-export const logout = (): AppThunk => (dispatch: Dispatch<AppActionsTypes | any>) => {
-    authAPI.me()
-        .then(response => {
-            if (response.data.resultCode === 0) {
-                // let {id, login, email} = response.data.data
-                // dispatch(setAuthUserData({id, email, login}))
-                dispatch(setAuthUserData({id: null, email: null, login: null, isAuth: true}))
-            }
-        })
+export const logout = (): AppThunk => async (dispatch: Dispatch<AppActionsTypes | any>) => {
+    const response =  await authAPI.me()
+    if (response.data.resultCode === 0) {
+        // let {id, login, email} = response.data.data
+        // dispatch(setAuthUserData({id, email, login}))
+        dispatch(setAuthUserData({id: null, email: null, login: null, isAuth: true}))
+    }
 }
 
 // types
