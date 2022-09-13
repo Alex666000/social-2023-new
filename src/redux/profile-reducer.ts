@@ -5,6 +5,7 @@ import {Dispatch} from 'redux';
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const DELETE_POST = 'DELETE_POST'
 
 // logic:
 let initialState = {
@@ -40,6 +41,10 @@ export const profileReducer = (state: initialStateType = initialState, action: P
                 ...state,
                 profile: action.profile
             }
+        case 'DELETE_POST':
+            return {
+                ...state, posts: state.posts.filter(p => p.id !== action.postId)
+            }
         default:
             return state
     }
@@ -49,6 +54,7 @@ export const profileReducer = (state: initialStateType = initialState, action: P
 export let addPostCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export let setUserProfile = (profile: IProfile) => ({type: SET_USER_PROFILE, profile} as const)
 export let setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export let deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
 
 // TC
 export let getUserProfile = (userId: number): AppThunk => (dispatch) => {
@@ -95,6 +101,7 @@ export type ProfileActionsTypes =
     ReturnType<typeof addPostCreator>
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
+    | ReturnType<typeof deletePost>
 // initialStateType:
 export type initialStateType = typeof initialState
 
