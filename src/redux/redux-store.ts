@@ -21,7 +21,7 @@ let rootReducer = combineReducers({
     app: appReducer,
 
 })
-
+// типизация state всего Арр
 export type AppRootStateType = ReturnType<typeof rootReducer>
 // типизация санок
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsTypes>

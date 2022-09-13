@@ -8,21 +8,14 @@ import {AppRootStateType} from '../redux/redux-store';
 import {login} from '../redux/auth-reducer';
 import styles from './common/FormsControls/FormsControls.module.css'
 
-
-type FormDataType = {
-    email: string
-    password: string
-    rememberMe: boolean
-}
-
-const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field validate={[required]} placeholder={'Email'} name={'email'} component={Input}/>
+                <Field validate={[required]} placeholder={'Email'} name={'password'} component={Input}/>
             </div>
             <div>
-                <Field validate={[required]} placeholder={'Password'} name={'password'} component={Input}
+                <Field validate={[required]} placeholder={'Password'} name={'email'} component={Input}
                        type={'password'}/>
             </div>
             <div>
@@ -40,10 +33,10 @@ const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     );
 };
 // передаем К вокруг которой нужно создать Редакс форм:
-const LoginReduxForm = reduxForm<FormDataType>({form: 'login',})(LoginForm)
+const LoginReduxForm = reduxForm<LoginFormValuesType>({form: 'login',})(LoginForm)
 
-export const Login = (props: DialogsPropsType | any) => {
-    const onSubmit = (formData: FormDataType) => {
+export const Login: React.FC<PropsType | any> = (props) => {
+    const onSubmit = (formData: LoginFormValuesType) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
 // если залогинены
@@ -57,17 +50,25 @@ export const Login = (props: DialogsPropsType | any) => {
     </div>
 }
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captcha: state.auth.captchaUrl
 })
 
 export default connect(mapStateToProps, {login})(Login)
 
 // types
 type MapStateToPropsType = {
-    isAuth: boolean
+    isAuth: boolean | null
+    captcha?: string | null
 }
 type MapDispatchToPropsType = {
     login: (email: string | null, password: string | null, rememberMe: boolean) => void
 }
-export type DialogsPropsType = MapStateToPropsType & MapDispatchToPropsType
+type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
+export type LoginFormValuesType = {
+    email: string
+    password: string
+    rememberMe: boolean
+    captcha?: string | null
+}

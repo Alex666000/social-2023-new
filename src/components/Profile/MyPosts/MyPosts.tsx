@@ -1,4 +1,4 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './MyPosts.module.css'
 import {Post} from './Post/Post';
 import {MyPostsPropsType} from './MyPostsContainer';
@@ -23,8 +23,11 @@ const AddNewPostForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
     const AddNewPostFormRedux = reduxForm<FormDataType>({form: 'ProfileAddNewPostForm'})(AddNewPostForm)
 
 // present component:
-export const MyPosts: React.FC<InjectedFormProps<FormDataType> & MyPostsPropsType> = (props) => {
-    const postsElements = props.posts.map((p) => <Post key={p.id} message={p.message} likeCount={p.likeCount}/>)
+export const MyPosts = React.memo((props: InjectedFormProps<FormDataType & MyPostsPropsType> & MyPostsPropsType) => {
+    console.log('render')
+
+    const postsElements = props.posts.map((p) => <Post key={p.id} message={p.message}
+                                                       likeCount={p.likeCount}/>)
 
     // в параметры придут values после onSubmit формы
     const onAddPost = (values: FormDataType) => {
@@ -40,7 +43,7 @@ export const MyPosts: React.FC<InjectedFormProps<FormDataType> & MyPostsPropsTyp
             </div>
         </div>
     );
-};
+})
 
 // types
 type FormDataType = {

@@ -53,7 +53,8 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
 export default compose<ComponentType>(
     // withAuthRedirect: защитили страницу пользователей - закомментируем withAuthRedirect чтобы могли в любом случае на нее заходит
     // withAuthRedirect,
-    connect(mapStateToProps, {
+    // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState
+    connect<MapStateToPropsType, MapDispatchToPropsType, { }, AppRootStateType>(mapStateToProps, {
         follow, unFollow,
         getUsers: requestUsers,
     })

@@ -50,7 +50,7 @@ export const getAuthUserData = (): AppThunk => (dispatch) => {
 // }---------------------------------------------------------------------
 
 // логинимся
-export const login = (email: string, password: string, rememberMe = false, captcha: null | string = null): AppThunk => (dispatch) => {
+export const login = (email: null | string, password:  null | string, rememberMe = false,captcha: string | null = null): AppThunk => (dispatch) => {
 
     authAPI.me()
         .then(response => {
