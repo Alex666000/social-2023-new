@@ -1,5 +1,4 @@
 // types:
-import {profileReducer} from './profile-reducer';
 import {dialogsReducer} from './dialogs-reduser';
 import {sidebarReducer} from './sidebar-reduser';
 
@@ -76,7 +75,7 @@ export const store: StoreType = {
         return store._state
     },
     _callSubscriber(observer) {
-        console.log('State changed')
+        // console.log('State changed')
     },
     subscribe(observer) {
         store._callSubscriber = observer

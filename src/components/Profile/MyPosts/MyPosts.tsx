@@ -24,7 +24,7 @@ const AddNewPostForm:React.FC<InjectedFormProps<FormDataType>> = (props) => {
 
 // present component:
 export const MyPosts = React.memo((props: InjectedFormProps<FormDataType & MyPostsPropsType> & MyPostsPropsType) => {
-    console.log('render')
+    // console.log('render')
 
     const postsElements = props.posts.map((p) => <Post key={p.id} message={p.message}
                                                        likeCount={p.likeCount}/>)

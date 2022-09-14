@@ -19,7 +19,7 @@ export const usersAPI = {
         return instance.delete(`follow/${userId}`,)
     },
     getProfile(userId: number) {
-        // console.warn('используется устаревший метод')
+        // console.warn('используется устаревший метод...')
         // используем делегирование обратимся к profileAPI если кто-то дернет метод
         return profileAPI.getProfile(userId)
     },

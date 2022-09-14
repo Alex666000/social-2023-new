@@ -35,7 +35,6 @@ export class ProfileStatus extends React.Component<ProfileStatusType> {
             this.setState({
                 status: this.props.status
             })
-        console.log('componentDidUpdate')
     }
 
     render() {
