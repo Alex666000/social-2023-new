@@ -3,7 +3,6 @@ import styles from './user.module.css';
 import userPhoto from '../../assets/images/user.jpg';
 import {NavLink} from 'react-router-dom';
 import {IUser} from '../../redux/users-reducer';
-import {Paginator} from '../common/Paginator/Paginator';
 
 type UsersPropsType = {
     user: IUser
@@ -18,7 +17,7 @@ export const User: React.FC<UsersPropsType> = ({user, followingInProgress, follo
             <span>
                 <div>
                     <NavLink to={'profile/' + user.id}>
-                        <img
+                        <img alt={'photo'}
                             src={user.photos.small ? user.photos.small : user.photos.large ? user.photos.large : userPhoto}
                             className={styles.userPhoto}/>
                     </NavLink>

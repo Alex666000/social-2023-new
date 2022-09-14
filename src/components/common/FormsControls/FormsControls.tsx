@@ -1,8 +1,7 @@
 import React from 'react'
 import styles from './FormsControls.module.css'
 import {Field, WrappedFieldProps} from 'redux-form';
-import {FieldValidatorType, required} from '../../../utils/validators/validators';
-import exp from 'constants';
+import {FieldValidatorType} from '../../../utils/validators/validators';
 
 type FormControlPropsType = {
     // meta: WrappedFieldMetaProps - или так одной строкой типизируется проще
@@ -47,10 +46,9 @@ export const createField = <FormKeysType extends string>(placeholder: string | u
                validate={validators}
                component={component}
                {...props}
+            // тут текст так как это не пропсы - просто текст
         /> {text}
     </div>;
-
-export type GetStringKeys<T> = Extract<keyof T, string>
 
 // export const createField = (placeholder: string, name: string,validators: any, component: any) => <Field
 //     validate={validators}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Field, InjectedFormProps, reduxForm} from 'redux-form';
+import {InjectedFormProps, reduxForm} from 'redux-form';
 import {createField, Input} from './common/FormsControls/FormsControls';
 import {required} from '../utils/validators/validators';
 import {connect} from 'react-redux';
@@ -12,9 +12,9 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({handleSubm
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                {createField('Email', 'email', [required], Input)}
-                {createField('Password', 'password', [required], Input, {type: 'password'})}
-                {createField(undefined, 'password', [required], Input, {type: 'checkbox'}, 'rememberMe')}
+                {createField<LoginFormValuesTypeKeys>('Email', 'email', [required], Input)}
+                {createField<LoginFormValuesTypeKeys>('Password', 'password', [required], Input, {type: 'password'})}
+                {createField<LoginFormValuesTypeKeys>(undefined, 'password', [required], Input, {type: 'checkbox'}, 'rememberMe')}
             </div>
             {/*<Field placeholder={'Email'} name={'password'} validate={[required]} component={Input}/>*/}
             {/*<Field placeholder={'Password'} name={'email'} validate={[required]} component={Input} type={'password'}/>*/}
@@ -65,9 +65,14 @@ type MapDispatchToPropsType = {
 }
 type PropsType = MapStateToPropsType & MapDispatchToPropsType
 
+// 2 типа для типизации - уточнения createField
 export type LoginFormValuesType = {
     email: string
     password: string
     rememberMe: boolean
     captcha?: string | null
 }
+// ключи в LoginFormValuesTypeKeys - строковые значения не все - а только из LoginFormValuesType
+export type LoginFormValuesTypeKeys = Extract<keyof LoginFormValuesType, string>
+
+
