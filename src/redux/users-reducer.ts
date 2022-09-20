@@ -86,7 +86,7 @@ export const requestUsers = (page: number, pageSize: number): AppThunk => async 
     // когда приходит ответ с сервера скрываем preloader:
     dispatch(toggleIsFetching(false))
     dispatch(setUsers(response.data.items))
-    dispatch(setUsersTotalCount(response.data.items.totalCount))
+    dispatch(setUsersTotalCount(response.data.totalCount))
 }
 // функция обертка для follow и unFollow
 const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => Promise<AxiosResponse<any, IUser>>, actionCreator: (userId: number) => UsersActionsTypes) => {

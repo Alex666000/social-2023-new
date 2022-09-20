@@ -1,4 +1,4 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {ProfileActionsTypes, profileReducer} from './profile-reducer';
 import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
@@ -27,9 +27,21 @@ export type AppRootStateType = ReturnType<typeof rootReducer>
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsTypes>
 
 // общая типизация всех actions приложения для типизации "санок"всего Арр:
-export type AppActionsTypes = UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes | AuthActionsTypes | InitializedSuccsesType
+export type AppActionsTypes =
+    UsersActionsTypes
+    | ProfileActionsTypes
+    | DialogsActionsTypes
+    | AuthActionsTypes
+    | InitializedSuccsesType
 
-let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+declare global {
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+    }
+}
+const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
+
 // @ts-ignore
 window.store = store
 

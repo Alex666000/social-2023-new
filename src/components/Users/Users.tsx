@@ -7,7 +7,7 @@ type UsersPropsType = {
     totalUsersCount: number
     pageSize: number
     currentPage: number
-    onPageChange: (page: number) => void
+    onPageChange: (pageNumber: number) => void
     users: Array<IUser>
     followingInProgress: Array<any>
     follow: (userId: number) => void
@@ -16,7 +16,7 @@ type UsersPropsType = {
 export const Users = ({totalUsersCount, pageSize, currentPage, onPageChange,users, ...props}: UsersPropsType) => {
     return <div>
         <Paginator totalUsersCount={totalUsersCount} pageSize={pageSize} currentPage={currentPage}
-                   onPageChange={onPageChange}/>
+                   onPageChanged={onPageChange}/>
         {
             users.map((u: IUser) => <User
                 user={u}
