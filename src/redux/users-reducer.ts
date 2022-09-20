@@ -15,9 +15,9 @@ const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 // logic:
 let initialState = {
     users: [] as IUser[],
-    pageSize: 4,
+    pageSize: 10,
     totalUsersCount: 0,
-    currentPage: 5,
+    currentPage: 1,
     isFetching: true,
     // followingInProgress: false,
     followingInProgress: [] as Array<number>,
