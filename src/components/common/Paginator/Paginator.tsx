@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import styles from './Paginator.module.css';
 import cn from "classnames";
@@ -10,7 +9,7 @@ type PaginatorPropsType = {
     currentPage?: number
     portionSize?: number
 }
-const Paginator: React.FC<PaginatorPropsType> = (
+export const Paginator: React.FC<PaginatorPropsType> = (
     {
         pageSize, totalItemsCount, onPageChanged,
         currentPage, portionSize = 20,
@@ -28,8 +27,6 @@ const Paginator: React.FC<PaginatorPropsType> = (
     let [portionNumber, setPortionNumber] = useState(1);
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
-
-
 
 
     return <div className={styles.paginator}>
@@ -54,4 +51,4 @@ const Paginator: React.FC<PaginatorPropsType> = (
     </div>
 }
 
-export default Paginator
+
