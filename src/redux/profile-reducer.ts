@@ -4,6 +4,7 @@ import {IProfile, profileAPI, usersAPI} from '../api/api';
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const SET_PHOTO_SUCCSES = 'SET_PHOTO_SUCCSES'
 const DELETE_POST = 'DELETE_POST'
 
 // logic:
@@ -44,18 +45,23 @@ export const profileReducer = (state: initialStateType = initialState, action: P
             return {
                 ...state, posts: state.posts.filter(p => p.id !== action.postId)
             }
+            case SET_PHOTO_SUCCSES:
+            return {
+                ...state, profile: {...state.profile, photos: action.photos}
+            }
         default:
             return state
     }
 }
 
-// actions
+// actions--------------------------------------------------
 export let addPostCreator = (newPostText: string) => ({type: ADD_POST, newPostText} as const)
 export let setUserProfile = (profile: IProfile) => ({type: SET_USER_PROFILE, profile} as const)
 export let setStatus = (status: string) => ({type: SET_STATUS, status} as const)
+export let setPhotoSuccess = (photos: any) => ({type: SET_PHOTO_SUCCSES, photos} as const)
 export let deletePost = (postId: number) => ({type: DELETE_POST, postId} as const)
 
-// thunk
+// thunk---------------------------------------------------
 export let getUserProfile = (userId: number): AppThunk => async (dispatch) => {
    const response = await usersAPI.getProfile(userId)
     dispatch(setUserProfile(response.data))
@@ -67,12 +73,21 @@ export let getStatus = (userId: number): AppThunk => async (dispatch) => {
     dispatch(setStatus(response.data))
 }
 // thunk, которая шлет запрос, чтобы обновить статус:
+
 // получение статуса с сервера - аякс запрос, так как делаем thunk:
 export let updateStatus = (status: string): AppThunk => async(dispatch) => {
     const response = await profileAPI.updateStatus(status)
     if (response.data.resultCode === 0) {
         // засетали статус себе - чтобы его потом на UI отобразить:
         dispatch(setStatus(status))
+    }
+}
+export let savePhoto = (file: any): AppThunk => async(dispatch) => {
+    const response = await profileAPI.savePhoto(file)
+
+    if (response.data.resultCode === 0) {
+        // засетали статус себе - чтобы его потом на UI отобразить:
+        dispatch(setPhotoSuccess(response.data.data.photos))
     }
 }
 
@@ -93,6 +108,7 @@ export type ProfileActionsTypes =
     | ReturnType<typeof setUserProfile>
     | ReturnType<typeof setStatus>
     | ReturnType<typeof deletePost>
+    | ReturnType<typeof setPhotoSuccess>
 
 type initialStateType = typeof initialState
 

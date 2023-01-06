@@ -12,7 +12,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
 export function withSuspense<T>(Component: ComponentType<T>) {
     return (props: any) => {
         return <React.Suspense
-            fallback={<div><Preloader/></div>}> <Component {...props}/>
+            fallback={<div><Preloader/></div>}> <Component {...props as T}/>
         </React.Suspense>
 
     }
