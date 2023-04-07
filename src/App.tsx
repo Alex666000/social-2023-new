@@ -12,7 +12,6 @@ import {Preloader} from "components/common/Preloader/Preloader";
 import {AppRootStateType} from "redux/redux-store";
 import {withSuspense} from "hoc/withSuspense";
 
-
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
 const DialogsContainer = lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'));
