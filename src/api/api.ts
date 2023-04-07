@@ -4,7 +4,7 @@ const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': '55c2a126-07c6-4eb6-9a58-b629e3ad8457'
+        'API-KEY': '35a2bc33-9361-4658-a8b4-b1a6a75da53d'
     }
 })
 // упаковочка для всех методов для группировки:

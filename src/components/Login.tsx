@@ -34,7 +34,8 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({handleSubm
 // передаем К вокруг которой нужно создать Редакс форм:
 const LoginReduxForm = reduxForm<LoginFormValuesType, any>({form: 'login'})(LoginForm)
 
-export const Login: React.FC<PropsType | any> = (props) => {
+const Login: React.FC<LoginPropsType> = (props) => {
+    debugger
     const onSubmit = (formData: LoginFormValuesType) => {
         props.login(formData.email, formData.password, formData.rememberMe)
     }
@@ -54,7 +55,7 @@ const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     captcha: state.auth.captchaUrl
 })
 
-export default connect(mapStateToProps, {login})(Login)
+export const LoginContainer = connect(mapStateToProps, {login})(Login)
 
 // types
 type MapStateToPropsType = {
@@ -64,7 +65,7 @@ type MapStateToPropsType = {
 type MapDispatchToPropsType = {
     login: (email: string | null, password: string | null, rememberMe: boolean) => void
 }
-type PropsType = MapStateToPropsType & MapDispatchToPropsType
+type LoginPropsType = MapStateToPropsType & MapDispatchToPropsType
 
 // 2 типа для типизации - уточнения createField
 export type LoginFormValuesType = {

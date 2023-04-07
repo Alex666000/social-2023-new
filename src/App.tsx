@@ -4,7 +4,7 @@ import {Navbar} from "components/Navbar/Navbar";
 import {Route, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import {Login} from "components/Login";
+import {LoginContainer} from "components/Login";
 import {connect} from 'react-redux';
 import {compose} from 'redux';
 import {initializeApp} from "redux/app-reducer";
@@ -47,7 +47,7 @@ class App extends React.Component<PropsType> {
                         render={() => <UsersContainer/>}/>
                     <Route
                         path={'/login'}
-                        render={() => <Login/>}/>
+                        render={() => <LoginContainer/>}/>
                 </div>
             </div>)
     }
