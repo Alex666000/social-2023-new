@@ -1,49 +1,120 @@
-import React from 'react';
-import s from './ProfileInfo.module.css'
-import {Preloader} from '../../common/Preloader/Preloader';
-import {IProfile} from '../../../api/api';
-import {ProfileStatusWithHooks} from './ProfileStatusWithHooks';
-import userPhoto from '../../../assets/images/user.jpg';
+import React, {ChangeEvent, useState} from "react";
+import s from "./ProfileInfo.module.css";
+import userPhoto from "../../../assets/images/user.jpg";
+import ProfileDataForm from "./ProfileDataForm";
+import {ContactsType, IProfile} from "api/api";
+import {Preloader} from "../../common/Preloader/Preloader";
+import {
+    ProfileStatusWithHooks
+} from "./ProfileStatusWithHooks";
 
-
-type ProfileInfoPropsType = {
-    profile: IProfile
+type PropsType = {
+    profile: IProfile | null
     status: string
     updateStatus: (status: string) => void
-    savePhoto: (file: any) => void
     isOwner: boolean
-
+    savePhoto: (file: File) => void
+    saveProfile: (profile: IProfile) => Promise<any>
 }
-//ПК:
-export const ProfileInfo: React.FC<ProfileInfoPropsType> = ({profile, status, updateStatus, isOwner,savePhoto}) => {
+
+const ProfileInfo: React.FC<PropsType> = ({
+                                              profile,
+                                              status,
+                                              updateStatus,
+                                              isOwner,
+                                              savePhoto,
+                                              saveProfile
+                                          }) => {
+
+    let [editMode, setEditMode] = useState(false);
+
     if (!profile) {
-        return <Preloader/>
+        return <Preloader/>;
     }
 
-    const onMainPhotoSelected = (e: any) => {
-    if (e.target.files.length) {
-        savePhoto(e.target.files[0])
-    }
-    }
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files.length) {
+            savePhoto(e.target.files[0]);
+        }
+    };
 
-    return (<div>
-            {/*<div>*/}
-            {/*<img className={s.imgProfileInfo}*/}
-            {/*src="https://img.championat.com/s/735x490/news/big/v/x/nejroset-imagen-ot-google-sozdayot-neveroyatnye-kartinki-vot-primery-eyo-rabot_1653415767422445164.jpg"*/}
-            {/*alt="TS"/>*/}
-            {/*</div>*/}
+    const onSubmit = (formData: IProfile) => {
+        // todo: remove then
+        saveProfile(formData).then(
+            () => {
+                setEditMode(false);
+            }
+        );
+    };
+
+    return (
+        <div>
             <div className={s.descriptionBlock}>
-                {profile.photos?.large
-                    &&
-                    <img src={profile.photos.large || userPhoto} className={s.mainPhoto}/>}
-                {isOwner && <input type="file" onChange={onMainPhotoSelected}/>}
+                <img src={profile.photos && profile?.photos?.large || userPhoto} className={s.mainPhoto}/>
+                {isOwner && <input type={"file"} onChange={onMainPhotoSelected}/>}
+
+                {editMode
+                    ? <ProfileDataForm initialValues={profile} profile={profile}
+                                       onSubmit={onSubmit}/>
+                    : <ProfileData goToEditMode={() => {
+                        setEditMode(true);
+                    }} profile={profile} isOwner={isOwner}/>}
+
                 <ProfileStatusWithHooks status={status} updateStatus={updateStatus}/>
-                <div>{profile.fullName}</div>
-                <div>{profile.lookingForAJobDescription}</div>
-                <div>{profile.aboutMe}</div>
-                <div>{profile.userId}</div>
             </div>
         </div>
     );
 };
 
+type ProfileDataPropsType = {
+    profile: IProfile
+    isOwner: boolean
+    goToEditMode: () => void
+}
+const ProfileData: React.FC<ProfileDataPropsType> = ({
+                                                         profile,
+                                                         isOwner,
+                                                         goToEditMode
+                                                     }) => {
+    return <div>
+        {isOwner && <div>
+            <button onClick={goToEditMode}>edit</button>
+        </div>}
+        <div>
+            <b>Full name</b>: {profile.fullName}
+        </div>
+        <div>
+            <b>Looking for a job</b>: {profile.lookingForAJob ? "yes" : "no"}
+        </div>
+        {profile.lookingForAJob &&
+            <div>
+                <b>My professional skills</b>: {profile.lookingForAJobDescription}
+            </div>
+        }
+
+        <div>
+            <b>About me</b>: {profile.aboutMe}
+        </div>
+        <div>
+            <b>Contacts</b>: {profile.contacts &&
+            Object.keys(profile.contacts)
+                .map((key) => {
+                    return <Contact key={key} contactTitle={key}
+                                    contactValue={profile.contacts[key as KeyType]}/>;
+                })}
+        </div>
+    </div>;
+};
+
+
+type ContactsPropsType = {
+    contactTitle: string
+    contactValue: string
+}
+const Contact: React.FC<ContactsPropsType> = ({contactTitle, contactValue}) => {
+    return <div className={s.contact}><b>{contactTitle}</b>: {contactValue}</div>;
+};
+
+type KeyType = keyof ContactsType
+
+export default ProfileInfo;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {InjectedFormProps, reduxForm} from 'redux-form';
 import {createField, Input} from './common/FormsControls/FormsControls';
-import {required} from '../utils/validators/validators';
+import {required} from "utils/validators/validators";
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import {AppRootStateType} from '../redux/redux-store';
-import {login} from '../redux/auth-reducer';
+import {AppRootStateType} from "redux/redux-store";
+import {login} from "redux/auth-reducer";
 import styles from './common/FormsControls/FormsControls.module.css'
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({handleSubmit, error}) => {
@@ -32,7 +32,7 @@ const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType>> = ({handleSubm
     );
 };
 // передаем К вокруг которой нужно создать Редакс форм:
-const LoginReduxForm = reduxForm<LoginFormValuesType>({form: 'login',})(LoginForm)
+const LoginReduxForm = reduxForm<LoginFormValuesType, any>({form: 'login'})(LoginForm)
 
 export const Login: React.FC<PropsType | any> = (props) => {
     const onSubmit = (formData: LoginFormValuesType) => {
@@ -48,6 +48,7 @@ export const Login: React.FC<PropsType | any> = (props) => {
         <LoginReduxForm onSubmit={onSubmit}/>
     </div>
 }
+
 const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => ({
     isAuth: state.auth.isAuth,
     captcha: state.auth.captchaUrl

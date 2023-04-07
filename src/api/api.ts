@@ -43,7 +43,11 @@ export const profileAPI = {
                 'Content-Type': 'multipart/form-data'
             }
         })
+    },
+    saveProfile(profile: IProfile) {
+        return instance.put<LoginResponseType>(`profile`, profile).then(res => res.data);
     }
+
 }
 
 export const authAPI = {
@@ -75,20 +79,20 @@ export interface IPhotosType {
     large: string
 }
 
-export interface IContactsType {
-    facebook: string
-    website: boolean
-    vk: string
-    twitter: string
-    instagram: string
-    youtube: boolean
+export interface ContactsType {
     github: string
-    mainLink: boolean
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
 }
 
 export interface IProfile {
     aboutMe: string
-    contacts: IContactsType
+    contacts: ContactsType
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string

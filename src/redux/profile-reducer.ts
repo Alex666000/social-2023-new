@@ -1,5 +1,6 @@
-import {AppThunk} from './redux-store';
-import {IProfile, profileAPI, usersAPI} from '../api/api';
+import {AppThunk} from "./redux-store";
+import {IProfile, profileAPI, usersAPI} from "api/api";
+import {stopSubmit} from "redux-form";
 // constants:
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -88,6 +89,22 @@ export let savePhoto = (file: any): AppThunk => async(dispatch) => {
     if (response.data.resultCode === 0) {
         // засетали статус себе - чтобы его потом на UI отобразить:
         dispatch(setPhotoSuccess(response.data.data.photos))
+    }
+}
+
+export const saveProfile = (profile: IProfile): AppThunk => async (dispatch, getState) => {
+    const userId = getState().auth.userId
+    const data = await profileAPI.saveProfile(profile)
+
+    if (data.resultCode === 0) {
+        if (userId !== null) {
+            dispatch(getUserProfile(userId))
+        } else {
+            throw new Error("userId can't be null")
+        }
+    } else {
+        dispatch(stopSubmit("edit-profile", {_error: data.messages[0] }))
+        return Promise.reject(data.messages[0])
     }
 }
 

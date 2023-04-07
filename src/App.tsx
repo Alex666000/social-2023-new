@@ -1,16 +1,16 @@
 import React, {ComponentType, lazy} from 'react';
 import './App.css';
-import {Navbar} from './components/Navbar/Navbar';
+import {Navbar} from "components/Navbar/Navbar";
 import {Route, withRouter} from 'react-router-dom';
 import UsersContainer from './components/Users/UsersContainer';
 import HeaderContainer from './components/Header/HeaderContainer';
-import {Login} from './components/Login';
+import {Login} from "components/Login";
 import {connect} from 'react-redux';
 import {compose} from 'redux';
-import {initializeApp} from './redux/app-reducer';
-import {Preloader} from './components/common/Preloader/Preloader';
-import {AppRootStateType} from './redux/redux-store';
-import {withSuspense} from './hoc/withSuspense';
+import {initializeApp} from "redux/app-reducer";
+import {Preloader} from "components/common/Preloader/Preloader";
+import {AppRootStateType} from "redux/redux-store";
+import {withSuspense} from "hoc/withSuspense";
 
 
 // import DialogsContainer from './components/Dialogs/DialogsContainer';
