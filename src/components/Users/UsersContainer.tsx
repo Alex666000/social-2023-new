@@ -1,7 +1,7 @@
 import React, {ComponentType} from 'react';
 import {connect} from 'react-redux';
-import {follow, IUser, requestUsers, unFollow} from '../../redux/users-reducer';
-import {AppRootStateType} from '../../redux/redux-store';
+import {follow, IUser, requestUsers, unFollow} from "redux/users-reducer";
+import {AppRootStateType} from "redux/redux-store";
 import {Users} from './Users';
 import {Preloader} from '../common/Preloader/Preloader';
 import {compose} from 'redux';
@@ -12,7 +12,7 @@ import {
     getPageSize,
     getTotalUsersCount,
     getUsers
-} from '../../redux/users-selectors';
+} from "redux/users-selectors";
 
 // КК - обертка:
 class UsersContainer extends React.Component<UsersContainerPropsType> {

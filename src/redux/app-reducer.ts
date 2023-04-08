@@ -6,7 +6,9 @@ const SET_INITIALIZED_SUCCSESS = 'SSET_INITIALIZED_SUCCSESS'
 
 //initialState
 const initialState = {
-    initialized: false
+    initialized: false,
+    // диспатчим санку доработать 40 min
+    globalError: null
 };
 // reducer
 export const appReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {

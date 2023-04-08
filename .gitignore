@@ -18,8 +18,8 @@
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
+npm-ug.log*
+yarn-ug.log*
 yarn-error.log*
 
 .idea

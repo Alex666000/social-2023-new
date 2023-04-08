@@ -1,6 +1,5 @@
 // types:
 import {dialogsReducer} from './dialogs-reduser';
-import {sidebarReducer} from './sidebar-reduser';
 
 type PostType = {
     id: number,
@@ -24,11 +23,11 @@ type DialogsPageType = {
     messages: Array<MessageType>
     newMessageBody: string
 }
-type SidebarType = {}
+type SiarType = {}
 export type RootStateType = {
     profilePage: ProfilePageType
     dialogsPage: DialogsPageType
-    sidebar: SidebarType
+    siar: SiarType
 }
 // store typing:
 export type StoreType = {
@@ -69,7 +68,7 @@ export const store: StoreType = {
             ],
             newMessageBody: 'friends'
         },
-        sidebar: {}
+        siar: {}
     },
     getState() {
         return store._state
@@ -83,7 +82,6 @@ export const store: StoreType = {
     dispatch(action) {
         // const profilePage = profileReducer(store._state.profilePage, action)
         const dialogsPage = dialogsReducer(store._state.dialogsPage, action)
-        const sidebarPage = sidebarReducer(store._state.dialogsPage, action)
         store._callSubscriber(store._state)
     }
 }

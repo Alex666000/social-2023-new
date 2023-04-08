@@ -77,11 +77,16 @@ export let getStatus = (userId: number): AppThunk => async (dispatch) => {
 
 // получение статуса с сервера - аякс запрос, так как делаем thunk:
 export let updateStatus = (status: string): AppThunk => async(dispatch) => {
-    const response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0) {
-        // засетали статус себе - чтобы его потом на UI отобразить:
-        dispatch(setStatus(status))
+    try {
+        const response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0) {
+            // засетали статус себе - чтобы его потом на UI отобразить:
+            dispatch(setStatus(status))
+        }
+    } catch (e) {
+        //
     }
+   
 }
 export let savePhoto = (file: any): AppThunk => async(dispatch) => {
     const response = await profileAPI.savePhoto(file)

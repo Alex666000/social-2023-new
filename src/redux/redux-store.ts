@@ -2,7 +2,6 @@ import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import thunkMiddleware, {ThunkAction} from 'redux-thunk';
 import {ProfileActionsTypes, profileReducer} from './profile-reducer';
 import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
-import {sidebarReducer} from './sidebar-reduser';
 import {UsersActionsTypes, usersReducer} from './users-reducer';
 import {AuthActionsTypes, authReducer} from './auth-reducer';
 import {reducer as formReducer} from 'redux-form'
@@ -13,7 +12,6 @@ let rootReducer = combineReducers({
     // ветки = части "стейта" - за ветки отвечают эти редюсеры
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
-    sidebar: sidebarReducer,
     usersPage: usersReducer,
     // данное что достаем useSelector или mapStateToProps
     auth: authReducer,

@@ -6,7 +6,7 @@ import {Redirect} from 'react-router-dom';
 import {Field, InjectedFormProps, reduxForm} from 'redux-form';
 import {DialogsPropsType} from './DialogsContainer';
 import {Textarea} from '../common/FormsControls/FormsControls';
-import {maxLengthCreator, required} from '../../utils/validators/validators';
+import {maxLengthCreator, required} from "utils/validators/validators";
 
 type PropsType = {
     isAuth: boolean

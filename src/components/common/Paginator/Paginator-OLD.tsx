@@ -21,7 +21,7 @@ export const PaginatorOLD: React.FC<PaginatorPropsType> = (props) => {
         {/* пагинация: рисуем страничку - "спанчики" по которым кликаем = меняем страничку*/}
         {pages.map(p => {
             // текущая страница:
-            return <span className={props.currentPage === p ? styles.selectedPage : ''}
+            return <span key={p} className={props.currentPage === p ? styles.selectedPage : ''}
                          //
                          onClick={() => props.onPageChanged(p)} // "сетаем" текущую страницу что придет через "колбек" в пропсах:
             >{p}</span>

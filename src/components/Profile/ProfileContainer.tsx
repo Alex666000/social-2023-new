@@ -16,11 +16,9 @@ import {AppRootStateType} from "redux/redux-store";
 
 class ProfileContainer extends React.Component<PropsType> {
     refreshProfile() {
-        debugger
         let userId: number | null = Number(this.props.match.params.userId);
         if (!userId) {
             // если нет userId и мы не авторизованы - то нам нечего показывать
-            debugger
             userId = this.props.authorizedId;
             // но если все-таки userId не оказалось:
         }
@@ -36,13 +34,11 @@ class ProfileContainer extends React.Component<PropsType> {
     }
 
     componentDidMount() {
-        debugger
         // Получаем userId:
         this.refreshProfile();
     }
 
     componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
-        debugger
         if (this.props.match.params.userId !== prevProps.match.params.userId) {
             this.refreshProfile();
         }
@@ -62,7 +58,6 @@ class ProfileContainer extends React.Component<PropsType> {
 }
 
 let mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-    debugger
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,

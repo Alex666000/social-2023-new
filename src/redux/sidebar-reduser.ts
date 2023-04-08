@@ -3,6 +3,6 @@ type InitialStateType = {}
 
 let initialState = {}
 
-export const sidebarReducer = (state: InitialStateType = {}, action: any) => {
+export const siarReducer = (state: InitialStateType = {}, action: any) => {
     return state
 }
