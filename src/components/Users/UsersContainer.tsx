@@ -1,81 +1,136 @@
-import React, {ComponentType} from 'react';
-import {connect} from 'react-redux';
-import {follow, IUser, requestUsers, unFollow} from "redux/users-reducer";
-import {AppRootStateType} from "redux/redux-store";
-import {Users} from './Users';
-import {Preloader} from '../common/Preloader/Preloader';
-import {compose} from 'redux';
+import React, {ChangeEvent} from "react";
+import {RootStateType} from "../../redux/redux-store";
+import {connect} from "react-redux";
+import {UsersArray, getUsersTC, deleteFollowTC, postFollowTC, setFilterAC, UsersSearchFilterType}
+    from '../../redux/users-reducer';
+import {Users} from "./Users";
+import {Preloader} from "../../common/UI/Preloader/Preloader";
+import classes from "./Users.module.css";
+import {compose} from "redux";
+import {withAuthRedirect} from "../../common/hoc/withAuthRedirect";
 import {
-    getCurrentPage,
-    getFollowingInProgress,
-    getIsFetching,
-    getPageSize,
-    getTotalUsersCount,
-    getUsers
-} from "redux/users-selectors";
+    currentPageSelector,
+    filterUserSelector,
+    followingInProgressSelector,
+    getUsersSelector,
+    isLoadingSelector,
+    pageSizeSelector,
+    totalUsersCountSelector
+} from '../../redux/users-selectors';
+import {isAuthSelector} from '../../redux/auth-selectors';
 
-// КК - обертка:
-class UsersContainer extends React.Component<UsersContainerPropsType> {
-    componentDidMount() {
-        const {currentPage, pageSize} = this.props
-        this.props.getUsers(currentPage, pageSize)
+export type UsersContainerType = MapStateToPropsUsersType & MapDispatchToPropsUsersType;
+
+type MapStateToPropsUsersType = {
+    users: Array<UsersArray>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isLoading: boolean
+    followingInProgress: Array<string>
+    isAuth: boolean
+    filter: UsersSearchFilterType
+}
+type MapDispatchToPropsUsersType = {
+    getUsers: (currentPage: number, pageSize: number, filter: UsersSearchFilterType) => void
+    deleteFollow: (userId: string) => void
+    postFollow: (userId: string) => void
+    setUserFilter: (filter: UsersSearchFilterType) => void
+}
+
+const mapStateToProps = (state: RootStateType): MapStateToPropsUsersType => {
+    return {
+        users: getUsersSelector(state),
+        pageSize: pageSizeSelector(state),
+        totalUsersCount: totalUsersCountSelector(state),
+        currentPage: currentPageSelector(state),
+        isLoading: isLoadingSelector(state),
+        followingInProgress: followingInProgressSelector(state),
+        isAuth: isAuthSelector(state),
+        filter: filterUserSelector(state),
+    }
+}
+
+const mapDispatchToProps: MapDispatchToPropsUsersType = {
+    getUsers: getUsersTC,
+    deleteFollow: deleteFollowTC,
+    postFollow: postFollowTC,
+    setUserFilter: setFilterAC
+}
+
+export class UsersAPIClassContainer extends React.Component<UsersContainerType> {
+
+    state = {
+        selectValue: 'null'
     }
 
-    onPageChange = (pageNumber: number) => {
-        const {pageSize} = this.props
-        this.props.getUsers(pageNumber, pageSize)
+    componentDidMount() {
+        const {currentPage, pageSize, filter} = this.props;
+        this.props.getUsers(currentPage, pageSize, {term: '', friend: null});
+    }
+
+    onChangePageHandler = (pageNumber: number) => {
+        const {pageSize, filter} = this.props;
+        this.props.getUsers(pageNumber, pageSize, filter);
+    }
+
+    onChangeSearchInputValue = (e: ChangeEvent<HTMLInputElement>) => {
+        this.props.setUserFilter({term: e.currentTarget.value, friend: this.props.filter.friend});
+    }
+    onChangeSearchSelectValue = (e: ChangeEvent<HTMLSelectElement>) => {
+        this.props.setUserFilter({term: this.props.filter.term,
+            friend: e.currentTarget.value === 'null' ? null : e.currentTarget.value === 'true'});
+        this.setState({
+            selectValue: e.currentTarget.value
+        });
+    }
+
+    clearInput = () => {
+        this.props.setUserFilter({term: '', friend: null});
+        this.props.getUsers(1, this.props.pageSize, {term: '', friend: null});
+    }
+
+    findFilteredUserHandler = (filter: UsersSearchFilterType) => {
+        const {currentPage, pageSize} = this.props;
+        this.props.getUsers(currentPage, pageSize, filter);
     }
 
     render() {
-        return <>
-            {this.props.isFetching ? <Preloader/> : null}
-            <Users totalUsersCount={this.props.totalUsersCount}
-                   pageSize={this.props.pageSize}
-                   currentPage={this.props.currentPage}
-                   onPageChange={this.onPageChange}
-                   users={this.props.users}
-                   followingInProgress={this.props.followingInProgress}
-                   follow={this.props.follow}
-                   unFollow={this.props.unFollow}
-            />
-        </>
+
+        return (
+            <>
+                {
+                    this.props.isLoading
+                        ? <div className={classes.usersWrapper}>
+                            <Preloader />
+                        </div>
+                        : <Users /*users={this.props.users}
+                                 pageSize={this.props.pageSize}
+                                 totalUsersCount={this.props.totalUsersCount}
+                                 currentPage={this.props.currentPage}
+                                 onChangePageHandler={this.onChangePageHandler}
+                                 followingInProgress={this.props.followingInProgress}
+                                 deleteFollow={this.props.deleteFollow}
+                                 postFollow={this.props.postFollow}
+                                 filterValue={this.props.filter.term}
+                                 filterIsFriend={this.props.filter.friend}
+                                 setSearchValue={this.onChangeSearchInputValue}
+                                 setSearchSelect={this.onChangeSearchSelectValue}
+                                 clearInput={this.clearInput}
+                                 findFilteredUserHandler={this.findFilteredUserHandler}
+                                 selectStateValue={this.state.selectValue}*/
+                        />
+                }
+            </>
+        )
     }
 }
-const mapStateToProps = (state: AppRootStateType): MapStateToPropsType => {
-    return {
-        // передаст пропсы users в ПК - Users
-        users: getUsers(state),
-        pageSize: getPageSize(state),
-        totalUsersCount: getTotalUsersCount(state),
-        currentPage: getCurrentPage(state),
-        isFetching: getIsFetching(state),
-        followingInProgress: getFollowingInProgress(state)
-    }
-}
-export default compose<ComponentType>(
-    // withAuthRedirect: защитили страницу пользователей - закомментируем withAuthRedirect чтобы могли в любом случае на нее заходит
-    // withAuthRedirect,
-    // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState
-    connect<MapStateToPropsType, MapDispatchToPropsType, { }, AppRootStateType>(mapStateToProps, {
-        follow, unFollow,
-        getUsers: requestUsers,
-    })
-)(UsersContainer)
 
-// types
-type MapStateToPropsType = {
-    totalUsersCount: number
-    currentPage: number
-    pageSize: number
-    isFetching: boolean
-    users: Array<IUser>
-    followingInProgress: Array<number>
-}
-type MapDispatchToPropsType = {
-    getUsers: (currentPage: number, pageSize: number) => void
-    follow: (userId: number) => void
-    unFollow: (userId: number) => void
-}
-export type UsersContainerPropsType = MapStateToPropsType & MapDispatchToPropsType
+//export default connect(mapStateToProps, mapDispatchToProps)(Users);
+//export default connect(mapStateToProps, mapDispatchToProps)(UsersAPIClassContainer);
 
+// Пошаговая запись без compose
+//export default connect(mapStateToProps, DispatchUsersToProps)(UsersAPIClassContainer);
 
+export const UsersContainer = compose<React.ComponentType>(connect(mapStateToProps, mapDispatchToProps),
+    withAuthRedirect)(UsersAPIClassContainer);

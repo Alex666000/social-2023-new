@@ -1,46 +1,44 @@
-import {AppThunk} from './redux-store';
-import {getAuthUserData} from './auth-reducer';
+import {getAuthTC} from "./auth-reducer";
+import {AppThunkType} from "./redux-store";
 
-// constants:
-const SET_INITIALIZED_SUCCSESS = 'SSET_INITIALIZED_SUCCSESS'
+export type AppPropsType = {
+    initialized: boolean
+}
 
-//initialState
 const initialState = {
-    initialized: false,
-    // диспатчим санку доработать 40 min
-    globalError: null
+    initialized: false
 };
-// reducer
-export const appReducer = (state: initialStateType = initialState, action: ActionsTypes): initialStateType => {
-    switch (action.type) {
-        case 'SET_INITIALIZED_SUCCSESS':
-            return {...state, initialized: true}
+
+export const appReducer = (state: AppPropsType = initialState, action: AppActionsType): AppPropsType => {
+    switch(action.type) {
+        case 'SET_INITIALIZED':
+            return {...state, initialized: true};
         default:
-            return state
+            return state;
     }
 }
 
-// АС:
-export const initializedSuccsess = () => ({type: 'SET_INITIALIZED_SUCCSESS'}) as const
+/*-------------------------ACTION CREATOR-------------------------*/
 
-// СК:
-// проинициализирую Арр всё
-export const initializeApp = (): AppThunk => (dispatch) => {
-    // диспатчим получение авторизационных данных и когда они получаться диспатчим initializedSuccsess
-    let promise = dispatch(getAuthUserData())
-    // dispatch(чего-то)......
-    // dispatch(чего-то)......
-    // .then говорим у all_а - когда все promises из массива станут resolve
-    Promise.all([promise])
-        .then(() => {
-            dispatch(initializedSuccsess() )
-            // теперь initialized: false изменится на try и наш Арр компонент получит try - для этого делаем ему mapStateToProps
+export type AppActionsType = SetInitializedACType;
+
+export type SetInitializedACType = ReturnType<typeof setInitializedAC>
+export const setInitializedAC = () => ({
+    type: 'SET_INITIALIZED'
+} as const)
+
+/*-------------------------THUNK-------------------------*/
+
+export const initializeAppTC = (): AppThunkType => {
+    return (dispatch) => {
+        let promise = dispatch(getAuthTC());
+
+        Promise.all([promise])
+            .then( () => {
+                dispatch(setInitializedAC());
         })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 }
-
-// type
-type initialStateType = typeof initialState
-
-export type InitializedSuccsesType =  ReturnType<typeof initializedSuccsess>
-type ActionsTypes =
-    | InitializedSuccsesType

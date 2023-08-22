@@ -1,133 +1,164 @@
-import {usersAPI} from '../api/api';
-import {AppThunk} from './redux-store';
-import {Dispatch} from 'redux';
-import {AxiosResponse} from 'axios';
-import {updateObjectInArray} from '../utils/helpers/odject-helpers';
-// constants:
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
-const SET_USERS = 'SET_USERS'
-const SET_CURRENT_PAGE = 'CURRENT_PAGE'
-const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
-const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
+import {usersAPI} from "../common/api/api";
+import {AppThunkType} from "./redux-store";
+import {getUserFriendsTC} from './sidebar-reducer';
 
-// logic:
-let initialState = {
-    users: [] as IUser[],
-    pageSize: 10,
-    totalUsersCount: 0,
-    currentPage: 1,
-    isFetching: true,
-    // followingInProgress: false,
-    followingInProgress: [] as Array<number>,
+export type UsersPropsType = {
+    users: Array<UsersArray>
+    pageSize: number
+    totalUsersCount: number
+    currentPage: number
+    isLoading: boolean
+    followingInProgress: Array<string>
+    filter: UsersSearchFilterType
 }
-// reducer
-export const usersReducer = (state: InitialStateType = initialState, action: UsersActionsTypes): InitialStateType => {
+export type UsersArray = {
+    id: string
+    name: string
+    followed: boolean
+    status: string
+    photos: { small: string, large: string }
+}
+export type UsersSearchFilterType = {
+    term: string
+    friend: null | boolean
+}
+
+const initialState = {
+    users: [] as Array<UsersArray>,
+    pageSize: 20, // количество пользователей на одной странице
+    totalUsersCount: 100, // количество пользователей приходит с сервера, теперь цифра не влияет
+    currentPage: 1,
+    isLoading: false,
+    followingInProgress: [],
+    filter: {
+        term: '',
+        friend: null as null | boolean
+    }
+};
+
+export const usersReducer = (state: UsersPropsType = initialState, action: UsersActionsType): UsersPropsType => {
     switch (action.type) {
-        case FOLLOW:
-            return {...state, users: updateObjectInArray(state.users, action.userId, 'id', {followed: true})};
-        // users: state.users.map(u => u.id === action.userId ? {...u, followed: true} : u)
-        case UNFOLLOW:
-            return {...state, users: updateObjectInArray(state.users, action.userId, 'id', {followed: false})};
-        // users: state.users.map(u => u.id === action.userId ? {...u, followed: false} : u)
-        case SET_USERS:
-            return {...state, users: action.users}
-        case SET_CURRENT_PAGE:
-            return {
-                ...state, currentPage: action.currentPage
-            }
-        case SET_TOTAL_USERS_COUNT:
-            return {
-                ...state, totalUsersCount: action.count
-            }
-        case TOGGLE_IS_FETCHING:
-            return {
-                ...state, isFetching: action.isFetching
-            }
-        case TOGGLE_IS_FOLLOWING_PROGRESS:
+        case 'FOLLOW':
+            return {...state, users: state.users.map(user => user.id === action.id ? {...user, followed: true} : user)};
+        case 'UNFOLLOW':
             return {
                 ...state,
-                followingInProgress: action.isFetching
+                users: state.users.map(user => user.id === action.id ? {...user, followed: false} : user)
+            };
+        case 'SET_FILTER':
+            return {...state, filter: action.payload };
+        case 'SET_USERS':
+            return {...state, users: action.users};
+        case 'SET_CURRENT_PAGE':
+            return {...state, currentPage: action.currentPage};
+        case 'SET_USERS_TOTAL_COUNT':
+            return {...state, totalUsersCount: action.count}; // берём из Action Creator
+        case 'TOGGLE_IS_LOADING':
+            return {...state, isLoading: action.isLoading};
+        case 'TOGGLE_FOLLOW_IN_PROGRESS':
+            return {
+                ...state,
+                followingInProgress: action.following
                     ? [...state.followingInProgress, action.userId]
                     : state.followingInProgress.filter(id => id !== action.userId)
-            }
+            };
         default:
-            return state
+            return state;
     }
 }
-// actions
-export const followSuccess = (userId: number) => ({type: FOLLOW, userId} as const)
-export const unFollowSuccess = (userId: number) => ({type: UNFOLLOW, userId} as const)
-// установить полученных с сервера пользователей:
-export const setUsers = (users: Array<IUser>) => ({type: SET_USERS, users} as const)
-// установить текущую страничку:
-export const setCurrentPage = (currentPage: number) => ({type: SET_CURRENT_PAGE, currentPage} as const)
-// установить общее кол-во пользователей:
-export const setUsersTotalCount = (totalUsersCount: number) => ({
-    type: SET_TOTAL_USERS_COUNT, count: totalUsersCount
-} as const)
-// preloader:
-export const toggleIsFetching = (isFetching: boolean) => ({type: TOGGLE_IS_FETCHING, isFetching} as const)
-// подписаться и отписаться:
-export const toggleFollowingProgress = (isFetching: boolean, userId: number) => ({
-    type: TOGGLE_IS_FOLLOWING_PROGRESS,
-    isFetching,
-    userId
+
+/*-------------------------ACTION CREATOR-------------------------*/
+
+export type UsersActionsType =
+    UserFollowACType |
+    UserUnfollowACType |
+    SetFilterACType |
+    SetUsersACType |
+    SetCurrentPageACType |
+    setUsersTotalCountACType | // весь список пользователей
+    ToggleIsLoadingACType |
+    ToggleFollowInProgressACType;
+
+export type UserFollowACType = ReturnType<typeof followAC>
+export type UserUnfollowACType = ReturnType<typeof unfollowAC>
+export type SetFilterACType = ReturnType<typeof setFilterAC>
+export type SetUsersACType = ReturnType<typeof setUsersAC>
+export type SetCurrentPageACType = ReturnType<typeof setCurrentPageAC>
+export type setUsersTotalCountACType = ReturnType<typeof setUsersTotalCountAC>
+export type ToggleIsLoadingACType = ReturnType<typeof toggleIsLoadingAC>
+export type ToggleFollowInProgressACType = ReturnType<typeof toggleFollowInProgressAC>
+
+export const followAC = (userId: string) => ({type: 'FOLLOW', id: userId} as const)
+export const unfollowAC = (userId: string) => ({type: 'UNFOLLOW', id: userId} as const)
+export const setFilterAC = (payload: UsersSearchFilterType) => ({type: 'SET_FILTER', payload} as const)
+export const setUsersAC = (users: Array<UsersArray>) => ({type: 'SET_USERS', users} as const)
+export const setCurrentPageAC = (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage} as const)
+export const setUsersTotalCountAC = (totalUsersCount: number) => ({type: 'SET_USERS_TOTAL_COUNT', count: totalUsersCount} as const)
+export const toggleIsLoadingAC = (isLoading: boolean) => ({type: 'TOGGLE_IS_LOADING', isLoading} as const)
+
+export const toggleFollowInProgressAC = (userId: string, following: boolean) => ({
+    type: 'TOGGLE_FOLLOW_IN_PROGRESS',
+    userId, following
 } as const)
 
-// thunk:
-// получить пользователей:
-export const requestUsers = (page: number, pageSize: number): AppThunk => async (dispatch) => {
-    dispatch(toggleIsFetching(true))
-    // теперь подсвечивается жирным текущая страница
-    dispatch(setCurrentPage(page))
-    const response = await usersAPI.getUsers(page, pageSize)
-    // когда приходит ответ с сервера скрываем preloader:
-    dispatch(toggleIsFetching(false))
-    dispatch(setUsers(response.data.items))
-    dispatch(setUsersTotalCount(response.data.totalCount))
-}
-// функция обертка для follow и unFollow
-const followUnfollowFlow = async (dispatch: Dispatch, userId: number, apiMethod: (userId: number) => Promise<AxiosResponse<any, IUser>>, actionCreator: (userId: number) => UsersActionsTypes) => {
-    dispatch(toggleFollowingProgress(true, userId))
-    const response = await apiMethod(userId)
-    if (response.data.resultCode === 0) {
-        dispatch(actionCreator(userId))
+/*------------------------------THUNK------------------------------*/
+
+export const getUsersTC = (currentPage: number, pageSize: number,
+                           filterPayload: UsersSearchFilterType): AppThunkType => {
+
+    return (dispatch) => {
+        dispatch(toggleIsLoadingAC(true));
+
+        usersAPI.getUsers(currentPage, pageSize, filterPayload.term, filterPayload.friend)
+        .then(data => {
+            dispatch(toggleIsLoadingAC(false));
+            dispatch(setUsersAC(data.items));
+            dispatch(setFilterAC(filterPayload));
+            dispatch(setCurrentPageAC(currentPage));
+            dispatch(setUsersTotalCountAC(data.totalCount));
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
-    dispatch(toggleFollowingProgress(false, userId))
-}
-// подписаться:
-export const follow = (userId: number): AppThunk => async (dispatch) => {
-    followUnfollowFlow(dispatch, userId, usersAPI.follow.bind(usersAPI), followSuccess)
-}
-// отписаться:
-export const unFollow = (userId: number): AppThunk => async (dispatch) => {
-    followUnfollowFlow(dispatch, userId, usersAPI.unFollow.bind(usersAPI), unFollowSuccess)
-
 }
 
-// types
+export const postFollowTC = (userId: string): AppThunkType => {
 
-/*   response type - 1 user:   */
-export interface IUser { // user
-    name: string
-    id: number
-    photos: { small: string, large: string }
-    status: boolean
-    followed: boolean
+    return (dispatch) => {
+        dispatch(toggleFollowInProgressAC(userId,true));
+
+        usersAPI.postFollow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(followAC(userId));
+                    // для обновления списка навбара
+                    dispatch(getUserFriendsTC(1, 20, true))
+                }
+                dispatch(toggleFollowInProgressAC(userId,false));
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
 }
 
-export type InitialStateType = typeof initialState
+export const deleteFollowTC = (userId: string): AppThunkType => {
 
-export type UsersActionsTypes =
-    | ReturnType<typeof setUsers>
-    | ReturnType<typeof followSuccess>
-    | ReturnType<typeof unFollowSuccess>
-    | ReturnType<typeof setCurrentPage>
-    | ReturnType<typeof setUsersTotalCount>
-    | ReturnType<typeof toggleIsFetching>
-    | ReturnType<typeof toggleFollowingProgress>
+    return (dispatch) => {
+        dispatch(toggleFollowInProgressAC(userId,true));
 
-
-
+        usersAPI.deleteFollow(userId)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(unfollowAC(userId));
+                    // для обновления списка навбара
+                    dispatch(getUserFriendsTC(1, 20, true))
+                }
+                dispatch(toggleFollowInProgressAC(userId,false));
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }
+}

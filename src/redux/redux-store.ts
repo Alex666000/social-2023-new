@@ -1,46 +1,41 @@
-import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
-import thunkMiddleware, {ThunkAction} from 'redux-thunk';
-import {ProfileActionsTypes, profileReducer} from './profile-reducer';
-import {DialogsActionsTypes, dialogsReducer} from './dialogs-reduser';
-import {UsersActionsTypes, usersReducer} from './users-reducer';
-import {AuthActionsTypes, authReducer} from './auth-reducer';
-import {reducer as formReducer} from 'redux-form'
-import {appReducer, InitializedSuccsesType} from './app-reducer';
+import {applyMiddleware, combineReducers, legacy_createStore} from "redux";
+import {ProfileActionsType, profileReducer} from "./profilePage-reducer";
+import {DialogsActionsType, dialogsPageReducer} from "./dialogsPage-reducer";
+import {SidebarActionsType, sidebarReducer} from "./sidebar-reducer";
+import {UsersActionsType, usersReducer} from "./users-reducer";
+import {AuthActionsType, authReducer} from "./auth-reducer";
+import {AppActionsType, appReducer} from "./app-reducer";
+import thunkMiddleware, { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { reducer as formReducer } from 'redux-form'
 
-// не RootReducers а в единственном числе - когда комбайним редюсеры на выходе получается один рутовый редюсер:
-let rootReducer = combineReducers({
-    // ветки = части "стейта" - за ветки отвечают эти редюсеры
+export const rootReducer = combineReducers({
     profilePage: profileReducer,
-    dialogsPage: dialogsReducer,
+    dialogsPage: dialogsPageReducer,
+    sidebar: sidebarReducer,
     usersPage: usersReducer,
-    // данное что достаем useSelector или mapStateToProps
     auth: authReducer,
-    form: formReducer,
     app: appReducer,
+    form: formReducer
+});
 
-})
-// типизация state всего Арр
-export type AppRootStateType = ReturnType<typeof rootReducer>
-// типизация санок
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppRootStateType, unknown, AppActionsTypes>
+export const store = legacy_createStore(rootReducer, applyMiddleware(thunkMiddleware));
 
-// общая типизация всех actions приложения для типизации "санок"всего Арр:
-export type AppActionsTypes =
-    UsersActionsTypes
-    | ProfileActionsTypes
-    | DialogsActionsTypes
-    | AuthActionsTypes
-    | InitializedSuccsesType
+//export type ReduxStoreType = typeof store
+export type RootStateType = ReturnType<typeof rootReducer>
 
-declare global {
-    interface Window {
-        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
-    }
-}
-const composeEnhancers = window['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__'] as typeof compose || compose;
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)))
+export type AppThunkDispatch = ThunkDispatch<RootStateType, unknown, ApplicationActionsType>
+
+export type AppThunkType<ReturnType = void> = ThunkAction<ReturnType, RootStateType, unknown, ApplicationActionsType>
+
+export type ApplicationActionsType =
+    AppActionsType |
+    AuthActionsType |
+    DialogsActionsType |
+    ProfileActionsType |
+    SidebarActionsType |
+    UsersActionsType;
+
+// export default store;
 
 // @ts-ignore
 window.store = store
-
-export default store

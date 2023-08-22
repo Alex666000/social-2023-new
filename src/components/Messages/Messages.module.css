@@ -1,0 +1,45 @@
+.messages {
+    /* display: flex; */
+    display: grid;
+    grid-template: 1fr/ 3fr 9fr; /*строки / колонки*/
+    grid-template-areas:
+        "dialogs text";
+}
+
+
+.dialogs {
+    grid-area: dialogs;
+    display: flex;
+    flex-direction: column;
+}
+.dialogs > div {
+    padding: 10px;
+    font-size: 18px;
+}
+.dialogs .activeLink {
+    color: black;
+    border: 2px solid gold;
+    text-decoration: none;
+}
+
+
+.text {
+    grid-area: text;
+    display: flex;
+    flex-direction: column;
+}
+.text > div {
+    padding: 7px;
+}
+
+
+.sendMessageForm {
+    width: 98%;
+}
+.sendMessageArea {
+    margin-bottom: 10px;
+}
+.sendButton {
+    display: flex;
+    justify-content: flex-end;
+}
