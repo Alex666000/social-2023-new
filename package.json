@@ -12,7 +12,6 @@
     "axios": "^0.27.2",
     "classnames": "2.3.1",
     "formik": "^2.2.9",
-    "gh-pages": "^6.0.0",
     "jest": "27.5.1",
     "react": "17.0.2",
     "react-debounce-input": "^3.3.0",
@@ -56,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^6.0.0",
     "@redux-devtools/core": "^3.13.1",
     "@types/node": "16.7.13",
     "@types/react": "17.0.20",
