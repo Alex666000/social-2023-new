@@ -2,7 +2,6 @@
   "name": "it-samurai-social",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://Crash2022.github.io/IT-Samurai-Social",
   "dependencies": {
     "@loadable/component": "^5.15.2",
     "@testing-library/jest-dom": "5.14.1",
@@ -12,7 +11,6 @@
     "axios": "^0.27.2",
     "classnames": "2.3.1",
     "formik": "^2.2.9",
-    "gh-pages": "^4.0.0",
     "jest": "27.5.1",
     "react": "17.0.2",
     "react-debounce-input": "^3.3.0",
@@ -33,9 +31,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
