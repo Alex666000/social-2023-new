@@ -9,11 +9,11 @@ import {Provider} from "react-redux";
 ReactDOM.render(
     // для GitHubPages необходимо использовать HashRouter
     // <HashRouter></HashRouter>
-    <BrowserRouter>
+    <HashRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </BrowserRouter>, document.getElementById('root')
+    </HashRouter>, document.getElementById('root')
 );
 
 //rerenderEntireTree();
