@@ -88,7 +88,7 @@ type PutUserPhotoType = {
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
-    headers: {'API-KEY': '48d8b3d0-c5f9-4b26-8c16-babe89d17737'}
+    headers: {'API-KEY': '74a19bbb-094d-4af5-81dc-fc82431ac8a3'}
 })
 
 export const usersAPI = {

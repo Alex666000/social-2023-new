@@ -3,14 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import {AppContainer} from "./components/App/App";
 import {store} from './redux/redux-store';
-import {HashRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-//
+
 ReactDOM.render(
-    <HashRouter>
+    // для GitHubPages необходимо использовать HashRouter
+    // <HashRouter></HashRouter>
+    <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </HashRouter>, document.getElementById('root')
+    </BrowserRouter>, document.getElementById('root')
 );
 
+//rerenderEntireTree();
+
+// store.subscribe( () => {
+//     rerenderEntireTree()
+// });
