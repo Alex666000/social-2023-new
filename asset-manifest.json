@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/social/static/css/main.0a844462.css",
-    "main.js": "/social/static/js/main.654681ca.js",
-    "static/css/748.640db6c8.chunk.css": "/social/static/css/748.640db6c8.chunk.css",
-    "static/js/748.1ba8d55f.chunk.js": "/social/static/js/748.1ba8d55f.chunk.js",
-    "static/media/avatar_photo.jpg": "/social/static/media/avatar_photo.03e71ff18e72e540389b.jpg",
-    "static/media/Welcome_01.jpg": "/social/static/media/Welcome_01.64cb3ae10d100177a4fe.jpg",
-    "static/media/isLoadingBike_02.gif": "/social/static/media/isLoadingBike_02.01d0f9f02ab558f6d464.gif",
-    "static/media/user_avatar.jpg": "/social/static/media/user_avatar.1c9706d318334dd4dc3c.jpg",
-    "static/media/NotFound_01-2.jpg": "/social/static/media/NotFound_01-2.75937b36113e2d02dc5c.jpg",
-    "static/media/post_avatar.jpg": "/social/static/media/post_avatar.94e65e803763579c8497.jpg",
-    "static/media/social_logo.png": "/social/static/media/social_logo.67592705d22d6d4d076f.png",
-    "static/media/magnifying-glass-03.svg": "/social/static/media/magnifying-glass-03.60a6fb8e574a0e688f8e.svg",
-    "index.html": "/social/index.html",
-    "main.0a844462.css.map": "/social/static/css/main.0a844462.css.map",
-    "main.654681ca.js.map": "/social/static/js/main.654681ca.js.map",
-    "748.640db6c8.chunk.css.map": "/social/static/css/748.640db6c8.chunk.css.map",
-    "748.1ba8d55f.chunk.js.map": "/social/static/js/748.1ba8d55f.chunk.js.map"
+    "main.css": "/social-2023-new/static/css/main.7e2637af.css",
+    "main.js": "/social-2023-new/static/js/main.13582d69.js",
+    "static/css/748.640db6c8.chunk.css": "/social-2023-new/static/css/748.640db6c8.chunk.css",
+    "static/js/748.1ba8d55f.chunk.js": "/social-2023-new/static/js/748.1ba8d55f.chunk.js",
+    "static/media/avatar_photo.jpg": "/social-2023-new/static/media/avatar_photo.03e71ff18e72e540389b.jpg",
+    "static/media/Welcome_01.jpg": "/social-2023-new/static/media/Welcome_01.64cb3ae10d100177a4fe.jpg",
+    "static/media/isLoadingBike_02.gif": "/social-2023-new/static/media/isLoadingBike_02.01d0f9f02ab558f6d464.gif",
+    "static/media/user_avatar.jpg": "/social-2023-new/static/media/user_avatar.1c9706d318334dd4dc3c.jpg",
+    "static/media/NotFound_01-2.jpg": "/social-2023-new/static/media/NotFound_01-2.75937b36113e2d02dc5c.jpg",
+    "static/media/post_avatar.jpg": "/social-2023-new/static/media/post_avatar.94e65e803763579c8497.jpg",
+    "static/media/social_logo.png": "/social-2023-new/static/media/social_logo.67592705d22d6d4d076f.png",
+    "static/media/magnifying-glass-03.svg": "/social-2023-new/static/media/magnifying-glass-03.60a6fb8e574a0e688f8e.svg",
+    "index.html": "/social-2023-new/index.html",
+    "main.7e2637af.css.map": "/social-2023-new/static/css/main.7e2637af.css.map",
+    "main.13582d69.js.map": "/social-2023-new/static/js/main.13582d69.js.map",
+    "748.640db6c8.chunk.css.map": "/social-2023-new/static/css/748.640db6c8.chunk.css.map",
+    "748.1ba8d55f.chunk.js.map": "/social-2023-new/static/js/748.1ba8d55f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0a844462.css",
-    "static/js/main.654681ca.js"
+    "static/css/main.7e2637af.css",
+    "static/js/main.13582d69.js"
   ]
 }
