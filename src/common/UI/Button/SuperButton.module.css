@@ -1,0 +1,30 @@
+.superButton {
+    /*display: flex;*/
+    /*justify-content: center;*/
+    /*align-items: center;*/
+    background-color: green;
+    color: white;
+    padding: 10px;
+    border: none;
+    font-size: 14px;
+    min-width: 150px;
+}
+.superButton:hover {
+    opacity: 0.7;
+}
+
+.default {
+
+}
+.default:hover {
+
+}
+.default:disabled:hover {
+}
+
+.red {
+
+}
+.red:hover {
+
+}

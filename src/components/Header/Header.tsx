@@ -1,26 +1,52 @@
-import React from 'react';
-import s from './Header.module.css'
-import {NavLink} from 'react-router-dom';
+import React from "react";
+import styles from './Header.module.css';
+import {NavLink} from "react-router-dom";
+import socialLogo from "../../common/assets/images/avatars/social_logo.png";
+import {HeaderContainerType} from "./HeaderContainer";
+import {SuperButton} from "../../common/UI/Button/SuperButton";
 
-type HeaderPropsType = {
-    isAuth: boolean
-    login: string | null
-    logout: (e: React.MouseEvent<HTMLButtonElement>) => void
-}
+export const Header = (props: HeaderContainerType) => {
 
-export const Header = (props: HeaderPropsType) => {
     return (
-        <header className={s.header}>
-            <img
-                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf8yndOQhIaFf36hkWn9w6UAff4nmPREbmvQ&usqp=CAU'
-                alt="react-logo"/>
-            <div className={s.loginBlock}>
-                {props.isAuth
-                    ? <div>{props.login} - <button onClick={props.logout}>Log out</button> </div>
-                    : <NavLink to={'/login'}>Login</NavLink>  }
+        <header className={styles.header}>
+            <div className={styles.header__logo}>
+                <NavLink to="/">
+                    <img
+                        src={socialLogo}
+                        style={{width: "100px", height: "100px"}}
+                        alt="logo">
+                    </img>
+                </NavLink>
+            </div>
 
+            <div className={styles.header__socialName}>
+                Социальная сеть для джедаев
+            </div>
+
+            <div className={styles.login_block}>
+                {
+                    props.isAuth
+                        ? <div className={styles.loginBlock}>
+                            <div className={styles.loginSpan}>
+                                {props.login}
+                            </div>
+                            <div>
+                                <SuperButton className={styles.logoutButton}
+                                             onClick={props.deleteLogin}
+                                >
+                                    Выход
+                                </SuperButton>
+                            </div>
+                        </div>
+                        : <NavLink to="/login">
+                            <div className={styles.loginBlock}>
+                                <SuperButton className={styles.loginButton}>
+                                    Вход
+                                </SuperButton>
+                            </div>
+                        </NavLink>
+                }
             </div>
         </header>
     );
-};
-
+}

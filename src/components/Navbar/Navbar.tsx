@@ -1,29 +1,34 @@
-import React from 'react';
-import s from './Navbar.module.css';
-import {NavLink} from 'react-router-dom';
+import React from "react";
+//import {NavLink} from "react-router-dom";
+import styles from './Navbar.module.css';
+import NavbarFriendsContainer from "./NavbarFriendsContainer";
+import {NavLinks} from "./NavbarLinks";
 
-export const Navbar:React.FC = (props) => {
+export const Navbar = () => {
     return (
-        <nav className={s.nav}>
-        <div className={s.item}>
-            <NavLink to={'/profile'} activeClassName={s.activeLink}>Profile</NavLink>
-        </div>
-        <div className={`${s.item} ${s.active}`}>
-            <NavLink to={'/dialogs'} activeClassName={s.activeLink}>Messages</NavLink>
-        </div>
-            <div className={`${s.item} ${s.active}`}>
-            <NavLink to={'/users'} activeClassName={s.activeLink}>Users</NavLink>
-        </div>
-        <div className={s.item}>
-            <NavLink to={'/news'} activeClassName={s.activeLink}>News</NavLink>
-        </div>
-        <div className={s.item}>
-            <NavLink to={'/music'} activeClassName={s.activeLink}>Music</NavLink>
-        </div>
-        <div className={s.item}>
-            <NavLink to={'/settings'} activeClassName={s.activeLink}>Settings</NavLink>
-        </div>
-    </nav>
-    )
-}
+        <nav className={styles.left__navMenu}>
+            {/*<div>
+                <NavLink to="/profile" activeClassName={classes.activeLink}>Профиль</NavLink>
+            </div>
+            <div>
+                <NavLink to="/messages" activeClassName={classes.activeLink}>Сообщения</NavLink>
+            </div>
+            <div>
+                <NavLink to="/news" activeClassName={classes.activeLink}>Новости</NavLink>
+            </div>
+            <div>
+                <NavLink to="/music" activeClassName={classes.activeLink}>Музыка</NavLink>
+            </div>
+            <div>
+                <NavLink to="/settings" activeClassName={classes.activeLink}>Настройки</NavLink>
+            </div>*/}
 
+            <div>
+                <NavLinks/>
+            </div>
+            <div>
+                <NavbarFriendsContainer/>
+            </div>
+        </nav>
+    );
+}

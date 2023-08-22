@@ -1,14 +1,57 @@
-.nav {
-    grid-area: n;
-    background-color: darkslateblue;
+.left__navMenu {
+    grid-area: left__navmenu;
+    background-color: green;
     padding: 20px;
 }
-
-.item a{
+.left__navMenu a {
     color: white;
+    font-size: 20px;
     text-decoration: none;
 }
-
-.item a.activeLink {
+.left__navMenu a:hover {
     color: gold;
+}
+.left__navMenu a.activeLink {
+    color: gold;
+}
+.left__navMenu > div {
+    padding-bottom: 15px;
+}
+.left__navMenu > div:nth-child(5) {
+    padding-top: 30px;
+}
+.left__navMenu > *:last-child {
+    padding-top: 30px;
+}
+
+/*----------------------------------*/
+
+.friendsWrapper {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.friendsItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 5px;
+}
+.friendsName {
+    color: white;
+    text-align: center;
+    word-break: break-word;
+    width: 100px;
+    /*padding-bottom: 3px;*/
+}
+.friendsAvatar {
+    text-align: center;
+    padding: 5px;
+}
+.friendsAvatar img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1px solid white;
 }
