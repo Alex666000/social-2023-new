@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/Alex666000/social-2023-new/static/css/main.e74ee522.css",
-    "main.js": "/Alex666000/social-2023-new/static/js/main.3bd5d0ac.js",
-    "static/css/748.640db6c8.chunk.css": "/Alex666000/social-2023-new/static/css/748.640db6c8.chunk.css",
-    "static/js/748.1ba8d55f.chunk.js": "/Alex666000/social-2023-new/static/js/748.1ba8d55f.chunk.js",
-    "static/media/avatar_photo.jpg": "/Alex666000/social-2023-new/static/media/avatar_photo.03e71ff18e72e540389b.jpg",
-    "static/media/Welcome_01.jpg": "/Alex666000/social-2023-new/static/media/Welcome_01.64cb3ae10d100177a4fe.jpg",
-    "static/media/isLoadingBike_02.gif": "/Alex666000/social-2023-new/static/media/isLoadingBike_02.01d0f9f02ab558f6d464.gif",
-    "static/media/user_avatar.jpg": "/Alex666000/social-2023-new/static/media/user_avatar.1c9706d318334dd4dc3c.jpg",
-    "static/media/NotFound_01-2.jpg": "/Alex666000/social-2023-new/static/media/NotFound_01-2.75937b36113e2d02dc5c.jpg",
-    "static/media/post_avatar.jpg": "/Alex666000/social-2023-new/static/media/post_avatar.94e65e803763579c8497.jpg",
-    "static/media/social_logo.png": "/Alex666000/social-2023-new/static/media/social_logo.67592705d22d6d4d076f.png",
-    "static/media/magnifying-glass-03.svg": "/Alex666000/social-2023-new/static/media/magnifying-glass-03.60a6fb8e574a0e688f8e.svg",
-    "index.html": "/Alex666000/social-2023-new/index.html",
-    "main.e74ee522.css.map": "/Alex666000/social-2023-new/static/css/main.e74ee522.css.map",
-    "main.3bd5d0ac.js.map": "/Alex666000/social-2023-new/static/js/main.3bd5d0ac.js.map",
-    "748.640db6c8.chunk.css.map": "/Alex666000/social-2023-new/static/css/748.640db6c8.chunk.css.map",
-    "748.1ba8d55f.chunk.js.map": "/Alex666000/social-2023-new/static/js/748.1ba8d55f.chunk.js.map"
+    "main.css": "/social-2023-new/static/css/main.7e2637af.css",
+    "main.js": "/social-2023-new/static/js/main.19d15e84.js",
+    "static/css/748.640db6c8.chunk.css": "/social-2023-new/static/css/748.640db6c8.chunk.css",
+    "static/js/748.1ba8d55f.chunk.js": "/social-2023-new/static/js/748.1ba8d55f.chunk.js",
+    "static/media/avatar_photo.jpg": "/social-2023-new/static/media/avatar_photo.03e71ff18e72e540389b.jpg",
+    "static/media/Welcome_01.jpg": "/social-2023-new/static/media/Welcome_01.64cb3ae10d100177a4fe.jpg",
+    "static/media/isLoadingBike_02.gif": "/social-2023-new/static/media/isLoadingBike_02.01d0f9f02ab558f6d464.gif",
+    "static/media/user_avatar.jpg": "/social-2023-new/static/media/user_avatar.1c9706d318334dd4dc3c.jpg",
+    "static/media/NotFound_01-2.jpg": "/social-2023-new/static/media/NotFound_01-2.75937b36113e2d02dc5c.jpg",
+    "static/media/post_avatar.jpg": "/social-2023-new/static/media/post_avatar.94e65e803763579c8497.jpg",
+    "static/media/social_logo.png": "/social-2023-new/static/media/social_logo.67592705d22d6d4d076f.png",
+    "static/media/magnifying-glass-03.svg": "/social-2023-new/static/media/magnifying-glass-03.60a6fb8e574a0e688f8e.svg",
+    "index.html": "/social-2023-new/index.html",
+    "main.7e2637af.css.map": "/social-2023-new/static/css/main.7e2637af.css.map",
+    "main.19d15e84.js.map": "/social-2023-new/static/js/main.19d15e84.js.map",
+    "748.640db6c8.chunk.css.map": "/social-2023-new/static/css/748.640db6c8.chunk.css.map",
+    "748.1ba8d55f.chunk.js.map": "/social-2023-new/static/js/748.1ba8d55f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e74ee522.css",
-    "static/js/main.3bd5d0ac.js"
+    "static/css/main.7e2637af.css",
+    "static/js/main.19d15e84.js"
   ]
 }
