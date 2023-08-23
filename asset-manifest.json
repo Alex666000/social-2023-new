@@ -1,9 +1,9 @@
 {
   "files": {
     "main.css": "/social-2023-new/static/css/main.7e2637af.css",
-    "main.js": "/social-2023-new/static/js/main.19d15e84.js",
+    "main.js": "/social-2023-new/static/js/main.dee5d033.js",
     "static/css/748.640db6c8.chunk.css": "/social-2023-new/static/css/748.640db6c8.chunk.css",
-    "static/js/748.1ba8d55f.chunk.js": "/social-2023-new/static/js/748.1ba8d55f.chunk.js",
+    "static/js/748.328f7788.chunk.js": "/social-2023-new/static/js/748.328f7788.chunk.js",
     "static/media/avatar_photo.jpg": "/social-2023-new/static/media/avatar_photo.03e71ff18e72e540389b.jpg",
     "static/media/Welcome_01.jpg": "/social-2023-new/static/media/Welcome_01.64cb3ae10d100177a4fe.jpg",
     "static/media/isLoadingBike_02.gif": "/social-2023-new/static/media/isLoadingBike_02.01d0f9f02ab558f6d464.gif",
@@ -14,12 +14,12 @@
     "static/media/magnifying-glass-03.svg": "/social-2023-new/static/media/magnifying-glass-03.60a6fb8e574a0e688f8e.svg",
     "index.html": "/social-2023-new/index.html",
     "main.7e2637af.css.map": "/social-2023-new/static/css/main.7e2637af.css.map",
-    "main.19d15e84.js.map": "/social-2023-new/static/js/main.19d15e84.js.map",
+    "main.dee5d033.js.map": "/social-2023-new/static/js/main.dee5d033.js.map",
     "748.640db6c8.chunk.css.map": "/social-2023-new/static/css/748.640db6c8.chunk.css.map",
-    "748.1ba8d55f.chunk.js.map": "/social-2023-new/static/js/748.1ba8d55f.chunk.js.map"
+    "748.328f7788.chunk.js.map": "/social-2023-new/static/js/748.328f7788.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7e2637af.css",
-    "static/js/main.19d15e84.js"
+    "static/js/main.dee5d033.js"
   ]
 }
