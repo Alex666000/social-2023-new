@@ -7,8 +7,6 @@ import {BrowserRouter, HashRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 
 ReactDOM.render(
-    // для GitHubPages необходимо использовать HashRouter
-    // <HashRouter></HashRouter>
     <HashRouter>
         <Provider store={store}>
             <AppContainer/>
@@ -16,8 +14,3 @@ ReactDOM.render(
     </HashRouter>, document.getElementById('root')
 );
 
-//rerenderEntireTree();
-
-// store.subscribe( () => {
-//     rerenderEntireTree()
-// });
