@@ -47,6 +47,7 @@ type LoginResponseType = {
     data: {
         userId: number
     }
+    //
     resultCode: ResultCodesEnum | ResultCodeForCaptcha
     messages: Array<string>
 }
