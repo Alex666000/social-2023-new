@@ -1,5 +1,5 @@
-import axios from "axios";
-import {FormDataType} from "../../components/Profile/ProfileInfo/MyProfileWithHooks";
+import axios from 'axios';
+import {FormDataType} from '../../components/Profile/ProfileInfo/MyProfileWithHooks';
 
 export enum ResultCodesEnum {
     Success = 0,
@@ -28,7 +28,7 @@ type UsersResponseType = {
     followed: boolean
 }
 
-export type PutResponseType<D = { }> = {
+export type PutResponseType<D = {}> = {
     resultCode: ResultCodesEnum | ResultCodeForCaptcha
     messages: Array<string>
     data: D
@@ -54,19 +54,12 @@ type LoginResponseType = {
 type GetCaptchaResponseType = {
     url: string
 }
+//
 
 type GetProfileResponseType = {
     aboutMe: string
     contacts: {
-        [key:string] : string
-        // facebook: string
-        // website: string | null
-        // vk: string
-        // twitter: string
-        // instagram: string | null
-        // youtube: string | null
-        // github: string
-        // mainLink: string | null
+        [key: string]: string
     }
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -88,8 +81,8 @@ type PutUserPhotoType = {
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
-    headers: {'API-KEY': '74a19bbb-094d-4af5-81dc-fc82431ac8a3'}
-})
+    headers: {'API-KEY': '637be77e-e33f-4f23-9dcc-15704fd62674'}
+});
 
 export const usersAPI = {
     getUsers(currentPage: number, pageSize: number, term: string = '', friend: null | boolean = null) {
@@ -97,14 +90,14 @@ export const usersAPI = {
             instance
                 .get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}&term=${term}` + (friend === null ? '' : `&friend=${friend}`), {})
                 .then(response => response.data)
-        )
+        );
     },
     getUserFriends(currentPage: number, pageSize: number, friend: null | boolean = null) {
         return (
             instance
                 .get<GetUsersResponseType>(`users?page=${currentPage}&count=${pageSize}` + (friend === null ? '' : `&friend=${friend}`), {})
                 .then(response => response.data)
-        )
+        );
     },
     getProfile(userId: string) {
         // можно написать так на всякий случай
@@ -116,16 +109,16 @@ export const usersAPI = {
             instance
                 .delete<PutResponseType>(`follow/${userId}`, {})
                 .then(response => response.data)
-        )
+        );
     },
     postFollow(userId: string) {
         return (
             instance
                 .post<PutResponseType>(`follow/${userId}`, {}, {})
                 .then(response => response.data)
-        )
+        );
     }
-}
+};
 
 export const authAPI = {
     getAuth() {
@@ -133,7 +126,7 @@ export const authAPI = {
             instance
                 .get<authMeResponseType>(`auth/me`, {})
                 .then(response => response.data)
-        )
+        );
     },
     postLogin(email: string, password: string, rememberMe: boolean = false,
               captchaUrl: null | string = null) {
@@ -141,16 +134,16 @@ export const authAPI = {
             instance
                 .post<PutResponseType>(`auth/login`, {email, password, rememberMe, captchaUrl}, {})
                 .then(response => response.data)
-        )
+        );
     },
     deleteLogin() {
         return (
             instance
                 .delete<PutResponseType>(`auth/login`)
                 .then(response => response.data)
-        )
+        );
     }
-}
+};
 
 export const securityAPI = {
     getCaptcha() {
@@ -158,9 +151,9 @@ export const securityAPI = {
             instance
                 .get<GetCaptchaResponseType>(`security/get-captcha-url`)
                 .then(response => response.data)
-        )
+        );
     }
-}
+};
 
 export const profileAPI = {
     getProfile(userId: string) {
@@ -168,21 +161,21 @@ export const profileAPI = {
             instance
                 .get<GetProfileResponseType>(`profile/${userId}`)
                 .then(response => response.data)
-        )
+        );
     },
     getUserStatus(userId: string) {
         return (
             instance
                 .get<string>(`profile/status/${userId}`)
                 .then(response => response.data)
-        )
+        );
     },
     updateUserStatus(status: string) {
         return (
             instance
                 .put<PutResponseType>(`profile/status`, {status: status})
                 .then(response => response.data)
-        )
+        );
     },
     updateUserPhoto(photoFile: File) {
         const formData = new FormData;
@@ -196,13 +189,13 @@ export const profileAPI = {
                     }
                 })
                 .then(response => response.data)
-        )
+        );
     },
     updateUserProfile(profile: FormDataType) {
         return (
             instance
                 .put<PutResponseType>(`profile`, profile)
                 .then(response => response.data)
-        )
+        );
     }
-}
+};
