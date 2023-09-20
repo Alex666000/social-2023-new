@@ -9,7 +9,7 @@ export const Welcome = () => {
                 Добро пожаловать в социальную сеть для Настоящих Джедаев!
             </div>
             <div className={styles.welcome_image}>
-                <img src={welcomeImage} alt="welcome image"/>
+                <img src={welcomeImage} alt="welcome"/>
             </div>
         </>
     );

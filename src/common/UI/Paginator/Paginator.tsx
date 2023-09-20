@@ -2,10 +2,6 @@ import React, {useEffect, useState} from "react";
 import styles from "./Paginator.module.css";
 import {v1} from "uuid";
 
-// позволяет писать классы стилей через запятую, добавлять логику
-// import cn from 'classnames';
-// className={cn(styles.myClassName1, myClassName2)}
-
 export type PaginatorPropsType = {
     pageSize: number
     totalUsersCount: number
@@ -17,7 +13,7 @@ export type PaginatorPropsType = {
 export const Paginator = (props: PaginatorPropsType) => {
 
     const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize); // всего страниц
-    const pages = []; // массив со страницами
+    const pages = [];
 
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i);
@@ -40,7 +36,7 @@ export const Paginator = (props: PaginatorPropsType) => {
     useEffect(() => {
         const currentBlock = Math.ceil(props.currentPage / props.numberOfPagesInBlock);
         setPartOfPages(currentBlock);
-    }, [props.currentPage])
+    }, [props.currentPage, props.numberOfPagesInBlock])
 
     return (
         <>

@@ -43,15 +43,6 @@ export type authMeResponseType = {
     }
 }
 
-type LoginResponseType = {
-    data: {
-        userId: number
-    }
-    //
-    resultCode: ResultCodesEnum | ResultCodeForCaptcha
-    messages: Array<string>
-}
-
 type GetCaptchaResponseType = {
     url: string
 }
