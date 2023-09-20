@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/social-2023-new/static/css/main.7e2637af.css",
-    "main.js": "/social-2023-new/static/js/main.dee5d033.js",
-    "static/css/748.640db6c8.chunk.css": "/social-2023-new/static/css/748.640db6c8.chunk.css",
-    "static/js/748.328f7788.chunk.js": "/social-2023-new/static/js/748.328f7788.chunk.js",
+    "main.css": "/social-2023-new/static/css/main.b43b53df.css",
+    "main.js": "/social-2023-new/static/js/main.d7d232fa.js",
+    "static/css/748.d04f541d.chunk.css": "/social-2023-new/static/css/748.d04f541d.chunk.css",
+    "static/js/748.945b7c3b.chunk.js": "/social-2023-new/static/js/748.945b7c3b.chunk.js",
     "static/media/avatar_photo.jpg": "/social-2023-new/static/media/avatar_photo.03e71ff18e72e540389b.jpg",
     "static/media/Welcome_01.jpg": "/social-2023-new/static/media/Welcome_01.64cb3ae10d100177a4fe.jpg",
     "static/media/isLoadingBike_02.gif": "/social-2023-new/static/media/isLoadingBike_02.01d0f9f02ab558f6d464.gif",
@@ -13,13 +13,13 @@
     "static/media/social_logo.png": "/social-2023-new/static/media/social_logo.67592705d22d6d4d076f.png",
     "static/media/magnifying-glass-03.svg": "/social-2023-new/static/media/magnifying-glass-03.60a6fb8e574a0e688f8e.svg",
     "index.html": "/social-2023-new/index.html",
-    "main.7e2637af.css.map": "/social-2023-new/static/css/main.7e2637af.css.map",
-    "main.dee5d033.js.map": "/social-2023-new/static/js/main.dee5d033.js.map",
-    "748.640db6c8.chunk.css.map": "/social-2023-new/static/css/748.640db6c8.chunk.css.map",
-    "748.328f7788.chunk.js.map": "/social-2023-new/static/js/748.328f7788.chunk.js.map"
+    "main.b43b53df.css.map": "/social-2023-new/static/css/main.b43b53df.css.map",
+    "main.d7d232fa.js.map": "/social-2023-new/static/js/main.d7d232fa.js.map",
+    "748.d04f541d.chunk.css.map": "/social-2023-new/static/css/748.d04f541d.chunk.css.map",
+    "748.945b7c3b.chunk.js.map": "/social-2023-new/static/js/748.945b7c3b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e2637af.css",
-    "static/js/main.dee5d033.js"
+    "static/css/main.b43b53df.css",
+    "static/js/main.d7d232fa.js"
   ]
 }
